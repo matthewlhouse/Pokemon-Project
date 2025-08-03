@@ -1,0 +1,634 @@
+/* ==========================================================================
+   Pokemon Walkthrough Project - Main CSS Template
+   Learning-focused template with guided implementation sections
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CSS CUSTOM PROPERTIES (VARIABLES)
+   ========================================================================== */
+
+:root {
+    /* TODO: Add Pokemon-themed color palette for other games as they are implemented */
+	--pokemon-red: #FF1111;
+	--pokemon-blue: #1155FF;  
+	--pokemon-yellow: #FFDE00;
+	
+	/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+	/* Default theme colors - will be overridden by theme classes */
+	--color-primary: #2563eb;               /* Default blue */
+	--color-secondary: #64748b;             /* Default gray */
+	--color-accent: var(--pokemon-yellow);    /* Always yellow for highlights */
+	--color-background: #ffffff;            /* Default white */
+	--color-surface: #f8fafc;               /* Light gray for cards/sections */
+	--color-text: #1e293b;                  /* Dark gray for text */
+	--color-text-secondary: #64748b;        /* Lighter gray for secondary text */
+    --color-text-contrast: #000000;         /* Black for light backgrounds */
+	
+	/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+	--space-xs: 0.25rem;  /* 4px - fine details */
+	--space-sm: 0.5rem;   /* 8px - small gaps */
+	--space-md: 1rem;     /* 16px - standard spacing */
+	--space-lg: 1.5rem;   /* 24px - section spacing */
+	--space-xl: 2.5rem;   /* 40px - major sections */
+	
+	/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+	--font-size-sm: 0.875rem;    /* 14px - small text (captions, labels) */
+	--font-size-base: 1rem;      /* 16px - body text (paragraphs, normal content) */
+	--font-size-lg: 1.125rem;    /* 18px - slightly larger text (subheadings) */
+	--font-size-xl: 1.25rem;     /* 20px - medium headings (h3, important text) */
+	--font-size-2xl: 1.5rem;     /* 24px - large headings (h2, section titles) */
+	--font-size-3xl: 2rem;       /* 32px - main page title */
+	
+	/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+	--breakpoint-sm: 576px;     /* Mobile Devices */
+	--breakpoint-md: 768px;     /* Larger Mobile Devices & Smaller Tablets */
+	--breakpoint-lg: 992px;     /* Tablets */
+	--breakpoint-xl: 1200px;    /* Small Laptops & Larger Tablets */
+	
+	/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+	--focus-color: var(--pokemon-yellow);
+	--focus-width: 2px;
+	--border-radius: 8px;
+	--transition-speed: 0.2s;
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+*,
+*::before,
+*::after {
+	margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    color: var(--color-text);
+    background: var(--color-background);
+}
+
+/* ==========================================================================
+   3. ACCESSIBILITY FOUNDATIONS
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+.skip {
+    position: absolute;
+    top: -1000px;
+    left: 6px;
+    background: var(--color-text);
+    color: var(--color-background);
+    padding: var(--space-sm);
+    text-decoration: none;
+    border-radius: var(--space-md);
+    z-index: 1000;
+}
+
+.skip:focus {
+    top: 6px;
+}
+
+:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--space-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    :root {
+        --color-text: #000000;
+        --color-background: #ffffff;
+        --focus-width: 3px;
+    }
+}
+
+/* ==========================================================================
+   4. TYPOGRAPHY SYSTEM
+   ========================================================================== */
+
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: var(--space-sm);
+    font-weight: normal;
+    line-height: 1.2;
+    color: var(--color-text);
+    text-align: center;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: var(--font-size-3xl);
+    color: var(--color-text-contrast);
+    background-color: var(--color-accent);
+    padding: var(--space-md);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: var(--font-size-2xl);
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+}
+
+h4 {
+    font-size: var(--font-size-lg);
+}
+
+h5 {
+    font-size: var(--font-size-base);
+}
+
+h6 {
+    font-size: var(--font-size-sm);
+}
+
+p {
+    line-height: 1.5;
+    margin: var(--space-sm);
+    max-width: 65ch;
+}
+
+ul, ol {
+    list-style-type: square;
+}
+
+/* ==========================================================================
+   5. LAYOUT SYSTEM
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+header {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-primary);
+}
+
+main {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-md);
+}
+
+nav {
+    display: grid;
+    justify-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--space-md);
+}
+
+nav a {
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   6. GAME SELECTION COMPONENT - TODO: Style Pokemon game buttons
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+.game-selection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.pkmred-walkthrough,
+.pkmblue-walkthrough, 
+.pkmyellow-walkthrough {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    border: 2px solid;
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    min-height: 3rem;
+}
+
+.pkmred-walkthrough {
+    border-color: var(--pokemon-red);
+}
+
+.pkmblue-walkthrough {
+    border-color: var(--pokemon-blue);
+}
+
+.pkmyellow-walkthrough {
+    border-color: var(--pokemon-yellow);
+}
+
+.pkmred-walkthrough:hover,
+.pkmblue-walkthrough:hover,
+.pkmyellow-walkthrough:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.pkmred-walkthrough:hover {
+    background-color: var(--pokemon-red);
+    color: white;
+}
+
+.pkmblue-walkthrough:hover {
+    background-color: var(--pokemon-blue);
+    color: white;
+}
+
+.pkmyellow-walkthrough:hover {
+    background-color: var(--pokemon-yellow);
+    color: var(--color-text-contrast);
+}
+
+.pkmred-walkthrough:focus-visible,
+.pkmblue-walkthrough:focus-visible,
+.pkmyellow-walkthrough:focus-visible {
+    background-color: var(--color-accent);
+}
+
+.pkmred-walkthrough[aria-pressed="true"],
+.pkmblue-walkthrough[aria-pressed="true"],
+.pkmyellow-walkthrough[aria-pressed="true"] {
+    background-color: var(--color-secondary);
+}
+
+/* ==========================================================================
+   7. PROGRESS TRACKING COMPONENT - TODO: Style progress indicators
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+.progress-overview {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.overall-progress-tracker {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+}
+
+.overall-progress-tracker h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    padding: 0;
+}
+
+.overall-progress-tracker p {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+    text-align: center;
+}
+
+.progress-card {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    text-align: center;
+    transition: transform var(--transition-speed) ease;
+}
+
+.progress-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Progress type indicators with colored left borders */
+.progress-steps .progress-card {
+    border-left: 4px solid var(--pokemon-blue);
+}
+
+.progress-pokemon .progress-card {
+    border-left: 4px solid var(--pokemon-red);
+}
+
+.progress-items .progress-card {
+    border-left: 4px solid var(--pokemon-yellow);
+}
+
+.progress-battles .progress-card {
+    border-left: 4px solid var(--color-secondary);
+}
+
+.progress-percentage {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    font-weight: normal;
+}
+
+/* ==========================================================================
+   8. WALKTHROUGH CONTENT COMPONENT - TODO: Style walkthrough sections
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+.walkthrough-content {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.walkthrough-content h2 {
+    background-color: transparent;
+    color: var(--color-text);
+    text-align: left;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+.walkthrough-content h3 {
+    text-align: left;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+}
+
+.walkthrough-step {
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    border-left: 3px solid var(--color-secondary);
+    background-color: var(--color-background);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    transition: all var(--transition-speed) ease;
+}
+
+.walkthrough-step:hover {
+    border-left-color: var(--color-primary);
+    transform: translateX(2px);
+}
+
+.step-completed {
+    border-left-color: var(--pokemon-yellow);
+    background-color: var(--color-surface);
+}
+
+.step-completed::before {
+    content: "✓ ";
+    color: var(--pokemon-yellow);
+    font-weight: bold;
+    margin-right: var(--space-xs);
+}
+
+.walkthrough-content p {
+    text-align: left;
+    max-width: none; /* Override the 65ch limit for walkthrough content */
+    margin: var(--space-sm) 0;
+}
+
+.walkthrough-content ul,
+.walkthrough-content ol {
+    margin-left: var(--space-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.walkthrough-content li {
+    margin-bottom: var(--space-xs);
+}
+
+.walkthrough-content:empty::after {
+    content: "Select a Pokemon game above to begin your walkthrough adventure!";
+    display: block;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    padding: var(--space-xl);
+}
+
+.pokemon-encounter {
+    display: inline-block;
+    background-color: var(--pokemon-red);
+    color: white;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.item-found {
+    display: inline-block;
+    background-color: var(--pokemon-yellow);
+    color: var(--color-text-contrast);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.trainer-battle {
+    display: inline-block;
+    background-color: var(--pokemon-blue);
+    color: white;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   9. RESPONSIVE DESIGN - TODO: Implement mobile-first responsive design
+   ========================================================================== */
+/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+@media (min-width: 768px) {
+    /* Game Selection - 3 column layout on tablets and up */
+    .game-selection {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Progress Tracker - 2 column layout on tablets */
+    .overall-progress-tracker {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    /* Progress Tracker - 4 column layout on desktop */
+    .overall-progress-tracker {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Future: Additional large screen optimizations */
+}
+
+/* ==========================================================================
+   10. UTILITY CLASSES - TODO: Add helpful utility classes
+   ========================================================================== */
+
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Focus utilities */
+.focus-visible-only:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Display utilities */
+.hidden { display: none; }
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+/* Pokemon-specific utilities */
+.pokemon-red-bg { background-color: var(--pokemon-red); }
+.pokemon-blue-bg { background-color: var(--pokemon-blue); }
+.pokemon-yellow-bg { background-color: var(--pokemon-yellow); }
+
+/* ==========================================================================
+   11. THEME VARIATIONS - TODO: Implement Pokemon game themes (Future)
+   ========================================================================== */
+
+/* TODO: Theme system for different Pokemon games */
+/* These classes override the semantic colors defined in :root */
+
+.theme-red {
+	/* Pokemon Red theme overrides */
+	--color-primary: var(--pokemon-red);     /* Use Pokemon Red for primary elements */
+	--color-secondary: #cc0000;              /* Darker red for secondary elements */
+	--color-surface: #fff5f5;                /* Very light red for card backgrounds */
+	--color-background: #ffffff;             /* Keep white background for readability */
+}
+
+.theme-blue {
+	/* Pokemon Blue theme overrides */
+	--color-primary: var(--pokemon-blue);    /* Use Pokemon Blue for primary elements */
+	--color-secondary: #0d47a1;              /* Darker blue for secondary elements */
+	--color-surface: #f0f4ff;                /* Very light blue for card backgrounds */
+	--color-background: #ffffff;             /* Keep white background for readability */
+}
+
+.theme-yellow {
+	/* Pokemon Yellow theme overrides */
+	--color-primary: var(--pokemon-yellow);  /* Use Pokemon Yellow for primary elements */
+	--color-secondary: #f57c00;              /* Orange for secondary elements (complements yellow) */
+	--color-surface: #fffbf0;                /* Very light yellow for card backgrounds */
+	--color-background: #ffffff;             /* Keep white background for readability */
+	--color-text: #1a1a1a;                  /* Darker text for better contrast with yellow */
+}
+
+/* ==========================================================================
+   12. PRINT STYLES - TODO: Optimize for printing (Optional)
+   ========================================================================== */
+
+@media print {
+    /* Hide interactive elements */
+    nav, .game-selection, button { display: none; }
+    
+    /* Optimize for print */
+    body { font-size: 12pt; line-height: 1.4; }
+    .walkthrough-content { 
+        background: white; 
+        border: none; 
+        box-shadow: none; 
+    }
+    
+    /* Ensure readable colors */
+    * { 
+        background: white !important; 
+        color: black !important; 
+    }
+}
+
+/* ==========================================================================
+   END OF TEMPLATE
+   
+   IMPLEMENTATION GUIDE:
+   1. Start with CSS Custom Properties (section 1) - define your design system
+   2. Implement Reset & Base Styles (section 2) - establish consistent foundation  
+   3. Add Accessibility features (section 3) - ensure inclusive design
+   4. Build Typography System (section 4) - create readable, scalable text
+   5. Create Layout System (section 5) - structure your page layout
+   6. Style Components (sections 6-8) - implement Pokemon-themed components
+   7. Add Responsive Design (section 9) - ensure mobile-first responsiveness
+   8. Include Utilities (section 10) - add helpful utility classes
+   
+   LEARNING OBJECTIVES:
+   - Master CSS custom properties and design systems
+   - Understand mobile-first responsive design principles  
+   - Practice accessibility-focused CSS development
+   - Learn component-based CSS architecture
+   - Implement Pokemon-themed visual design
+   
+   ACCESSIBILITY PRIORITIES:
+   - High contrast focus indicators
+   - Screen reader compatible layouts
+   - Keyboard navigation support
+   - Reduced motion preferences
+   - Semantic color usage (not color-only information)
+   
+   Happy coding! 🎨🎮
+   ========================================================================== */

@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- TODO: Add basic meta tags for charset, viewport, and description -->
-    
-    <!-- TODO: Add title that describes the Pokemon walkthrough app -->
-    
-    <!-- TODO: Add favicon and theme-color meta tags -->
-    
+    <meta charset="utf-8" />
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- TODO: Update description when more games are covered -->
+    <meta
+        name="description"
+        content="Interactive, accessible Pokemon walkthroughs for Red, Blue & Yellow with progress tracking and comprehensive guides" />
+    <title>The Pokemon Walkthrough Project</title>
+    <!-- TODO: Pick an icon to represent the project -->
+    <link rel="icon" href="favicon.ico" />
+    <meta 
+        name="theme-color"
+        content="#FFDE00" />
     <!-- TODO: Consider preload hints for performance (optional for now) -->
     
-    <!-- TODO: Link to CSS file when ready to add styling -->
-    
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <!-- TODO: Add skip link for keyboard accessibility -->
-    
-    <!-- TODO: Create header with site title and navigation -->
-    
-    <!-- TODO: Create main content area with:
-         - Game selection interface (Red, Blue, Yellow buttons)
-         - Progress overview section
-         - Walkthrough content area (initially empty)
-    -->
-    
+    <header>
+        <a href="#main-content" class="skip">Skip to Main Content</a>
+
+        <h1>The Pokemon Walkthrough Project</h1>
+        <!-- TODO: Update navigation when content is finalized -->
+        <nav>
+            <ul>
+                <li><a href="#walkthrough">Walkthrough</a></li>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="game-selection">
+            <button class="pkmred-walkthrough" 
+                    name="Pokemon Red" 
+                    type="button"
+                    aria-pressed="false"
+                    aria-describedby="game-description">
+                Pokemon Red
+            </button>
+            <button class="pkmblue-walkthrough" 
+                    name="Pokemon Blue" 
+                    type="button"
+                    aria-pressed="false"
+                    aria-describedby="game-description">
+                Pokemon Blue
+            </button>
+            <button class="pkmyellow-walkthrough"
+                    name="Pokemon Yellow" 
+                    type="button"
+                    aria-pressed="false"
+                    aria-describedby="game-description">
+                Pokemon Yellow
+            </button>
+        </section>
+        <!-- TODO: Placeholder data, update when number of steps is known -->
+        <section class="progress-overview">
+            <article class="overall-progress-tracker">
+                <h2>Step Progress</h2>
+                <p>0/300</p>
+
+                <h2>Pokedex Progress</h2>
+                <p>0/151</p>
+            </article>
+        </section>
+        <!-- TODO: Will remain empty as content will be loaded dynamically based on game selection -->
+        <section class="walkthrough-content">
+            <h2>Walkthrough</h2>
+        </section>
+    </main>
     <!-- TODO: Create settings panel (initially hidden) -->
     
     <!-- TODO: Add loading indicator for future use -->

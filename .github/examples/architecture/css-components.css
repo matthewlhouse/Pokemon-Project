@@ -1,0 +1,303 @@
+/* 
+CSS Component System for Pokemon Walkthrough Project
+Demonstrates component-based CSS architecture with design tokens
+*/
+
+/* 1. CSS Custom Properties (Design Tokens) */
+:root {
+  /* Colors - Generation-based theming */
+  --gen1-primary: #ff1744;
+  --gen1-secondary: #1976d2;
+  --gen1-accent: #4caf50;
+  
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 1rem;
+  --line-height-base: 1.5;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Layout */
+  --container-max-width: 1200px;
+  --step-max-width: 800px;
+  --sidebar-width: 300px;
+  
+  /* Status colors */
+  --success-color: #4caf50;
+  --success-bg: rgba(76, 175, 80, 0.05);
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+  --border-color: #e0e0e0;
+}
+
+/* 2. Base Components */
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.step:hover:not(.completed) {
+  background-color: #f5f5f5;
+  transform: translateX(2px);
+}
+
+.step:focus-within {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-left-color: var(--gen1-secondary);
+}
+
+.step.completed {
+  background-color: var(--success-bg);
+  border-left-color: var(--success-color);
+  opacity: 0.7;
+}
+
+.step.completed .step-text {
+  text-decoration: line-through;
+}
+
+/* Category-specific styling */
+.step[data-category="story"] {
+  border-left-color: var(--gen1-primary);
+  background-color: rgba(255, 23, 68, 0.05);
+}
+
+.step[data-category="pokemon"] {
+  border-left-color: var(--success-color);
+  background-color: var(--success-bg);
+}
+
+.step[data-category="trainer-battle"] {
+  border-left-color: #f44336;
+  background-color: rgba(244, 67, 54, 0.05);
+}
+
+.step[data-category="gym-battle"] {
+  border-left-color: #9c27b0;
+  background-color: rgba(156, 39, 176, 0.05);
+  font-weight: 600;
+}
+
+.step[data-category="item"] {
+  border-left-color: #607d8b;
+  background-color: rgba(96, 125, 139, 0.05);
+}
+
+.step[data-category="choice"] {
+  border-left-color: var(--warning-color);
+  background-color: rgba(255, 152, 0, 0.05);
+}
+
+/* Step elements */
+.step-checkbox {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.step-checkbox:focus {
+  outline: 2px solid var(--gen1-secondary);
+  outline-offset: 2px;
+}
+
+.step-text {
+  flex: 1;
+  color: #212121;
+}
+
+.step-metadata {
+  font-size: 0.875rem;
+  color: #757575;
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+/* Location sections */
+.location-section {
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.location-section[open] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background-color: #f5f5f5;
+  cursor: pointer;
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #212121;
+  transition: background-color 0.2s ease;
+}
+
+.location-header:hover {
+  background-color: #eeeeee;
+}
+
+.location-header:focus {
+  outline: 2px solid var(--gen1-secondary);
+  outline-offset: -2px;
+}
+
+.location-name {
+  font-weight: 600;
+  color: #212121;
+}
+
+.step-counter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: #757575;
+  background-color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.counter-number {
+  font-weight: 600;
+  color: var(--warning-color);
+}
+
+.location-section[data-completed="true"] .counter-number {
+  color: var(--success-color);
+}
+
+.location-content {
+  padding: var(--spacing-md);
+  background-color: white;
+}
+
+.location-description {
+  margin-bottom: var(--spacing-md);
+  color: #757575;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* Pokemon type indicators */
+.pokemon-type {
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+}
+
+.pokemon-type[data-type*="fire"] { background-color: #ff5722; }
+.pokemon-type[data-type*="water"] { background-color: #2196f3; }
+.pokemon-type[data-type*="grass"] { background-color: #4caf50; }
+.pokemon-type[data-type*="electric"] { background-color: #ffeb3b; color: #212121; }
+.pokemon-type[data-type*="poison"] { background-color: #9c27b0; }
+.pokemon-type[data-type*="normal"] { background-color: #9e9e9e; }
+.pokemon-type[data-type*="flying"] { background-color: #03a9f4; }
+
+/* Progress bar styling */
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  appearance: none;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  color: var(--success-color);
+}
+
+.progress-bar::-webkit-progress-bar {
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+.progress-bar::-webkit-progress-value {
+  background-color: var(--success-color);
+  border-radius: 12px;
+}
+
+.progress-bar::-moz-progress-bar {
+  background-color: var(--success-color);
+  border-radius: 12px;
+}
+
+/* 3. Responsive Breakpoints */
+@media (max-width: 768px) {
+  .step {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .location-header {
+    padding: var(--spacing-sm);
+  }
+  
+  .step-metadata {
+    flex-wrap: wrap;
+  }
+}
+
+/* 4. Accessibility Features */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: inherit;
+}
+
+/* Focus indicators */
+:focus {
+  outline: 3px solid var(--gen1-secondary);
+  outline-offset: 2px;
+}
+
+/* 5. Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .step:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,265 @@
+/**
+ * Component Styles
+ * 
+ * Core component styling patterns for the Pokemon Walkthrough Project:
+ * - Step component with states and interactions
+ * - Location sections with collapsible behavior
+ * - Step elements (checkboxes, labels, details)
+ * - Category-specific step styling
+ * 
+ * Usage:
+ * Import after design-tokens.css to use the established design system
+ * for consistent component styling across the application.
+ */
+
+/* =============================================================================
+   Step Component Base Styles
+   ============================================================================= */
+
+.step {
+  padding: var(--step-padding);
+  border-left: 3px solid transparent;
+  border-radius: 4px;
+  margin-bottom: var(--space-sm);
+  transition: all 0.2s ease;
+  background-color: var(--bg-primary);
+}
+
+/* Step States */
+.step.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+  border-left-color: var(--completed-color);
+  background-color: rgba(76, 175, 80, 0.05);
+}
+
+.step.hidden {
+  display: none;
+}
+
+.step.current {
+  border-left-color: var(--focus-color);
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+/* Step Interactions */
+.step:hover:not(.completed) {
+  background-color: var(--bg-secondary);
+  transform: translateX(2px);
+}
+
+.step:focus-within {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-left-color: var(--focus-color);
+}
+
+/* Category-Specific Step Styling */
+.step.gym-battle {
+  border-left-color: #f44336;
+  background-color: rgba(244, 67, 54, 0.05);
+}
+
+.step.legendary {
+  border-left-color: #9c27b0;
+  background-color: rgba(156, 39, 176, 0.05);
+  font-weight: 600;
+}
+
+.step.tm-hm {
+  border-left-color: #607d8b;
+  background-color: rgba(96, 125, 139, 0.05);
+}
+
+.step.pokemon-step {
+  border-left-color: var(--gen1-accent);
+  background-color: rgba(76, 175, 80, 0.05);
+}
+
+/* =============================================================================
+   Step Elements
+   ============================================================================= */
+
+/* Checkbox Styling */
+.step-checkbox {
+  margin-right: var(--space-sm);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.step-checkbox:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* Label Styling */
+.step-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.step-text {
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.step-meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* Step Details */
+.step-details {
+  margin-top: var(--space-sm);
+  padding-left: calc(var(--space-md) + 1.1em); /* Align with checkbox */
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--bg-tertiary);
+  padding-top: var(--space-sm);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.input-group label {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.input-group input {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 4px;
+  font-size: var(--text-sm);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* =============================================================================
+   Location Sections
+   ============================================================================= */
+
+/* Location Container */
+.location-section {
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.location-section[open] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Location Header */
+.location-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--location-padding);
+  background-color: var(--bg-secondary);
+  cursor: pointer;
+  border: none;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+}
+
+.location-header:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.location-header:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.location-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Step Counter */
+.step-counter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 12px;
+  border: 1px solid var(--bg-tertiary);
+}
+
+.counter-number {
+  font-weight: 600;
+  color: var(--pending-color);
+}
+
+.location-section[data-completed="true"] .counter-number {
+  color: var(--completed-color);
+}
+
+.location-section[data-completed="true"] .counter-text::after {
+  content: " ✅";
+}
+
+/* Location Content */
+.location-content {
+  padding: var(--location-padding);
+  background-color: var(--bg-primary);
+}
+
+.location-description {
+  margin-bottom: var(--space-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* =============================================================================
+   Filter States
+   ============================================================================= */
+
+/* Tag-based filtering */
+.filter-story .step:not([data-tags*="story"]) {
+  display: none;
+}
+
+.filter-pokemon .step:not([data-tags*="pokemon"]) {
+  display: none;
+}
+
+.filter-optional .step[data-tags*="required"] {
+  display: none;
+}
+
+.filter-battles .step:not([data-tags*="battle"]) {
+  display: none;
+}
+
+/* Hide completed steps option */
+.hide-completed .step.completed {
+  display: none;
+}
+
+/* Hide optional steps */
+.hide-optional .step[data-tags*="optional"] {
+  display: none;
+}

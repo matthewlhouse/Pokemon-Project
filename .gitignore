@@ -1,0 +1,83 @@
+# Pokemon Walkthrough Project - .gitignore
+
+# Node modules (if we add build tools later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code settings (keep workspace settings, ignore user settings)
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Cache files
+*.cache
+.cache/
+
+# Build outputs (if we add build tools later)
+dist/
+build/
+.parcel-cache/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+*.sublime-project
+*.sublime-workspace
+.idea/
+*.iml
+
+# Local development files
+local/
+dev/
+temp/
+scratch/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Coverage reports (if we add testing)
+coverage/
+*.lcov
+
+# Documentation build (if we add doc generation)
+docs/build/
+
+# Lock files (until we decide on package manager)
+package-lock.json
+yarn.lock
+
+# Test artifacts
+test-results/
+test-reports/

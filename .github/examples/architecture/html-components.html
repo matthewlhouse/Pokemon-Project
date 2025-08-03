@@ -1,0 +1,202 @@
+<!-- 
+HTML Component Patterns for Pokemon Walkthrough Project
+Demonstrates semantic HTML structure with proper accessibility attributes
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Component Patterns</title>
+</head>
+<body>
+    <!-- Step Component Template -->
+    <div class="step" 
+         data-step-id="unique-identifier"
+         data-category="story"
+         data-location="pallet-town"
+         data-tags="required,story-critical">
+      
+      <input type="checkbox" 
+             class="step-checkbox" 
+             id="step-unique-identifier"
+             aria-describedby="step-unique-identifier-desc">
+      
+      <label for="step-unique-identifier" class="step-text">
+        Clear, actionable instruction text
+      </label>
+      
+      <div id="step-unique-identifier-desc" class="step-description">
+        Additional context or strategy information
+      </div>
+      
+      <div class="step-metadata">
+        <span class="step-category" aria-label="Step category">Story</span>
+        <span class="step-tags" aria-label="Step tags">Required, Tutorial</span>
+      </div>
+    </div>
+
+    <!-- Pokemon Catch Step Variant -->
+    <div class="step pokemon-step" 
+         data-step-id="catch-pidgey-route01" 
+         data-category="pokemon"
+         data-location="route-01"
+         data-tags="pokemon,optional,wild"
+         data-pokemon="pidgey">
+      
+      <input type="checkbox" 
+             class="step-checkbox" 
+             id="catch-pidgey-route01"
+             data-pokemon="pidgey">
+      
+      <label for="catch-pidgey-route01" class="step-text">
+        Catch Pidgey in tall grass
+      </label>
+      
+      <div class="step-metadata">
+        <span class="encounter-rate">50%</span>
+        <span class="pokemon-type" data-type="normal-flying">Normal/Flying</span>
+      </div>
+    </div>
+
+    <!-- Trainer Battle Step -->
+    <div class="step battle-step" 
+         data-step-id="battle-youngster-joey" 
+         data-category="trainer-battle"
+         data-location="route-30"
+         data-tags="trainer-battle,optional">
+      
+      <input type="checkbox" 
+             class="step-checkbox" 
+             id="battle-youngster-joey"
+             data-trainer="youngster-joey">
+      
+      <label for="battle-youngster-joey" class="step-text">
+        Battle Youngster Joey
+      </label>
+      
+      <div class="step-metadata">
+        <span class="trainer-reward">₽180</span>
+        <span class="battle-type">Trainer</span>
+      </div>
+    </div>
+
+    <!-- Location Container Template -->
+    <details class="location-section" data-location-id="pallet-town">
+      <summary class="location-header" 
+               aria-expanded="false" 
+               aria-controls="pallet-town-content">
+        <h3 class="location-name">Pallet Town</h3>
+        <div class="location-meta">
+          <span class="step-counter" aria-label="3 steps in this location">3 steps</span>
+          <span class="progress-indicator" aria-label="67% complete">67%</span>
+        </div>
+      </summary>
+      
+      <section id="pallet-town-content" 
+               class="location-content" 
+               aria-labelledby="pallet-town-header">
+        
+        <div class="location-description">
+          Your hometown and the starting point of your Pokemon journey.
+        </div>
+        
+        <div class="steps-container">
+          <!-- Steps would be inserted here -->
+          <div class="step" data-step-id="choose-starter" data-category="story">
+            <input type="checkbox" class="step-checkbox" id="choose-starter">
+            <label for="choose-starter" class="step-text">
+              Choose your starter Pokemon from Professor Oak
+            </label>
+          </div>
+        </div>
+      </section>
+    </details>
+
+    <!-- Choice Step (Radio Buttons) -->
+    <fieldset class="step-group choice-step" 
+              data-step-id="choose-starter" 
+              data-category="choice"
+              data-location="pallet-town"
+              data-tags="required,story-critical,choice">
+      
+      <legend class="choice-legend">Choose your starter Pokemon</legend>
+      
+      <div class="choice-option">
+        <input type="radio" 
+               name="starter-choice" 
+               id="starter-bulbasaur" 
+               value="bulbasaur" 
+               data-choice="starter"
+               data-pokemon-id="001">
+        <label for="starter-bulbasaur" class="choice-label">
+          <span class="pokemon-sprite" data-pokemon="bulbasaur" aria-hidden="true"></span>
+          <span class="choice-content">
+            <span class="pokemon-name">Bulbasaur</span>
+            <span class="pokemon-type" data-type="grass-poison">Grass/Poison</span>
+            <span class="choice-description">Good against first two gyms</span>
+          </span>
+        </label>
+      </div>
+      
+      <div class="choice-option">
+        <input type="radio" 
+               name="starter-choice" 
+               id="starter-charmander" 
+               value="charmander" 
+               data-choice="starter"
+               data-pokemon-id="004">
+        <label for="starter-charmander" class="choice-label">
+          <span class="pokemon-sprite" data-pokemon="charmander" aria-hidden="true"></span>
+          <span class="choice-content">
+            <span class="pokemon-name">Charmander</span>
+            <span class="pokemon-type" data-type="fire">Fire</span>
+            <span class="choice-description">Challenging early game, powerful late game</span>
+          </span>
+        </label>
+      </div>
+      
+      <div class="choice-option">
+        <input type="radio" 
+               name="starter-choice" 
+               id="starter-squirtle" 
+               value="squirtle" 
+               data-choice="starter"
+               data-pokemon-id="007">
+        <label for="starter-squirtle" class="choice-label">
+          <span class="pokemon-sprite" data-pokemon="squirtle" aria-hidden="true"></span>
+          <span class="choice-content">
+            <span class="pokemon-name">Squirtle</span>
+            <span class="pokemon-type" data-type="water">Water</span>
+            <span class="choice-description">Balanced difficulty throughout</span>
+          </span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Progress Section -->
+    <section class="progress-overview" aria-labelledby="progress-heading">
+      <h2 id="progress-heading">Game Progress</h2>
+      <div class="progress-stats">
+        <progress class="progress-bar" 
+                 value="67" 
+                 max="100"
+                 aria-label="Overall completion progress">
+          67% Complete (24 of 36 steps)
+        </progress>
+      </div>
+    </section>
+
+    <!-- Live regions for screen reader announcements -->
+    <div aria-live="polite" 
+         aria-atomic="false" 
+         id="progress-announcements" 
+         class="sr-only"></div>
+    
+    <div aria-live="assertive" 
+         aria-atomic="true" 
+         id="error-announcements" 
+         class="sr-only"></div>
+</body>
+</html>

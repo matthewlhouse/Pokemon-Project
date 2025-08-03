@@ -1,0 +1,324 @@
+/**
+ * Theme System
+ * 
+ * Generation-based theming and accessibility themes for the Pokemon Walkthrough Project:
+ * - Generation 1 & 2 themes with Pokemon-inspired colors
+ * - Dark mode support with system preference detection
+ * - High contrast mode for accessibility
+ * - Pokemon type-specific styling
+ * 
+ * Usage:
+ * Import after design-tokens.css to apply theme-specific styling
+ * that builds on the established design system.
+ */
+
+/* =============================================================================
+   Generation-Based Themes
+   ============================================================================= */
+
+/* Generation 1 Theme (Red/Blue/Yellow) */
+.gen1-theme {
+  --primary-color: var(--gen1-primary);
+  --secondary-color: var(--gen1-secondary);
+  --accent-color: var(--gen1-accent);
+}
+
+.gen1-theme .location-header {
+  background: linear-gradient(135deg, #ff1744, #ff4569);
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="fire"] {
+  background-color: #ff5722;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="water"] {
+  background-color: #2196f3;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="grass"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="electric"] {
+  background-color: #ffeb3b;
+  color: #212121;
+}
+
+.gen1-theme .pokemon-type[data-type*="psychic"] {
+  background-color: #e91e63;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="ice"] {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="dragon"] {
+  background-color: #673ab7;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="dark"] {
+  background-color: #424242;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="fighting"] {
+  background-color: #795548;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="poison"] {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="ground"] {
+  background-color: #ff9800;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="flying"] {
+  background-color: #03a9f4;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="bug"] {
+  background-color: #8bc34a;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="rock"] {
+  background-color: #607d8b;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="ghost"] {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="steel"] {
+  background-color: #607d8b;
+  color: white;
+}
+
+.gen1-theme .pokemon-type[data-type*="fairy"] {
+  background-color: #e1bee7;
+  color: #212121;
+}
+
+.gen1-theme .pokemon-type[data-type*="normal"] {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+/* Generation 2 Theme (Gold/Silver/Crystal) */
+.gen2-theme {
+  --primary-color: var(--gen2-primary);
+  --secondary-color: var(--gen2-secondary);
+  --accent-color: var(--gen2-accent);
+}
+
+.gen2-theme .location-header {
+  background: linear-gradient(135deg, #ffd700, #ffeb3b);
+  color: #212121;
+}
+
+/* Gen 2 uses the same type colors but with different accent styling */
+.gen2-theme .pokemon-type {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================================================
+   Dark Mode Support
+   ============================================================================= */
+
+/* Dark mode adjustments for components */
+@media (prefers-color-scheme: dark) {
+  .step {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+  
+  .step:hover:not(.completed) {
+    background-color: var(--bg-tertiary);
+  }
+  
+  .location-header {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+  
+  /* Adjust theme-specific elements for dark mode */
+  .gen1-theme .location-header {
+    background: linear-gradient(135deg, #2d1b42, #1a237e);
+    color: white;
+  }
+  
+  .gen2-theme .location-header {
+    background: linear-gradient(135deg, #bf9000, #f57f17);
+    color: white;
+  }
+  
+  /* Pokemon types maintain readability in dark mode */
+  .pokemon-type {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Manual dark mode class support */
+.dark-mode .step {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .step:hover:not(.completed) {
+  background-color: var(--bg-tertiary);
+}
+
+.dark-mode .location-header {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.dark-mode.gen1-theme .location-header {
+  background: linear-gradient(135deg, #2d1b42, #1a237e);
+  color: white;
+}
+
+.dark-mode.gen2-theme .location-header {
+  background: linear-gradient(135deg, #bf9000, #f57f17);
+  color: white;
+}
+
+/* =============================================================================
+   High Contrast Mode
+   ============================================================================= */
+
+@media (prefers-contrast: high) {
+  .step {
+    border-width: 2px;
+    border-color: var(--text-primary);
+  }
+  
+  .step.completed {
+    background-color: #003300;
+    border-color: var(--completed-color);
+  }
+  
+  .location-header {
+    border: 2px solid var(--text-primary);
+  }
+  
+  .pokemon-type {
+    border: 2px solid var(--text-primary);
+    font-weight: 700;
+  }
+  
+  /* High contrast Pokemon types */
+  .pokemon-type[data-type*="fire"] {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+  
+  .pokemon-type[data-type*="water"] {
+    background-color: #0000ff;
+    color: #ffffff;
+  }
+  
+  .pokemon-type[data-type*="grass"] {
+    background-color: #008000;
+    color: #ffffff;
+  }
+  
+  .pokemon-type[data-type*="electric"] {
+    background-color: #ffff00;
+    color: #000000;
+  }
+}
+
+/* =============================================================================
+   Accessibility Theme Enhancements
+   ============================================================================= */
+
+/* Focus indicators for themed elements */
+.gen1-theme .step:focus-within {
+  border-left-color: var(--gen1-primary);
+  box-shadow: 0 0 0 2px rgba(255, 23, 68, 0.2);
+}
+
+.gen2-theme .step:focus-within {
+  border-left-color: var(--gen2-primary);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+/* Theme-specific completed states */
+.gen1-theme .location-section[data-completed="true"] .counter-number {
+  color: var(--gen1-accent);
+}
+
+.gen2-theme .location-section[data-completed="true"] .counter-number {
+  color: var(--gen2-accent);
+}
+
+/* =============================================================================
+   Reduced Motion Theme Support
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Remove theme-specific animations */
+  .gen1-theme .location-header,
+  .gen2-theme .location-header {
+    background: var(--bg-secondary);
+    transition: none;
+  }
+  
+  .pokemon-type {
+    transition: none;
+  }
+  
+  .step {
+    transition: none;
+  }
+  
+  .step:hover {
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   Print Styles
+   ============================================================================= */
+
+@media print {
+  /* Ensure themes work well in print */
+  .gen1-theme .location-header,
+  .gen2-theme .location-header {
+    background: none;
+    color: black;
+    border: 1px solid black;
+  }
+  
+  .pokemon-type {
+    background: none;
+    color: black;
+    border: 1px solid black;
+  }
+  
+  .step {
+    background: none;
+    border-left: 2px solid black;
+  }
+  
+  .step.completed {
+    background: none;
+    opacity: 0.7;
+  }
+}

@@ -1,253 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive Pokemon walkthrough for Red, Blue, and Yellow versions with progress tracking and accessibility features.">
+    <!-- TODO: Add basic meta tags for charset, viewport, and description -->
     
-    <title>Pokemon Walkthrough - Red, Blue & Yellow</title>
+    <!-- TODO: Add title that describes the Pokemon walkthrough app -->
     
-    <!-- Preload critical resources -->
-    <link rel="preload" href="css/main.css" as="style">
-    <link rel="preload" href="js/app.js" as="script">
+    <!-- TODO: Add favicon and theme-color meta tags -->
     
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/main.css">
+    <!-- TODO: Consider preload hints for performance (optional for now) -->
     
-    <!-- Accessibility and SEO -->
-    <!-- TODO: Add Firefox compatibility for theme-color meta tag -->
-    <!-- Firefox doesn't support theme-color but we can use CSS prefers-color-scheme -->
-    <!-- and dynamic theme switching via JavaScript for cross-browser theming -->
-    <meta name="theme-color" content="#FF0000">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!-- TODO: Link to CSS file when ready to add styling -->
     
-    <!-- Open Graph meta tags for social sharing -->
-    <meta property="og:title" content="Pokemon Walkthrough - Red, Blue & Yellow">
-    <meta property="og:description" content="Interactive Pokemon walkthrough with progress tracking">
-    <meta property="og:type" content="website">
-    
-    <!-- Accessibility features -->
-    <meta name="color-scheme" content="light dark">
 </head>
 <body>
-    <!-- Skip link for keyboard navigation -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- TODO: Add skip link for keyboard accessibility -->
     
-    <!-- Header -->
-    <header class="site-header" role="banner">
-        <div class="header-container">
-            <h1 class="site-title">
-                <span class="title-main">Pokemon Walkthrough</span>
-                <span class="title-subtitle">Red, Blue & Yellow</span>
-            </h1>
-            
-            <!-- Navigation -->
-            <nav class="main-nav" role="navigation" aria-label="Main navigation">
-                <ul class="nav-list">
-                    <li><a href="#walkthrough" class="nav-link">Walkthrough</a></li>
-                    <li><a href="#progress" class="nav-link">Progress</a></li>
-                    <li><a href="#settings" class="nav-link">Settings</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Accessibility and user controls -->
-            <div class="header-controls">
-                <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Switch theme">
-                    <span class="theme-icon" aria-hidden="true">☀️</span>
-                    <span class="theme-label">Theme</span>
-                </button>
-                <button type="button" class="settings-toggle" aria-label="Open settings">
-                    <span class="settings-icon" aria-hidden="true">⚙️</span>
-                    <span class="settings-label">Settings</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main content -->
-    <main id="main-content" class="main-content" role="main">
-        <!-- Game selection -->
-        <section class="game-selection" aria-labelledby="game-select-title">
-            <h2 id="game-select-title">Choose Your Game</h2>
-            <div class="game-buttons">
-                <button type="button" class="game-button game-red" data-game="red" aria-describedby="red-description">
-                    <span class="game-title">Pokemon Red</span>
-                    <span class="game-description" id="red-description">The original adventure</span>
-                </button>
-                <button type="button" class="game-button game-blue" data-game="blue" aria-describedby="blue-description">
-                    <span class="game-title">Pokemon Blue</span>
-                    <span class="game-description" id="blue-description">The classic journey</span>
-                </button>
-                <button type="button" class="game-button game-yellow" data-game="yellow" aria-describedby="yellow-description">
-                    <span class="game-title">Pokemon Yellow</span>
-                    <span class="game-description" id="yellow-description">Pikachu special edition</span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Progress overview -->
-        <section class="progress-overview" aria-labelledby="progress-title">
-            <h2 id="progress-title">Your Progress</h2>
-            <div class="progress-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Steps Completed:</span>
-                    <span class="stat-value" id="steps-completed">0</span>
-                    <span class="stat-total">/ <span id="total-steps">0</span></span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Pokemon Caught:</span>
-                    <span class="stat-value" id="pokemon-caught">0</span>
-                    <span class="stat-total">/ 151</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Completion:</span>
-                    <span class="stat-value" id="completion-percentage">0%</span>
-                </div>
-            </div>
-            <div class="progress-bar-container">
-                <progress class="progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Overall completion progress">
-                    <div class="progress-fill"></div>
-                </progress>
-            </div>
-        </section>
-
-        <!-- Walkthrough content will be dynamically loaded here -->
-        <section class="walkthrough-content" aria-labelledby="walkthrough-title">
-            <h2 id="walkthrough-title">Select a game to begin your walkthrough</h2>
-            <div class="walkthrough-container" id="walkthrough-container">
-                <!-- Sample walkthrough content for testing -->
-                <div class="walkthrough-section hidden" id="pallet-town">
-                    <h3>Pallet Town - Getting Started</h3>
-                    
-                    <details class="step-group" data-tags="story">
-                        <summary>Introduction & Starter Pokemon</summary>
-                        <ol class="step-list">
-                            <li class="step" data-step-id="intro-1" data-tags="story">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Watch the opening sequence and enter your name</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="intro-2" data-tags="story">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Enter your rival's name (or use "BLUE")</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="intro-3" data-tags="story">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Exit your house and try to leave Pallet Town</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="intro-4" data-tags="story">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Professor Oak will stop you and take you to his lab</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="starter-choice" data-tags="story pokemon">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Choose your starter Pokemon: Bulbasaur, Charmander, or Squirtle</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="rival-battle-1" data-tags="story battles">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Battle your rival (BLUE) - your first Pokemon battle!</span>
-                                </label>
-                            </li>
-                        </ol>
-                    </details>
-                    
-                    <details class="step-group" data-tags="optional">
-                        <summary>Optional Activities</summary>
-                        <ol class="step-list">
-                            <li class="step" data-step-id="pallet-optional-1" data-tags="optional">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Talk to your mom to rest and heal your Pokemon</span>
-                                </label>
-                            </li>
-                            <li class="step" data-step-id="pallet-optional-2" data-tags="optional">
-                                <label class="step-content">
-                                    <input type="checkbox" class="step-checkbox">
-                                    <span class="step-text">Explore Pallet Town and talk to all NPCs</span>
-                                </label>
-                            </li>
-                        </ol>
-                    </details>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Settings panel (initially hidden) -->
-    <aside class="settings-panel" id="settings-panel" aria-labelledby="settings-panel-title" aria-hidden="true">
-        <div class="settings-content">
-            <header class="settings-header">
-                <h2 id="settings-panel-title">Settings</h2>
-                <button type="button" class="settings-close" aria-label="Close settings">×</button>
-            </header>
-            
-            <div class="settings-body">
-                <!-- Filter options -->
-                <fieldset class="settings-group">
-                    <legend>Content Filters</legend>
-                    <label class="setting-item">
-                        <input type="checkbox" id="show-story" checked>
-                        <span class="setting-label">Story Steps</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="show-optional" checked>
-                        <span class="setting-label">Optional Content</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="show-pokemon" checked>
-                        <span class="setting-label">Pokemon Encounters</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="show-battles" checked>
-                        <span class="setting-label">Trainer Battles</span>
-                    </label>
-                </fieldset>
-
-                <!-- Display preferences -->
-                <fieldset class="settings-group">
-                    <legend>Display Preferences</legend>
-                    <label class="setting-item">
-                        <input type="checkbox" id="high-contrast">
-                        <span class="setting-label">High Contrast Mode</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="reduce-motion">
-                        <span class="setting-label">Reduce Motion</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="large-text">
-                        <span class="setting-label">Large Text</span>
-                    </label>
-                </fieldset>
-
-                <!-- Data management -->
-                <fieldset class="settings-group">
-                    <legend>Data Management</legend>
-                    <button type="button" class="action-button" id="export-progress">Export Progress</button>
-                    <button type="button" class="action-button" id="import-progress">Import Progress</button>
-                    <button type="button" class="action-button warning" id="reset-progress">Reset All Progress</button>
-                </fieldset>
-            </div>
-        </div>
-    </aside>
-
-    <!-- Loading indicator -->
-    <output class="loading-indicator" id="loading-indicator" aria-hidden="true" aria-label="Loading content">
-        <div class="loading-spinner"></div>
-        <span class="loading-text">Loading...</span>
-    </output>
-
-    <!-- Scripts -->
-    <script src="js/app.js" type="module"></script>
+    <!-- TODO: Create header with site title and navigation -->
+    
+    <!-- TODO: Create main content area with:
+         - Game selection interface (Red, Blue, Yellow buttons)
+         - Progress overview section
+         - Walkthrough content area (initially empty)
+    -->
+    
+    <!-- TODO: Create settings panel (initially hidden) -->
+    
+    <!-- TODO: Add loading indicator for future use -->
+    
+    <!-- TODO: Link to JavaScript file when ready to add interactivity -->
 </body>
 </html>

@@ -1,0 +1,33 @@
+{
+  "name": "pokemon-validation-system",
+  "version": "1.0.0",
+  "description": "A comprehensive validation system for Pokemon data with cross-referencing capabilities",
+  "main": "scripts/validation-runner.js",
+  "scripts": {
+    "validate-single": "node scripts/validation-runner.js single",
+    "validate-batch": "node scripts/validation-runner.js batch",
+    "install-deps": "npm install cheerio axios",
+    "test-validation": "node scripts/validation-runner.js batch"
+  },
+  "keywords": [
+    "pokemon",
+    "validation",
+    "data",
+    "bulbapedia",
+    "serebii"
+  ],
+  "author": "Pokemon Project",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "local"
+  }
+}

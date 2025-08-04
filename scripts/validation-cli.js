@@ -17,11 +17,11 @@ class ValidationCLI {
     async run(args = []) {
         console.log('🔍 POKEMON VALIDATION SYSTEM');
         console.log('='.repeat(50));
-        
+
         try {
             // Parse command line arguments
             const options = this.parseArguments(args);
-            
+
             // Handle command routing
             if (options.command) {
                 return await this.handleCommand(options);
@@ -29,7 +29,6 @@ class ValidationCLI {
 
             // Handle validation workflow
             return await this.handleValidationWorkflow(options);
-
         } catch (error) {
             console.error('❌ CLI Error:', error.message);
             if (error.stack) {
@@ -72,17 +71,17 @@ class ValidationCLI {
         // Load Pokemon data
         console.log('📂 Loading pokemon-base.json...');
         await this.validator.loadPokemonData();
-        
+
         // Load accepted issues and in-game validation
         console.log('⚙️ Loading validation data...');
         const acceptedLoaded = await this.validator.loadAcceptedIssues();
         const inGameLoaded = await this.validator.loadInGameValidation();
         this.reportValidationDataStatus(acceptedLoaded, inGameLoaded);
-        
+
         // Get Pokemon that need validation
         const needsValidation = this.validator.getPokemonNeedingValidation();
         console.log(`📊 Found ${needsValidation.length} Pokemon needing validation`);
-        
+
         if (needsValidation.length === 0) {
             console.log('✅ All Pokemon are already 100% validated!');
             return;
@@ -99,7 +98,7 @@ class ValidationCLI {
 
         // Run validation with progress tracking
         const results = await this.runValidationWithProgress(pokemonToValidate);
-        
+
         console.log('\n✅ Validation complete!');
         console.log('');
 
@@ -128,13 +127,14 @@ class ValidationCLI {
      */
     filterPokemonForValidation(needsValidation, options) {
         let pokemonToValidate = needsValidation;
-        
+
         if (options.pokemon) {
-            pokemonToValidate = needsValidation.filter(p => 
-                p.name.toLowerCase().includes(options.pokemon.toLowerCase()) ||
-                p.id === options.pokemon
+            pokemonToValidate = needsValidation.filter(
+                p =>
+                    p.name.toLowerCase().includes(options.pokemon.toLowerCase()) ||
+                    p.id === options.pokemon
             );
-            
+
             if (pokemonToValidate.length === 0) {
                 console.log(`❌ No Pokemon found matching "${options.pokemon}"`);
                 return [];
@@ -154,10 +154,12 @@ class ValidationCLI {
     async runValidationWithProgress(pokemonToValidate) {
         // Set up progress tracking
         let lastProgress = 0;
-        this.validator.setProgressCallback((progress) => {
+        this.validator.setProgressCallback(progress => {
             const percent = Math.round((progress.current / progress.total) * 100);
             if (percent !== lastProgress) {
-                process.stdout.write(`\r⏳ Progress: ${percent}% (${progress.current}/${progress.total}) - Validating ${progress.pokemon}...`);
+                process.stdout.write(
+                    `\r⏳ Progress: ${percent}% (${progress.current}/${progress.total}) - Validating ${progress.pokemon}...`
+                );
                 lastProgress = percent;
             }
         });
@@ -173,16 +175,21 @@ class ValidationCLI {
      */
     async generateAndOpenReport(results, options) {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-        const reportPath = path.join(__dirname, '..', 'reports', `validation-report-${timestamp}.html`);
-        
+        const reportPath = path.join(
+            __dirname,
+            '..',
+            'reports',
+            `validation-report-${timestamp}.html`
+        );
+
         console.log('📝 Generating HTML report...');
         await this.validator.generateHTMLReport(results, reportPath);
         console.log(`📋 Report saved to: ${reportPath}`);
-        
+
         // Open report if requested
         if (options.open) {
             const { exec } = require('child_process');
-            exec(`start "${reportPath}"`, (error) => {
+            exec(`start "${reportPath}"`, error => {
                 if (error) {
                     console.log(`💡 To view the report, open: ${reportPath}`);
                 } else {
@@ -200,10 +207,10 @@ class ValidationCLI {
     async handleStats(options) {
         console.log('📊 VALIDATION STATISTICS');
         console.log('='.repeat(50));
-        
+
         await this.validator.loadPokemonData();
         await this.validator.loadValidationStatistics();
-        
+
         if (this.validator.validationStatistics.size === 0) {
             console.log('ℹ️ No validation statistics available.');
             console.log('💡 Run validations first to generate statistics.');
@@ -217,10 +224,10 @@ class ValidationCLI {
                 console.log(`❌ No validation statistics found for Pokemon #${options.pokemonId}`);
                 return;
             }
-            
+
             const pokemon = this.validator.pokemonData.pokemon[options.pokemonId];
             const pokemonName = pokemon?.name || `Pokemon #${options.pokemonId}`;
-            
+
             console.log(`🎯 ${pokemonName} (#${options.pokemonId})`);
             console.log(`   📈 Overall Completeness: ${stats.completeness}%`);
             console.log(`   🌐 External Accuracy: ${stats.externalAccuracy}% (75% max)`);
@@ -228,26 +235,31 @@ class ValidationCLI {
             console.log(`   ⚠️ Total Issues: ${stats.totalIssues}`);
             console.log(`   ✅ Accepted Issues: ${stats.acceptedIssues}`);
             console.log(`   🕒 Last Validated: ${new Date(stats.lastValidated).toLocaleString()}`);
-            
         } else {
             // Show summary statistics for all Pokemon
             const allStats = Array.from(this.validator.validationStatistics.entries());
-            const avgCompleteness = allStats.reduce((sum, [, stats]) => sum + stats.completeness, 0) / allStats.length;
+            const avgCompleteness =
+                allStats.reduce((sum, [, stats]) => sum + stats.completeness, 0) / allStats.length;
             const totalIssues = allStats.reduce((sum, [, stats]) => sum + stats.totalIssues, 0);
-            const totalAccepted = allStats.reduce((sum, [, stats]) => sum + stats.acceptedIssues, 0);
-            
+            const totalAccepted = allStats.reduce(
+                (sum, [, stats]) => sum + stats.acceptedIssues,
+                0
+            );
+
             console.log(`📊 Summary for ${allStats.length} Pokemon:`);
             console.log(`   📈 Average Completeness: ${Math.round(avgCompleteness)}%`);
             console.log(`   ⚠️ Total Issues: ${totalIssues}`);
             console.log(`   ✅ Accepted Issues: ${totalAccepted}`);
-            
+
             console.log(`\n🎯 Individual Pokemon:`);
             allStats
                 .sort((a, b) => b[1].completeness - a[1].completeness)
                 .forEach(([pokemonId, stats]) => {
                     const pokemon = this.validator.pokemonData.pokemon[pokemonId];
                     const pokemonName = pokemon?.name || `Pokemon #${pokemonId}`;
-                    console.log(`   ${pokemonName} (#${pokemonId}): ${stats.completeness}% complete`);
+                    console.log(
+                        `   ${pokemonName} (#${pokemonId}): ${stats.completeness}% complete`
+                    );
                 });
         }
     }
@@ -258,10 +270,10 @@ class ValidationCLI {
     async handleFieldStatus(options) {
         console.log('🔍 FIELD VALIDATION STATUS');
         console.log('='.repeat(50));
-        
+
         await this.validator.loadPokemonData();
         await this.validator.loadValidationStatistics();
-        
+
         if (this.validator.validationStatistics.size === 0) {
             console.log('ℹ️ No validation statistics available.');
             console.log('💡 Run validations first to generate field status information.');
@@ -284,17 +296,17 @@ class ValidationCLI {
             console.log(`❌ No validation statistics found for Pokemon #${pokemonId}`);
             return;
         }
-        
+
         const pokemon = this.validator.pokemonData.pokemon[pokemonId];
         const pokemonName = pokemon?.name || `Pokemon #${pokemonId}`;
-        
+
         console.log(`🎯 ${pokemonName} (#${pokemonId}) - Field Status:`);
         console.log(`📈 Overall: ${stats.completeness}% complete\n`);
-        
+
         for (const [field, fieldInfo] of Object.entries(stats.fieldValidation)) {
             const statusEmoji = this.getFieldStatusEmoji(fieldInfo.status);
             const statusText = this.getFieldStatusText(fieldInfo.status);
-            
+
             console.log(`${statusEmoji} ${field}: ${statusText}`);
             if (fieldInfo.inGameValidated) {
                 console.log(`     🎮 In-game validated`);
@@ -310,15 +322,29 @@ class ValidationCLI {
      */
     showFieldStatusSummary() {
         const fieldCounts = this.calculateFieldStatusCounts();
-        
+
         console.log(`📊 Field Status Summary (${fieldCounts.total} total fields):`);
-        console.log(`   ✅ Accurate: ${fieldCounts.accurate} (${Math.round(fieldCounts.accurate/fieldCounts.total*100)}%)`);
-        console.log(`   🔄 Accepted Override: ${fieldCounts.accepted_override} (${Math.round(fieldCounts.accepted_override/fieldCounts.total*100)}%)`);
-        console.log(`   🎮 In-Game Validated: ${fieldCounts.in_game_validated} (${Math.round(fieldCounts.in_game_validated/fieldCounts.total*100)}%)`);
-        console.log(`   ❌ Inaccurate: ${fieldCounts.inaccurate} (${Math.round(fieldCounts.inaccurate/fieldCounts.total*100)}%)`);
-        console.log(`   ❓ No Reference Data: ${fieldCounts.no_reference} (${Math.round(fieldCounts.no_reference/fieldCounts.total*100)}%)`);
-        console.log(`   ⚠️ Partial Match: ${fieldCounts.partial_match} (${Math.round(fieldCounts.partial_match/fieldCounts.total*100)}%)`);
-        console.log(`   ⚡ Source Conflict: ${fieldCounts.source_conflict} (${Math.round(fieldCounts.source_conflict/fieldCounts.total*100)}%)`);
+        console.log(
+            `   ✅ Accurate: ${fieldCounts.accurate} (${Math.round((fieldCounts.accurate / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   🔄 Accepted Override: ${fieldCounts.accepted_override} (${Math.round((fieldCounts.accepted_override / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   🎮 In-Game Validated: ${fieldCounts.in_game_validated} (${Math.round((fieldCounts.in_game_validated / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   ❌ Inaccurate: ${fieldCounts.inaccurate} (${Math.round((fieldCounts.inaccurate / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   ❓ No Reference Data: ${fieldCounts.no_reference} (${Math.round((fieldCounts.no_reference / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   ⚠️ Partial Match: ${fieldCounts.partial_match} (${Math.round((fieldCounts.partial_match / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
+            `   ⚡ Source Conflict: ${fieldCounts.source_conflict} (${Math.round((fieldCounts.source_conflict / fieldCounts.total) * 100)}%)`
+        );
     }
 
     /**
@@ -333,16 +359,16 @@ class ValidationCLI {
             no_reference: 0,
             partial_match: 0,
             source_conflict: 0,
-            total: 0
+            total: 0,
         };
-        
+
         for (const [, stats] of this.validator.validationStatistics.entries()) {
             for (const [, fieldInfo] of Object.entries(stats.fieldValidation)) {
                 fieldCounts[fieldInfo.status]++;
                 fieldCounts.total++;
             }
         }
-        
+
         return fieldCounts;
     }
 
@@ -351,14 +377,22 @@ class ValidationCLI {
      */
     getFieldStatusEmoji(status) {
         switch (status) {
-            case 'accurate': return '✅';
-            case 'accepted_override': return '🔄';
-            case 'in_game_validated': return '🎮';
-            case 'inaccurate': return '❌';
-            case 'no_reference': return '❓';
-            case 'partial_match': return '⚠️';
-            case 'source_conflict': return '⚡';
-            default: return '❓';
+            case 'accurate':
+                return '✅';
+            case 'accepted_override':
+                return '🔄';
+            case 'in_game_validated':
+                return '🎮';
+            case 'inaccurate':
+                return '❌';
+            case 'no_reference':
+                return '❓';
+            case 'partial_match':
+                return '⚠️';
+            case 'source_conflict':
+                return '⚡';
+            default:
+                return '❓';
         }
     }
 
@@ -367,14 +401,22 @@ class ValidationCLI {
      */
     getFieldStatusText(status) {
         switch (status) {
-            case 'accurate': return 'Matches external sources';
-            case 'accepted_override': return 'Override accepted (manual verification)';
-            case 'in_game_validated': return 'Validated through gameplay (no external match)';
-            case 'inaccurate': return 'Does not match external sources';
-            case 'no_reference': return 'No external reference data available';
-            case 'partial_match': return 'Matches one source but conflicts with another (0 weight)';
-            case 'source_conflict': return 'External sources disagree, current matches neither (0 weight)';
-            default: return 'Unknown status';
+            case 'accurate':
+                return 'Matches external sources';
+            case 'accepted_override':
+                return 'Override accepted (manual verification)';
+            case 'in_game_validated':
+                return 'Validated through gameplay (no external match)';
+            case 'inaccurate':
+                return 'Does not match external sources';
+            case 'no_reference':
+                return 'No external reference data available';
+            case 'partial_match':
+                return 'Matches one source but conflicts with another (0 weight)';
+            case 'source_conflict':
+                return 'External sources disagree, current matches neither (0 weight)';
+            default:
+                return 'Unknown status';
         }
     }
 
@@ -388,7 +430,7 @@ class ValidationCLI {
             open: false,
             command: null,
             field: null,
-            pokemonId: null
+            pokemonId: null,
         };
 
         let i = 0;
@@ -507,62 +549,90 @@ class ValidationCLI {
      * Parse accept-issue command
      */
     parseAcceptIssueCommand(args, index, options) {
-        return this.parseTwoParameterCommand(args, index, options, 'accept-issue', 'accept-issue <pokemon-id> <field-name>');
+        return this.parseTwoParameterCommand(
+            args,
+            index,
+            options,
+            'accept-issue',
+            'accept-issue <pokemon-id> <field-name>'
+        );
     }
 
     /**
      * Parse remove-accepted command
      */
     parseRemoveAcceptedCommand(args, index, options) {
-        return this.parseTwoParameterCommand(args, index, options, 'remove-accepted', 'remove-accepted <pokemon-id> <field-name>');
+        return this.parseTwoParameterCommand(
+            args,
+            index,
+            options,
+            'remove-accepted',
+            'remove-accepted <pokemon-id> <field-name>'
+        );
     }
 
     /**
      * Parse set-in-game-validated command
      */
     parseSetInGameValidatedCommand(args, index, options) {
-        return this.parseTwoParameterCommand(args, index, options, 'set-in-game-validated', 'set-in-game-validated <pokemon-id> <field-name>');
+        return this.parseTwoParameterCommand(
+            args,
+            index,
+            options,
+            'set-in-game-validated',
+            'set-in-game-validated <pokemon-id> <field-name>'
+        );
     }
 
     /**
      * Parse remove-in-game-validated command
      */
     parseRemoveInGameValidatedCommand(args, index, options) {
-        return this.parseTwoParameterCommand(args, index, options, 'remove-in-game-validated', 'remove-in-game-validated <pokemon-id> <field-name>');
+        return this.parseTwoParameterCommand(
+            args,
+            index,
+            options,
+            'remove-in-game-validated',
+            'remove-in-game-validated <pokemon-id> <field-name>'
+        );
     }
 
     /**
      * Handle accept-issue command
      */
     async handleAcceptIssue(options) {
-        console.log(`📝 Accepting issue for Pokemon #${options.pokemonId}, field: ${options.field}`);
-        
+        console.log(
+            `📝 Accepting issue for Pokemon #${options.pokemonId}, field: ${options.field}`
+        );
+
         // Load current data
         await this.validator.loadPokemonData();
         await this.validator.loadAcceptedIssues();
-        
+
         // Get Pokemon data
         const pokemon = this.validator.pokemonData.pokemon[options.pokemonId];
         if (!pokemon) {
             console.log(`❌ Pokemon #${options.pokemonId} not found`);
             return;
         }
-        
+
         // Validate to get current issues
         const result = await this.validator.validatePokemon(options.pokemonId, pokemon);
-        
+
         // Find the issue for this field
         const issue = result.issues.find(i => i.field === options.field && !i.accepted);
         const pokemonName = pokemon.name || `Pokemon #${options.pokemonId}`;
         if (!issue) {
-            console.log(`❌ No unaccepted issue found for field "${options.field}" in ${pokemonName}`);
+            console.log(
+                `❌ No unaccepted issue found for field "${options.field}" in ${pokemonName}`
+            );
             return;
         }
-        
+
         // Accept the issue
         this.validator.acceptIssue(options.pokemonId, this.validator.generateIssueSignature(issue));
         await this.validator.saveAcceptedIssues();
-        
+
         console.log(`✅ Issue accepted for ${pokemonName}, field: ${options.field}`);
         console.log(`📊 This will improve the completeness score on next validation.`);
     }
@@ -571,28 +641,30 @@ class ValidationCLI {
      * Handle remove-accepted command
      */
     async handleRemoveAccepted(options) {
-        console.log(`🗑️ Removing accepted issue for Pokemon #${options.pokemonId}, field: ${options.field}`);
-        
+        console.log(
+            `🗑️ Removing accepted issue for Pokemon #${options.pokemonId}, field: ${options.field}`
+        );
+
         await this.validator.loadPokemonData();
         await this.validator.loadAcceptedIssues();
-        
+
         const pokemon = this.validator.pokemonData.pokemon[options.pokemonId];
         if (!pokemon) {
             console.log(`❌ Pokemon #${options.pokemonId} not found`);
             return;
         }
-        
+
         // Create a mock issue signature to remove
         const mockIssue = {
             field: options.field,
             severity: 'inaccurate', // Most common
-            current: this.validator.getFieldValue(pokemon, options.field)
+            current: this.validator.getFieldValue(pokemon, options.field),
         };
-        
+
         const signature = this.validator.generateIssueSignature(mockIssue);
         this.validator.removeAcceptedIssue(options.pokemonId, signature);
         await this.validator.saveAcceptedIssues();
-        
+
         const pokemonName = pokemon.name || `Pokemon #${options.pokemonId}`;
         console.log(`✅ Removed accepted issue for ${pokemonName}, field: ${options.field}`);
     }
@@ -603,62 +675,77 @@ class ValidationCLI {
     async handleListAccepted() {
         console.log('📋 ACCEPTED ISSUES LIST');
         console.log('='.repeat(50));
-        
+
         await this.validator.loadPokemonData();
         await this.validator.loadAcceptedIssues();
-        
+
         if (this.validator.acceptedIssues.size === 0) {
             console.log('ℹ️ No accepted issues found.');
             return;
         }
-        
+
         for (const [pokemonId, signatures] of this.validator.acceptedIssues.entries()) {
             const pokemon = this.validator.pokemonData.pokemon[pokemonId];
             const pokemonName = pokemon?.name || `Pokemon #${pokemonId}`;
-            
+
             console.log(`\n🔍 ${pokemonName} (#${pokemonId}):`);
-            
+
             for (const signature of signatures) {
                 // Parse signature to extract field name
                 const [field] = signature.split(':');
                 console.log(`   ✅ ${field}`);
             }
         }
-        
-        console.log(`\n📊 Total: ${Array.from(this.validator.acceptedIssues.values()).reduce((sum, set) => sum + set.size, 0)} accepted issues across ${this.validator.acceptedIssues.size} Pokemon`);
+
+        console.log(
+            `\n📊 Total: ${Array.from(this.validator.acceptedIssues.values()).reduce((sum, set) => sum + set.size, 0)} accepted issues across ${this.validator.acceptedIssues.size} Pokemon`
+        );
     }
 
     /**
      * Handle set-in-game-validated command
      */
     async handleSetInGameValidated(options) {
-        console.log(`🎮 Setting in-game validation for Pokemon #${options.pokemonId}, field: ${options.field}`);
-        
+        console.log(
+            `🎮 Setting in-game validation for Pokemon #${options.pokemonId}, field: ${options.field}`
+        );
+
         await this.validator.loadPokemonData();
         await this.validator.loadInGameValidation();
-        
+
         const pokemon = this.validator.pokemonData.pokemon[options.pokemonId];
         if (!pokemon) {
             console.log(`❌ Pokemon #${options.pokemonId} not found`);
             return;
         }
-        
+
         // Validate field name
         const validFields = [
-            'name', 'species', 'types', 'baseStats', 'height', 'weight', 
-            'growthRate', 'baseExp', 'catchRate', 'effortValues', 
-            'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
+            'name',
+            'species',
+            'types',
+            'baseStats',
+            'height',
+            'weight',
+            'growthRate',
+            'baseExp',
+            'catchRate',
+            'effortValues',
+            'evolutionChain',
+            'learnset',
+            'tmCompatibility',
+            'pokedexEntry',
         ];
-        
+
         if (!validFields.includes(options.field)) {
             console.log(`❌ Invalid field name "${options.field}"`);
             console.log(`💡 Valid fields: ${validFields.join(', ')}`);
             return;
         }
-        
+
         this.validator.setInGameValidated(options.pokemonId, options.field);
         await this.validator.saveInGameValidation();
-        
+
         const pokemonName = pokemon.name || `Pokemon #${options.pokemonId}`;
         console.log(`✅ ${pokemonName} field "${options.field}" marked as in-game validated`);
         console.log(`📊 This field now contributes to the 25% in-game validation bonus.`);
@@ -668,20 +755,22 @@ class ValidationCLI {
      * Handle remove-in-game-validated command
      */
     async handleRemoveInGameValidated(options) {
-        console.log(`🗑️ Removing in-game validation for Pokemon #${options.pokemonId}, field: ${options.field}`);
-        
+        console.log(
+            `🗑️ Removing in-game validation for Pokemon #${options.pokemonId}, field: ${options.field}`
+        );
+
         await this.validator.loadPokemonData();
         await this.validator.loadInGameValidation();
-        
+
         const pokemon = this.validator.pokemonData.pokemon[options.pokemonId];
         if (!pokemon) {
             console.log(`❌ Pokemon #${options.pokemonId} not found`);
             return;
         }
-        
+
         this.validator.removeInGameValidated(options.pokemonId, options.field);
         await this.validator.saveInGameValidation();
-        
+
         const pokemonName = pokemon.name || `Pokemon #${options.pokemonId}`;
         console.log(`✅ In-game validation removed for ${pokemonName} field "${options.field}"`);
         console.log(`📊 This field no longer contributes to in-game validation bonus.`);
@@ -693,30 +782,34 @@ class ValidationCLI {
     async handleListInGameValidated() {
         console.log('🎮 IN-GAME VALIDATED FIELDS');
         console.log('='.repeat(50));
-        
+
         await this.validator.loadPokemonData();
         await this.validator.loadInGameValidation();
-        
+
         if (this.validator.inGameValidated.size === 0) {
             console.log('ℹ️ No Pokemon fields have been marked as in-game validated.');
-            console.log('💡 Use "set-in-game-validated <pokemon-id> <field-name>" to mark specific fields as validated through actual gameplay.');
+            console.log(
+                '💡 Use "set-in-game-validated <pokemon-id> <field-name>" to mark specific fields as validated through actual gameplay.'
+            );
             return;
         }
-        
+
         let totalFields = 0;
-        
+
         for (const [pokemonId, fields] of this.validator.inGameValidated.entries()) {
             const pokemon = this.validator.pokemonData.pokemon[pokemonId];
             const pokemonName = pokemon?.name || `Pokemon #${pokemonId}`;
-            
+
             console.log(`\n🎮 ${pokemonName} (#${pokemonId}):`);
             for (const field of fields) {
                 console.log(`   ✅ ${field}`);
                 totalFields++;
             }
         }
-        
-        console.log(`\n📊 Total: ${totalFields} fields validated across ${this.validator.inGameValidated.size} Pokemon`);
+
+        console.log(
+            `\n📊 Total: ${totalFields} fields validated across ${this.validator.inGameValidated.size} Pokemon`
+        );
         console.log(`💡 Each validated field contributes to the 25% in-game validation bonus.`);
     }
 
@@ -781,7 +874,7 @@ Examples:
         const completed = results.filter(r => r.status === 'completed').length;
         const errors = results.filter(r => r.status === 'error').length;
         const totalIssues = results.reduce((sum, r) => sum + (r.totalIssues || 0), 0);
-        
+
         const severityCounts = results.reduce((counts, r) => {
             if (r.issues) {
                 r.issues.forEach(issue => {
@@ -810,7 +903,9 @@ Examples:
                 .slice(0, 5);
 
             sortedByIssues.forEach(r => {
-                console.log(`   ${r.name} (#${r.id}): ${r.totalIssues} issues (${r.completeness}% complete)`);
+                console.log(
+                    `   ${r.name} (#${r.id}): ${r.totalIssues} issues (${r.completeness}% complete)`
+                );
             });
             console.log('');
         }

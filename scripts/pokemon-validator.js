@@ -32,11 +32,11 @@ class PokemonValidator {
      */
     async loadInGameValidation() {
         const inGamePath = path.join(__dirname, '..', 'data', 'in-game-validated.json');
-        
+
         try {
             const rawData = await fs.readFile(inGamePath, 'utf8');
             const inGameData = JSON.parse(rawData);
-            
+
             this.inGameValidated.clear();
             for (const pokemonEntry of inGameData.validated) {
                 if (pokemonEntry.fields) {
@@ -46,14 +46,25 @@ class PokemonValidator {
                     // Legacy format: Pokemon was validated entirely
                     // Convert to all fields being validated
                     const allFields = [
-                        'name', 'species', 'types', 'baseStats', 'height', 'weight', 
-                        'growthRate', 'baseExp', 'catchRate', 'effortValues', 
-                        'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
+                        'name',
+                        'species',
+                        'types',
+                        'baseStats',
+                        'height',
+                        'weight',
+                        'growthRate',
+                        'baseExp',
+                        'catchRate',
+                        'effortValues',
+                        'evolutionChain',
+                        'learnset',
+                        'tmCompatibility',
+                        'pokedexEntry',
                     ];
                     this.inGameValidated.set(pokemonEntry.id, new Set(allFields));
                 }
             }
-            
+
             return true;
         } catch (error) {
             // No in-game validation file found - this is expected for new setups
@@ -72,8 +83,8 @@ class PokemonValidator {
         const inGamePath = path.join(__dirname, '..', 'data', 'in-game-validated.json');
         const inGameData = {
             metadata: {
-                description: "Pokemon fields that have been validated in-game",
-                lastUpdated: new Date().toISOString()
+                description: 'Pokemon fields that have been validated in-game',
+                lastUpdated: new Date().toISOString(),
             },
             validated: Array.from(this.inGameValidated.entries()).map(([pokemonId, fields]) => {
                 const pokemon = this.pokemonData?.pokemon[pokemonId];
@@ -81,11 +92,11 @@ class PokemonValidator {
                     id: pokemonId,
                     name: pokemon?.name || `Pokemon #${pokemonId}`,
                     fields: Array.from(fields),
-                    lastUpdated: new Date().toISOString()
+                    lastUpdated: new Date().toISOString(),
                 };
-            })
+            }),
         };
-        
+
         await fs.writeFile(inGamePath, JSON.stringify(inGameData, null, 2), 'utf8');
     }
 
@@ -116,8 +127,10 @@ class PokemonValidator {
      * Check if a specific field has been validated in-game for a Pokemon
      */
     isInGameValidated(pokemonId, fieldName) {
-        return this.inGameValidated.has(pokemonId) && 
-               this.inGameValidated.get(pokemonId).has(fieldName);
+        return (
+            this.inGameValidated.has(pokemonId) &&
+            this.inGameValidated.get(pokemonId).has(fieldName)
+        );
     }
 
     /**
@@ -132,11 +145,11 @@ class PokemonValidator {
      */
     async loadValidationStatistics() {
         const statsPath = path.join(__dirname, '..', 'data', 'validation-statistics.json');
-        
+
         try {
             const rawData = await fs.readFile(statsPath, 'utf8');
             const statsData = JSON.parse(rawData);
-            
+
             this.validationStatistics.clear();
             for (const pokemonEntry of statsData.statistics) {
                 this.validationStatistics.set(pokemonEntry.id, {
@@ -146,10 +159,10 @@ class PokemonValidator {
                     externalAccuracy: pokemonEntry.externalAccuracy,
                     inGameValidation: pokemonEntry.inGameValidation,
                     totalIssues: pokemonEntry.totalIssues,
-                    acceptedIssues: pokemonEntry.acceptedIssues
+                    acceptedIssues: pokemonEntry.acceptedIssues,
                 });
             }
-            
+
             return true;
         } catch (error) {
             // No validation statistics file found - this is expected for new setups
@@ -168,26 +181,28 @@ class PokemonValidator {
         const statsPath = path.join(__dirname, '..', 'data', 'validation-statistics.json');
         const statsData = {
             metadata: {
-                description: "Pokemon validation statistics and field-level validation status",
+                description: 'Pokemon validation statistics and field-level validation status',
                 lastUpdated: new Date().toISOString(),
-                validationSystem: "Granular Field Validation (75% external + 25% in-game)"
+                validationSystem: 'Granular Field Validation (75% external + 25% in-game)',
             },
-            statistics: Array.from(this.validationStatistics.entries()).map(([pokemonId, stats]) => {
-                const pokemon = this.pokemonData?.pokemon[pokemonId];
-                return {
-                    id: pokemonId,
-                    name: pokemon?.name || `Pokemon #${pokemonId}`,
-                    completeness: stats.completeness,
-                    lastValidated: stats.lastValidated,
-                    fieldValidation: stats.fieldValidation,
-                    externalAccuracy: stats.externalAccuracy,
-                    inGameValidation: stats.inGameValidation,
-                    totalIssues: stats.totalIssues,
-                    acceptedIssues: stats.acceptedIssues
-                };
-            })
+            statistics: Array.from(this.validationStatistics.entries()).map(
+                ([pokemonId, stats]) => {
+                    const pokemon = this.pokemonData?.pokemon[pokemonId];
+                    return {
+                        id: pokemonId,
+                        name: pokemon?.name || `Pokemon #${pokemonId}`,
+                        completeness: stats.completeness,
+                        lastValidated: stats.lastValidated,
+                        fieldValidation: stats.fieldValidation,
+                        externalAccuracy: stats.externalAccuracy,
+                        inGameValidation: stats.inGameValidation,
+                        totalIssues: stats.totalIssues,
+                        acceptedIssues: stats.acceptedIssues,
+                    };
+                }
+            ),
         };
-        
+
         await fs.writeFile(statsPath, JSON.stringify(statsData, null, 2), 'utf8');
     }
 
@@ -196,16 +211,40 @@ class PokemonValidator {
      */
     updateValidationStatistics(pokemonId, validationResult, pokemon, externalData) {
         const requiredFields = [
-            'name', 'species', 'types', 'baseStats', 'height', 'weight', 
-            'growthRate', 'baseExp', 'catchRate', 'effortValues', 
-            'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
+            'name',
+            'species',
+            'types',
+            'baseStats',
+            'height',
+            'weight',
+            'growthRate',
+            'baseExp',
+            'catchRate',
+            'effortValues',
+            'evolutionChain',
+            'learnset',
+            'tmCompatibility',
+            'pokedexEntry',
         ];
 
-        const fieldValidation = this.calculateFieldValidation(pokemonId, validationResult, requiredFields);
+        const fieldValidation = this.calculateFieldValidation(
+            pokemonId,
+            validationResult,
+            requiredFields
+        );
         const accurateFields = this.countAccurateFields(fieldValidation);
-        const validationScores = this.calculateValidationScores(accurateFields, requiredFields.length, pokemonId);
+        const validationScores = this.calculateValidationScores(
+            accurateFields,
+            requiredFields.length,
+            pokemonId
+        );
 
-        this.storeValidationStatistics(pokemonId, fieldValidation, validationScores, validationResult);
+        this.storeValidationStatistics(
+            pokemonId,
+            fieldValidation,
+            validationScores,
+            validationResult
+        );
     }
 
     /**
@@ -214,9 +253,14 @@ class PokemonValidator {
     calculateFieldValidation(pokemonId, validationResult, requiredFields) {
         const fieldValidation = {};
         const inGameValidatedFields = this.getInGameValidatedFields(pokemonId);
-        
+
         for (const field of requiredFields) {
-            const fieldData = this.processFieldValidation(pokemonId, field, validationResult, inGameValidatedFields);
+            const fieldData = this.processFieldValidation(
+                pokemonId,
+                field,
+                validationResult,
+                inGameValidatedFields
+            );
             fieldValidation[field] = fieldData;
         }
 
@@ -230,7 +274,7 @@ class PokemonValidator {
         const isInGameValidated = inGameValidatedFields.has(field);
         const hasAcceptedIssue = this.hasAcceptedIssueForField(pokemonId, field);
         const fieldIssue = validationResult.issues.find(issue => issue.field === field);
-        
+
         const status = this.determineFieldStatus(fieldIssue, hasAcceptedIssue, isInGameValidated);
         const isAccurate = !fieldIssue;
 
@@ -238,7 +282,7 @@ class PokemonValidator {
             accurate: isAccurate,
             inGameValidated: isInGameValidated,
             hasAcceptedIssue: hasAcceptedIssue,
-            status: status
+            status: status,
         };
     }
 
@@ -265,8 +309,8 @@ class PokemonValidator {
      * Count fields that are considered accurate (naturally accurate or have accepted issues)
      */
     countAccurateFields(fieldValidation) {
-        return Object.values(fieldValidation).filter(field => 
-            field.accurate || field.hasAcceptedIssue
+        return Object.values(fieldValidation).filter(
+            field => field.accurate || field.hasAcceptedIssue
         ).length;
     }
 
@@ -275,7 +319,7 @@ class PokemonValidator {
      */
     calculateValidationScores(accurateFields, totalFields, pokemonId) {
         const inGameValidatedFields = this.getInGameValidatedFields(pokemonId);
-        
+
         const externalAccuracy = (accurateFields / totalFields) * 0.75;
         const inGameValidation = (inGameValidatedFields.size / totalFields) * 0.25;
         const totalCompleteness = externalAccuracy + inGameValidation;
@@ -283,7 +327,7 @@ class PokemonValidator {
         return {
             externalAccuracy: Math.round(externalAccuracy * 100),
             inGameValidation: Math.round(inGameValidation * 100),
-            completeness: Math.round(totalCompleteness * 100)
+            completeness: Math.round(totalCompleteness * 100),
         };
     }
 
@@ -298,7 +342,7 @@ class PokemonValidator {
             externalAccuracy: validationScores.externalAccuracy,
             inGameValidation: validationScores.inGameValidation,
             totalIssues: validationResult.totalIssues || 0,
-            acceptedIssues: validationResult.acceptedIssues || 0
+            acceptedIssues: validationResult.acceptedIssues || 0,
         });
     }
 
@@ -308,7 +352,7 @@ class PokemonValidator {
     hasAcceptedIssueForField(pokemonId, fieldName) {
         const acceptedSignatures = this.acceptedIssues.get(pokemonId);
         if (!acceptedSignatures) return false;
-        
+
         // Check if any accepted signature matches this field
         for (const signature of acceptedSignatures) {
             if (signature.startsWith(`${fieldName}:`)) {
@@ -345,17 +389,17 @@ class PokemonValidator {
      */
     async loadAcceptedIssues() {
         const acceptedPath = path.join(__dirname, '..', 'data', 'accepted-issues.json');
-        
+
         try {
             const rawData = await fs.readFile(acceptedPath, 'utf8');
             const acceptedData = JSON.parse(rawData);
-            
+
             this.acceptedIssues.clear();
             for (const [pokemonId, pokemonData] of Object.entries(acceptedData)) {
                 const signatures = pokemonData.acceptedIssues.map(issue => issue.signature);
                 this.acceptedIssues.set(pokemonId, new Set(signatures));
             }
-            
+
             return true;
         } catch (error) {
             // No accepted issues file found - this is expected for new setups
@@ -373,18 +417,18 @@ class PokemonValidator {
     async saveAcceptedIssues() {
         const acceptedPath = path.join(__dirname, '..', 'data', 'accepted-issues.json');
         const acceptedData = {};
-        
+
         for (const [pokemonId, signatures] of this.acceptedIssues.entries()) {
             const pokemon = this.pokemonData?.pokemon[pokemonId];
             acceptedData[pokemonId] = {
                 name: pokemon?.name || `Pokemon #${pokemonId}`,
                 acceptedIssues: Array.from(signatures).map(sig => ({
                     signature: sig,
-                    acceptedAt: new Date().toISOString()
-                }))
+                    acceptedAt: new Date().toISOString(),
+                })),
             };
         }
-        
+
         await fs.writeFile(acceptedPath, JSON.stringify(acceptedData, null, 2), 'utf8');
     }
 
@@ -395,7 +439,7 @@ class PokemonValidator {
         if (!this.acceptedIssues.has(pokemonId)) {
             this.acceptedIssues.set(pokemonId, new Set());
         }
-        
+
         this.acceptedIssues.get(pokemonId).add(issueSignature);
     }
 
@@ -459,14 +503,14 @@ class PokemonValidator {
         if (!this.pokemonData) return [];
 
         const needsValidation = [];
-        
+
         for (const [id, pokemon] of Object.entries(this.pokemonData.pokemon)) {
             if (this.needsValidation(pokemon, id)) {
                 needsValidation.push({
                     id,
                     name: pokemon.name,
                     completeness: 0, // Will be calculated after external data fetch
-                    pokemon
+                    pokemon,
                 });
             }
         }
@@ -487,37 +531,39 @@ class PokemonValidator {
             suggestions: [],
             externalData: {},
             status: 'processing',
-            acceptedIssues: 0
+            acceptedIssues: 0,
         };
 
         try {
             // Fetch from external sources
-            const externalData = await this.fetcher.fetchAndValidatePokemon(pokemonId, pokemon.name);
+            const externalData = await this.fetcher.fetchAndValidatePokemon(
+                pokemonId,
+                pokemon.name
+            );
             result.externalData = externalData;
 
             // Compare and identify issues
             this.compareWithExternalSources(pokemon, externalData, result);
-            
+
             // Apply accepted issues (mark them as accepted)
             this.applyAcceptedIssues(pokemonId, result);
-            
+
             // Update validation statistics first to get accurate completeness calculation
             this.updateValidationStatistics(pokemonId, result, pokemon, externalData);
-            
+
             // Use the completeness from validation statistics (which accounts for partial matches correctly)
             const stats = this.getValidationStatistics(pokemonId);
             result.completeness = stats ? stats.completeness : 0;
-            
+
             result.status = 'completed';
             result.totalIssues = result.issues.filter(issue => !issue.accepted).length;
-            
         } catch (error) {
             result.status = 'error';
             result.error = error.message;
             result.issues.push({
                 field: 'external_fetch',
                 severity: 'error',
-                message: `Failed to fetch external data: ${error.message}`
+                message: `Failed to fetch external data: ${error.message}`,
             });
         }
 
@@ -529,7 +575,7 @@ class PokemonValidator {
      */
     applyAcceptedIssues(pokemonId, result) {
         let acceptedCount = 0;
-        
+
         result.issues.forEach(issue => {
             if (this.isIssueAccepted(pokemonId, issue)) {
                 issue.accepted = true;
@@ -537,7 +583,7 @@ class PokemonValidator {
                 acceptedCount++;
             }
         });
-        
+
         result.acceptedIssues = acceptedCount;
     }
 
@@ -551,14 +597,25 @@ class PokemonValidator {
         }
 
         const requiredFields = [
-            'name', 'species', 'types', 'baseStats', 'height', 'weight', 
-            'growthRate', 'baseExp', 'catchRate', 'effortValues', 
-            'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
+            'name',
+            'species',
+            'types',
+            'baseStats',
+            'height',
+            'weight',
+            'growthRate',
+            'baseExp',
+            'catchRate',
+            'effortValues',
+            'evolutionChain',
+            'learnset',
+            'tmCompatibility',
+            'pokedexEntry',
         ];
 
         let accurateFields = 0;
         let inGameValidatedFields = 0;
-        
+
         for (const field of requiredFields) {
             if (this.isFieldAccurate(pokemon, field, externalData)) {
                 // Field is naturally accurate
@@ -568,14 +625,14 @@ class PokemonValidator {
                 const mockIssue = {
                     field: field,
                     severity: 'inaccurate',
-                    current: this.getFieldValue(pokemon, field)
+                    current: this.getFieldValue(pokemon, field),
                 };
-                
+
                 if (this.isIssueAccepted(pokemonId, mockIssue)) {
                     accurateFields++;
                 }
             }
-            
+
             // Check if this field has been validated in-game
             if (this.isInGameValidated(pokemonId, field)) {
                 inGameValidatedFields++;
@@ -584,10 +641,10 @@ class PokemonValidator {
 
         // External validation: 75% maximum
         const externalScore = (accurateFields / requiredFields.length) * 0.75;
-        
+
         // In-game validation: 25% maximum (proportional to fields validated)
         const inGameScore = (inGameValidatedFields / requiredFields.length) * 0.25;
-        
+
         // Total score
         return externalScore + inGameScore;
     }
@@ -599,17 +656,17 @@ class PokemonValidator {
     isFieldAccurate(pokemon, field, externalData) {
         const bulbapediaData = externalData.sources?.find(s => s.source === 'bulbapedia')?.data;
         const serebiiData = externalData.sources?.find(s => s.source === 'serebii')?.data;
-        
+
         // Get the authoritative value (prefer Bulbapedia, fallback to Serebii)
         const authoritativeValue = this.getAuthoritativeValue(field, bulbapediaData, serebiiData);
-        
+
         if (!authoritativeValue) {
             // No external data to compare against
             return false;
         }
 
         const currentValue = this.getFieldValue(pokemon, field);
-        
+
         return this.exactMatch(currentValue, authoritativeValue);
     }
 
@@ -619,7 +676,7 @@ class PokemonValidator {
     getAuthoritativeValue(field, bulbapediaData, serebiiData) {
         const bulbapediaValue = bulbapediaData?.[field];
         const serebiiValue = serebiiData?.[field];
-        
+
         // Prefer Bulbapedia, fallback to Serebii
         return bulbapediaValue !== undefined ? bulbapediaValue : serebiiValue;
     }
@@ -629,12 +686,12 @@ class PokemonValidator {
      */
     exactMatch(current, authoritative) {
         if (current === authoritative) return true;
-        
+
         // Deep comparison for objects and arrays
         if (typeof current === 'object' && typeof authoritative === 'object') {
             return JSON.stringify(current) === JSON.stringify(authoritative);
         }
-        
+
         return false;
     }
 
@@ -643,9 +700,12 @@ class PokemonValidator {
      */
     getFieldValue(pokemon, field) {
         switch (field) {
-            case 'height': return pokemon.height?.meters;
-            case 'weight': return pokemon.weight?.kg;
-            default: return pokemon[field];
+            case 'height':
+                return pokemon.height?.meters;
+            case 'weight':
+                return pokemon.weight?.kg;
+            default:
+                return pokemon[field];
         }
     }
 
@@ -657,20 +717,104 @@ class PokemonValidator {
         const serebiiData = externalData.sources?.find(s => s.source === 'serebii')?.data;
 
         // Compare each field for accuracy
-        this.compareFieldAccuracy('name', pokemon.name, bulbapediaData?.name, serebiiData?.name, result);
-        this.compareFieldAccuracy('species', pokemon.species, bulbapediaData?.species, serebiiData?.species, result);
-        this.compareFieldAccuracy('types', pokemon.types, bulbapediaData?.types, serebiiData?.types, result);
-        this.compareFieldAccuracy('baseStats', pokemon.baseStats, bulbapediaData?.baseStats, serebiiData?.baseStats, result);
-        this.compareFieldAccuracy('height', pokemon.height?.meters, bulbapediaData?.height, serebiiData?.height, result);
-        this.compareFieldAccuracy('weight', pokemon.weight?.kg, bulbapediaData?.weight, serebiiData?.weight, result);
-        this.compareFieldAccuracy('growthRate', pokemon.growthRate, bulbapediaData?.growthRate, serebiiData?.growthRate, result);
-        this.compareFieldAccuracy('baseExp', pokemon.baseExp, bulbapediaData?.baseExp, serebiiData?.baseExp, result);
-        this.compareFieldAccuracy('catchRate', pokemon.catchRate, bulbapediaData?.catchRate, serebiiData?.catchRate, result);
-        this.compareFieldAccuracy('learnset', pokemon.learnset, bulbapediaData?.learnset, serebiiData?.learnset, result);
-        this.compareFieldAccuracy('tmCompatibility', pokemon.tmCompatibility, bulbapediaData?.tmCompatibility, serebiiData?.tmCompatibility, result);
-        this.compareFieldAccuracy('evolutionChain', pokemon.evolutionChain, bulbapediaData?.evolutionChain, serebiiData?.evolutionChain, result);
-        this.compareFieldAccuracy('effortValues', pokemon.effortValues, bulbapediaData?.effortValues, serebiiData?.effortValues, result);
-        this.compareFieldAccuracy('pokedexEntry', pokemon.pokedexEntry, bulbapediaData?.pokedexEntry, serebiiData?.pokedexEntry, result);
+        this.compareFieldAccuracy(
+            'name',
+            pokemon.name,
+            bulbapediaData?.name,
+            serebiiData?.name,
+            result
+        );
+        this.compareFieldAccuracy(
+            'species',
+            pokemon.species,
+            bulbapediaData?.species,
+            serebiiData?.species,
+            result
+        );
+        this.compareFieldAccuracy(
+            'types',
+            pokemon.types,
+            bulbapediaData?.types,
+            serebiiData?.types,
+            result
+        );
+        this.compareFieldAccuracy(
+            'baseStats',
+            pokemon.baseStats,
+            bulbapediaData?.baseStats,
+            serebiiData?.baseStats,
+            result
+        );
+        this.compareFieldAccuracy(
+            'height',
+            pokemon.height?.meters,
+            bulbapediaData?.height,
+            serebiiData?.height,
+            result
+        );
+        this.compareFieldAccuracy(
+            'weight',
+            pokemon.weight?.kg,
+            bulbapediaData?.weight,
+            serebiiData?.weight,
+            result
+        );
+        this.compareFieldAccuracy(
+            'growthRate',
+            pokemon.growthRate,
+            bulbapediaData?.growthRate,
+            serebiiData?.growthRate,
+            result
+        );
+        this.compareFieldAccuracy(
+            'baseExp',
+            pokemon.baseExp,
+            bulbapediaData?.baseExp,
+            serebiiData?.baseExp,
+            result
+        );
+        this.compareFieldAccuracy(
+            'catchRate',
+            pokemon.catchRate,
+            bulbapediaData?.catchRate,
+            serebiiData?.catchRate,
+            result
+        );
+        this.compareFieldAccuracy(
+            'learnset',
+            pokemon.learnset,
+            bulbapediaData?.learnset,
+            serebiiData?.learnset,
+            result
+        );
+        this.compareFieldAccuracy(
+            'tmCompatibility',
+            pokemon.tmCompatibility,
+            bulbapediaData?.tmCompatibility,
+            serebiiData?.tmCompatibility,
+            result
+        );
+        this.compareFieldAccuracy(
+            'evolutionChain',
+            pokemon.evolutionChain,
+            bulbapediaData?.evolutionChain,
+            serebiiData?.evolutionChain,
+            result
+        );
+        this.compareFieldAccuracy(
+            'effortValues',
+            pokemon.effortValues,
+            bulbapediaData?.effortValues,
+            serebiiData?.effortValues,
+            result
+        );
+        this.compareFieldAccuracy(
+            'pokedexEntry',
+            pokemon.pokedexEntry,
+            bulbapediaData?.pokedexEntry,
+            serebiiData?.pokedexEntry,
+            result
+        );
     }
 
     /**
@@ -678,18 +822,36 @@ class PokemonValidator {
      */
     compareFieldAccuracy(fieldName, currentValue, bulbapediaValue, serebiiValue, result) {
         const sourceInfo = this.analyzeSourceAvailability(bulbapediaValue, serebiiValue);
-        
+
         if (!sourceInfo.hasAny) {
             this.addNoReferenceIssue(fieldName, currentValue, result);
             return;
         }
 
-        const matchInfo = this.analyzeMatches(currentValue, bulbapediaValue, serebiiValue, sourceInfo);
+        const matchInfo = this.analyzeMatches(
+            currentValue,
+            bulbapediaValue,
+            serebiiValue,
+            sourceInfo
+        );
 
         if (sourceInfo.hasBoth) {
-            this.handleBothSourcesComparison(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result);
+            this.handleBothSourcesComparison(
+                fieldName,
+                currentValue,
+                matchInfo,
+                bulbapediaValue,
+                serebiiValue,
+                result
+            );
         } else {
-            this.handleSingleSourceComparison(fieldName, currentValue, matchInfo, sourceInfo, result);
+            this.handleSingleSourceComparison(
+                fieldName,
+                currentValue,
+                matchInfo,
+                sourceInfo,
+                result
+            );
         }
     }
 
@@ -699,14 +861,14 @@ class PokemonValidator {
     analyzeSourceAvailability(bulbapediaValue, serebiiValue) {
         const hasBulbapedia = bulbapediaValue !== undefined;
         const hasSerebii = serebiiValue !== undefined;
-        
+
         return {
             hasBulbapedia,
             hasSerebii,
             hasBoth: hasBulbapedia && hasSerebii,
             hasAny: hasBulbapedia || hasSerebii,
             authoritativeValue: hasBulbapedia ? bulbapediaValue : serebiiValue,
-            authoritativeSource: hasBulbapedia ? 'Bulbapedia' : 'Serebii'
+            authoritativeSource: hasBulbapedia ? 'Bulbapedia' : 'Serebii',
         };
     }
 
@@ -715,31 +877,63 @@ class PokemonValidator {
      */
     analyzeMatches(currentValue, bulbapediaValue, serebiiValue, sourceInfo) {
         return {
-            matchesBulbapedia: sourceInfo.hasBulbapedia ? this.exactMatch(currentValue, bulbapediaValue) : null,
-            matchesSerebii: sourceInfo.hasSerebii ? this.exactMatch(currentValue, serebiiValue) : null,
-            sourcesAgree: sourceInfo.hasBoth ? this.exactMatch(bulbapediaValue, serebiiValue) : true
+            matchesBulbapedia: sourceInfo.hasBulbapedia
+                ? this.exactMatch(currentValue, bulbapediaValue)
+                : null,
+            matchesSerebii: sourceInfo.hasSerebii
+                ? this.exactMatch(currentValue, serebiiValue)
+                : null,
+            sourcesAgree: sourceInfo.hasBoth
+                ? this.exactMatch(bulbapediaValue, serebiiValue)
+                : true,
         };
     }
 
     /**
      * Handle comparison when both sources are available
      */
-    handleBothSourcesComparison(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result) {
+    handleBothSourcesComparison(
+        fieldName,
+        currentValue,
+        matchInfo,
+        bulbapediaValue,
+        serebiiValue,
+        result
+    ) {
         if (matchInfo.matchesBulbapedia && matchInfo.matchesSerebii) {
             // Perfect match - both sources agree and current value matches
             return;
         }
 
         if (matchInfo.matchesBulbapedia || matchInfo.matchesSerebii) {
-            this.addPartialMatchIssue(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result);
+            this.addPartialMatchIssue(
+                fieldName,
+                currentValue,
+                matchInfo,
+                bulbapediaValue,
+                serebiiValue,
+                result
+            );
             return;
         }
 
         // No match to either source
         if (matchInfo.sourcesAgree) {
-            this.addInaccurateIssue(fieldName, currentValue, bulbapediaValue, 'Bulbapedia & Serebii', result);
+            this.addInaccurateIssue(
+                fieldName,
+                currentValue,
+                bulbapediaValue,
+                'Bulbapedia & Serebii',
+                result
+            );
         } else {
-            this.addSourceConflictIssue(fieldName, currentValue, bulbapediaValue, serebiiValue, result);
+            this.addSourceConflictIssue(
+                fieldName,
+                currentValue,
+                bulbapediaValue,
+                serebiiValue,
+                result
+            );
         }
     }
 
@@ -747,10 +941,18 @@ class PokemonValidator {
      * Handle comparison when only one source is available
      */
     handleSingleSourceComparison(fieldName, currentValue, matchInfo, sourceInfo, result) {
-        const matchesSource = sourceInfo.hasBulbapedia ? matchInfo.matchesBulbapedia : matchInfo.matchesSerebii;
-        
+        const matchesSource = sourceInfo.hasBulbapedia
+            ? matchInfo.matchesBulbapedia
+            : matchInfo.matchesSerebii;
+
         if (!matchesSource) {
-            this.addInaccurateIssue(fieldName, currentValue, sourceInfo.authoritativeValue, sourceInfo.authoritativeSource, result);
+            this.addInaccurateIssue(
+                fieldName,
+                currentValue,
+                sourceInfo.authoritativeValue,
+                sourceInfo.authoritativeSource,
+                result
+            );
         }
     }
 
@@ -762,18 +964,25 @@ class PokemonValidator {
             field: fieldName,
             severity: 'no_reference',
             message: `${fieldName} has no external reference data`,
-            current: currentValue
+            current: currentValue,
         });
     }
 
     /**
      * Add partial match issue
      */
-    addPartialMatchIssue(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result) {
+    addPartialMatchIssue(
+        fieldName,
+        currentValue,
+        matchInfo,
+        bulbapediaValue,
+        serebiiValue,
+        result
+    ) {
         const matchingSource = matchInfo.matchesBulbapedia ? 'Bulbapedia' : 'Serebii';
         const conflictingSource = matchInfo.matchesBulbapedia ? 'Serebii' : 'Bulbapedia';
         const conflictingValue = matchInfo.matchesBulbapedia ? serebiiValue : bulbapediaValue;
-        
+
         result.issues.push({
             field: fieldName,
             severity: 'partial_match',
@@ -782,7 +991,7 @@ class PokemonValidator {
             matchingSource: matchingSource,
             matchingValue: currentValue,
             conflictingSource: conflictingSource,
-            conflictingValue: conflictingValue
+            conflictingValue: conflictingValue,
         });
     }
 
@@ -796,14 +1005,14 @@ class PokemonValidator {
             message: `${fieldName} does not match ${source}`,
             current: currentValue,
             expected: expectedValue,
-            source: source
+            source: source,
         });
-        
+
         result.suggestions.push({
             field: fieldName,
             action: 'correct',
             value: expectedValue,
-            source: source === 'Bulbapedia & Serebii' ? 'Both sources' : source
+            source: source === 'Bulbapedia & Serebii' ? 'Both sources' : source,
         });
     }
 
@@ -817,7 +1026,7 @@ class PokemonValidator {
             message: `${fieldName} conflicts - external sources disagree and current value matches neither`,
             current: currentValue,
             bulbapediaValue: bulbapediaValue,
-            serebiiValue: serebiiValue
+            serebiiValue: serebiiValue,
         });
     }
 
@@ -827,31 +1036,31 @@ class PokemonValidator {
     async validateMultiplePokemon(pokemonList) {
         const results = [];
         const total = pokemonList.length;
-        
+
         for (let i = 0; i < total; i++) {
             const { id, pokemon } = pokemonList[i];
-            
+
             if (this.progressCallback) {
                 this.progressCallback({
                     current: i + 1,
                     total,
                     pokemon: pokemon.name,
-                    status: 'validating'
+                    status: 'validating',
                 });
             }
 
             const result = await this.validatePokemon(id, pokemon);
             results.push(result);
-            
+
             // Rate limiting delay
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
 
         this.validationResults = results;
-        
+
         // Save validation statistics after all validations complete
         await this.saveValidationStatistics();
-        
+
         return results;
     }
 
@@ -871,12 +1080,12 @@ class PokemonValidator {
         const timestamp = new Date().toLocaleString();
         const totalPokemon = results.length;
         const totalIssues = results.reduce((sum, r) => sum + (r.totalIssues || 0), 0);
-        
+
         // Calculate validation level statistics
         const fullyValidated = results.filter(r => r.completeness >= 100).length;
         const highlyValidated = results.filter(r => r.completeness >= 75).length;
         const lowValidated = results.filter(r => r.completeness < 75).length;
-        
+
         const severityCounts = results.reduce((counts, r) => {
             if (r.issues) {
                 r.issues.forEach(issue => {
@@ -1407,7 +1616,8 @@ class PokemonValidator {
         }
 
         // Check if Pokemon has any in-game validated fields
-        const hasInGameValidation = this.inGameValidated.has(result.id) && this.inGameValidated.get(result.id).size > 0;
+        const hasInGameValidation =
+            this.inGameValidated.has(result.id) && this.inGameValidated.get(result.id).size > 0;
         if (hasInGameValidation) {
             badges.push('<span class="validation-badge badge-in-game">🎮 In-Game Validated</span>');
         }
@@ -1415,55 +1625,75 @@ class PokemonValidator {
         // Get field validation data from statistics (includes all fields, not just issues)
         const stats = this.getValidationStatistics(result.id);
         let fieldsHTML = '';
-        
+
         if (stats?.fieldValidation) {
             // Display all fields from validation statistics
             const allFields = [
-                'name', 'species', 'types', 'baseStats', 'height', 'weight', 
-                'growthRate', 'baseExp', 'catchRate', 'effortValues', 
-                'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
+                'name',
+                'species',
+                'types',
+                'baseStats',
+                'height',
+                'weight',
+                'growthRate',
+                'baseExp',
+                'catchRate',
+                'effortValues',
+                'evolutionChain',
+                'learnset',
+                'tmCompatibility',
+                'pokedexEntry',
             ];
-            
-            fieldsHTML = allFields.map(field => {
-                return this.generateFieldHTML(field, stats.fieldValidation[field], result);
-            }).join('');
+
+            fieldsHTML = allFields
+                .map(field => {
+                    return this.generateFieldHTML(field, stats.fieldValidation[field], result);
+                })
+                .join('');
         } else {
             // Fallback to showing only issues if no statistics available
-            fieldsHTML = result.issues && result.issues.length > 0 ? 
-                result.issues.map(issue => {
-                    let comparisonHTML = '';
-                    if (issue.severity === 'inaccurate') {
-                        comparisonHTML = `
+            fieldsHTML =
+                result.issues && result.issues.length > 0
+                    ? result.issues
+                          .map(issue => {
+                              let comparisonHTML = '';
+                              if (issue.severity === 'inaccurate') {
+                                  comparisonHTML = `
                             <div class="comparison">
                                 <strong>Current:</strong> ${JSON.stringify(issue.current)}<br>
                                 <strong>Expected (${issue.source}):</strong> ${JSON.stringify(issue.expected)}
                                 ${issue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
                             </div>
                         `;
-                    } else if (issue.current !== undefined) {
-                        comparisonHTML = `
+                              } else if (issue.current !== undefined) {
+                                  comparisonHTML = `
                             <div class="comparison">
                                 <strong>Current:</strong> ${JSON.stringify(issue.current)}
                                 ${issue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
                             </div>
                         `;
-                    }
-                    
-                    const issueClass = issue.accepted ? `${issue.severity} accepted` : issue.severity;
-                    
-                    // Check if this field is in-game validated
-                    const isInGameValidated = this.inGameValidated.has(result.id) && 
-                                            this.inGameValidated.get(result.id).has(issue.field);
-                    
-                    const issueBadges = [];
-                    if (issue.accepted) {
-                        issueBadges.push('<span class="accepted-badge">✅ ACCEPTED</span>');
-                    }
-                    if (isInGameValidated) {
-                        issueBadges.push('<span class="in-game-badge">🎮 IN-GAME</span>');
-                    }
-                    
-                    return `
+                              }
+
+                              const issueClass = issue.accepted
+                                  ? `${issue.severity} accepted`
+                                  : issue.severity;
+
+                              // Check if this field is in-game validated
+                              const isInGameValidated =
+                                  this.inGameValidated.has(result.id) &&
+                                  this.inGameValidated.get(result.id).has(issue.field);
+
+                              const issueBadges = [];
+                              if (issue.accepted) {
+                                  issueBadges.push(
+                                      '<span class="accepted-badge">✅ ACCEPTED</span>'
+                                  );
+                              }
+                              if (isInGameValidated) {
+                                  issueBadges.push('<span class="in-game-badge">🎮 IN-GAME</span>');
+                              }
+
+                              return `
                     <div class="issue ${issueClass}" data-signature="${this.generateIssueSignature(issue)}">
                         <div class="issue-header">
                             <div class="issue-field">${issue.field}</div>
@@ -1474,10 +1704,11 @@ class PokemonValidator {
                         <div class="issue-message">${issue.message}</div>
                         ${comparisonHTML}
                     </div>`;
-                }).join('') : 
-                '<div class="no-issues">✅ Perfect accuracy - all data matches external sources!</div>';
+                          })
+                          .join('')
+                    : '<div class="no-issues">✅ Perfect accuracy - all data matches external sources!</div>';
         }
-        
+
         return `
         <div class="pokemon-card collapsed" data-completeness="${result.completeness}">
             <div class="pokemon-header">
@@ -1501,11 +1732,15 @@ class PokemonValidator {
                     ${badges.join('')}
                 </div>
 
-                ${result.status === 'error' ? `
+                ${
+                    result.status === 'error'
+                        ? `
                     <div class="status-error">
                         <strong>⚠️ Validation Error:</strong> ${result.error}
                     </div>
-                ` : ''}
+                `
+                        : ''
+                }
                 
                 <div class="issues">
                     ${fieldsHTML}
@@ -1516,4 +1751,3 @@ class PokemonValidator {
 }
 
 module.exports = PokemonValidator;
-

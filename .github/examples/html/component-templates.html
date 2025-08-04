@@ -1,523 +1,729 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Walkthrough - HTML Component Templates</title>
-    <meta name="description" content="Complete HTML component templates for the Pokemon Walkthrough Project with accessibility and semantic markup patterns.">
-    
-    <!-- Link to our CSS examples for proper styling -->
-    <link rel="stylesheet" href="../css/design-tokens.css">
-    <link rel="stylesheet" href="../css/component-styles.css">
-    <link rel="stylesheet" href="../css/theme-system.css">
-    <link rel="stylesheet" href="../css/accessibility-styles.css">
-    
-    <style>
-        /* Demo-specific styles */
-        body {
-            font-family: var(--font-primary);
-            line-height: var(--leading-normal);
-            margin: 0;
-            padding: var(--space-lg);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-        }
-        
-        .demo-section {
-            margin-bottom: var(--space-xxl);
-            padding: var(--space-lg);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 8px;
-            background-color: var(--bg-secondary);
-        }
-        
-        .demo-section h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--bg-tertiary);
-            padding-bottom: var(--space-sm);
-        }
-        
-        .demo-section h3 {
-            color: var(--text-secondary);
-            margin-top: var(--space-lg);
-        }
-        
-        .code-example {
-            background-color: var(--bg-primary);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 4px;
-            padding: var(--space-md);
-            margin: var(--space-md) 0;
-        }
-        
-        /* Apply gen1 theme for demo */
-        :root {
-            --primary-color: #ff1744;
-            --secondary-color: #1976d2;
-            --accent-color: #4caf50;
-        }
-    </style>
-</head>
-<body class="rich-mode gen1-theme">
-    <header>
-        <h1>Pokemon Walkthrough - HTML Component Templates</h1>
-        <p>Complete semantic HTML templates with accessibility attributes and data structure for the Pokemon Walkthrough Project.</p>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pokemon Walkthrough - HTML Component Templates</title>
+        <meta
+            name="description"
+            content="Complete HTML component templates for the Pokemon Walkthrough Project with accessibility and semantic markup patterns."
+        />
 
-    <!-- Document Structure Template -->
-    <section class="demo-section">
-        <h2>Document Structure Template</h2>
-        <p>Complete page structure with semantic HTML5 elements and accessibility features.</p>
-        
-        <div class="code-example">
-            <!-- Skip to content link for screen readers -->
-            <a href="#main-content" class="sr-only sr-only-focusable">Skip to main content</a>
-            
-            <!-- Header with game selection and settings -->
-            <header class="site-header" role="banner">
-                <h1>Pokemon Walkthrough Tracker</h1>
-                <nav class="game-nav" aria-label="Game selection">
-                    <select id="game-selector" aria-label="Select Pokemon game">
-                        <option value="red">Pokemon Red</option>
-                        <option value="blue">Pokemon Blue</option>
-                        <option value="yellow">Pokemon Yellow</option>
-                    </select>
-                </nav>
-                <button id="settings-toggle" aria-label="Open settings panel" aria-expanded="false">
-                    Settings
-                </button>
-            </header>
-            
-            <!-- Main content area -->
-            <main id="main-content" class="walkthrough-container">
-                <!-- Progress overview -->
-                <section class="progress-overview" aria-labelledby="progress-heading">
-                    <h2 id="progress-heading">Game Progress</h2>
-                    <div class="progress-stats">
-                        <progress class="progress-bar" value="0" max="100" aria-label="Game completion progress">
-                            0% Complete
-                        </progress>
-                    </div>
-                </section>
-                
-                <!-- Walkthrough content -->
-                <section class="walkthrough-content" aria-labelledby="walkthrough-heading">
-                    <h2 id="walkthrough-heading">Walkthrough Steps</h2>
-                    <!-- Dynamic content loaded here -->
-                </section>
-            </main>
-            
-            <!-- Settings panel -->
-            <aside id="settings-panel" class="settings-panel" aria-labelledby="settings-heading" aria-hidden="true">
-                <h2 id="settings-heading">Settings & Filters</h2>
-                <!-- Settings content -->
-            </aside>
-        </div>
-    </section>
+        <!-- Link to our CSS examples for proper styling -->
+        <link rel="stylesheet" href="../css/design-tokens.css" />
+        <link rel="stylesheet" href="../css/component-styles.css" />
+        <link rel="stylesheet" href="../css/theme-system.css" />
+        <link rel="stylesheet" href="../css/accessibility-styles.css" />
 
-    <!-- Step Element Patterns -->
-    <section class="demo-section">
-        <h2>Step Element Patterns</h2>
-        
-        <h3>Basic Step Structure</h3>
-        <div class="code-example">
-            <!-- Standard step with checkbox -->
-            <div class="step" data-step-id="unique-identifier" data-tags="story,required" data-category="progression">
-                <input type="checkbox" id="step-unique-id" class="step-checkbox" data-location="location-id">
-                <label for="step-unique-id" class="step-label">
-                    <span class="step-text">Step description goes here</span>
-                    <span class="step-meta" aria-label="Additional information">Optional meta info</span>
-                </label>
-            </div>
-        </div>
+        <style>
+            /* Demo-specific styles */
+            body {
+                font-family: var(--font-primary);
+                line-height: var(--leading-normal);
+                margin: 0;
+                padding: var(--space-lg);
+                background-color: var(--bg-primary);
+                color: var(--text-primary);
+            }
 
-        <h3>Pokemon Catch Step</h3>
-        <div class="code-example">
-            <div class="step pokemon-step" data-step-id="catch-pidgey-route01" data-tags="pokemon,optional,wild" data-category="pokemon">
-                <input type="checkbox" id="catch-pidgey-route01" class="step-checkbox" 
-                       data-location="route-01" data-pokemon="pidgey" data-pokemon-id="016">
-                <label for="catch-pidgey-route01" class="step-label">
-                    <span class="step-text">Catch Pidgey</span>
-                    <span class="pokemon-meta">
-                        <span class="encounter-rate" title="Encounter rate">50%</span>
-                        <span class="pokemon-type" data-type="normal-flying">Normal/Flying</span>
-                    </span>
-                </label>
-                
-                <!-- Expandable details for data capture -->
-                <div class="step-details" aria-labelledby="catch-pidgey-route01">
-                    <div class="input-group">
-                        <label for="pidgey-level">Level caught:</label>
-                        <input type="number" id="pidgey-level" class="level-input" 
-                               min="1" max="100" placeholder="Level" data-field="level">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="pidgey-encounters">Encounters before catch:</label>
-                        <input type="number" id="pidgey-encounters" class="encounters-input" 
-                               min="1" placeholder="1" data-field="encountersBeforeCatch" 
-                               title="How many times did you encounter this Pokemon before catching it?">
-                    </div>
-                    
-                    <div class="location-info">
-                        <span class="location-tag" data-location="route-01">Route 01</span>
-                        <button type="button" class="encounter-tracker" 
-                                data-pokemon="pidgey" data-location="route-01" 
-                                title="Track encounter without catching">
-                            +1 Encounter
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            .demo-section {
+                margin-bottom: var(--space-xxl);
+                padding: var(--space-lg);
+                border: 1px solid var(--bg-tertiary);
+                border-radius: 8px;
+                background-color: var(--bg-secondary);
+            }
 
-        <h3>Trainer Battle Step</h3>
-        <div class="code-example">
-            <div class="step battle-step gym-battle" data-step-id="battle-brock" 
-                 data-tags="story,required,gym-battle,pewter-city" data-category="trainer-battle">
-                <input type="checkbox" id="battle-brock" class="step-checkbox" 
-                       data-location="pewter-gym" data-trainer="brock" data-trainer-id="gym-01">
-                <label for="battle-brock" class="step-label">
-                    <span class="step-text">Battle Brock (Gym Leader #1)</span>
-                    <span class="battle-meta">
-                        <span class="gym-badge" data-badge="boulder">Boulder Badge</span>
-                        <span class="battle-type" data-type="rock">Rock-type specialist</span>
-                    </span>
-                </label>
-                
-                <div class="step-details trainer-details" aria-labelledby="battle-brock">
-                    <div class="trainer-team">
-                        <h4>Brock's Team:</h4>
-                        <ul class="pokemon-list">
-                            <li class="trainer-pokemon" data-pokemon="geodude">
-                                <span class="pokemon-name">Geodude</span>
-                                <span class="pokemon-level">Lv. 12</span>
-                                <span class="pokemon-type" data-type="rock-ground">Rock/Ground</span>
-                            </li>
-                            <li class="trainer-pokemon" data-pokemon="onix">
-                                <span class="pokemon-name">Onix</span>
-                                <span class="pokemon-level">Lv. 14</span>
-                                <span class="pokemon-type" data-type="rock-ground">Rock/Ground</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="battle-strategy">
-                        <h4>Strategy Tips:</h4>
-                        <ul class="strategy-list">
-                            <li>Use Water, Grass, Fighting, or Ground-type moves</li>
-                            <li>Avoid Normal, Flying, Poison, and Fire-type attacks</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+            .demo-section h2 {
+                margin-top: 0;
+                color: var(--primary-color);
+                border-bottom: 2px solid var(--bg-tertiary);
+                padding-bottom: var(--space-sm);
+            }
 
-        <h3>Choice Step (Radio Buttons)</h3>
-        <div class="code-example">
-            <fieldset class="step-group choice-step" data-step-id="choose-starter" data-tags="story,required,choice" data-category="pokemon">
-                <legend class="choice-legend">Choose your starter Pokemon</legend>
-                
-                <div class="choice-option">
-                    <input type="radio" name="starter-choice" id="starter-bulbasaur" 
-                           value="bulbasaur" data-choice="bulbasaur" data-pokemon-id="001">
-                    <label for="starter-bulbasaur" class="choice-label">
-                        <span class="pokemon-sprite" data-pokemon="bulbasaur" aria-hidden="true"></span>
-                        <span class="choice-content">
-                            <span class="pokemon-name">Bulbasaur</span>
-                            <span class="pokemon-type" data-type="grass-poison">Grass/Poison</span>
-                            <span class="choice-description">Good against first two gyms</span>
-                        </span>
-                    </label>
-                </div>
-                
-                <div class="choice-option">
-                    <input type="radio" name="starter-choice" id="starter-charmander" 
-                           value="charmander" data-choice="charmander" data-pokemon-id="004">
-                    <label for="starter-charmander" class="choice-label">
-                        <span class="pokemon-sprite" data-pokemon="charmander" aria-hidden="true"></span>
-                        <span class="choice-content">
-                            <span class="pokemon-name">Charmander</span>
-                            <span class="pokemon-type" data-type="fire">Fire</span>
-                            <span class="choice-description">Challenging early game, powerful late game</span>
-                        </span>
-                    </label>
-                </div>
-                
-                <div class="choice-option">
-                    <input type="radio" name="starter-choice" id="starter-squirtle" 
-                           value="squirtle" data-choice="squirtle" data-pokemon-id="007">
-                    <label for="starter-squirtle" class="choice-label">
-                        <span class="pokemon-sprite" data-pokemon="squirtle" aria-hidden="true"></span>
-                        <span class="choice-content">
-                            <span class="pokemon-name">Squirtle</span>
-                            <span class="pokemon-type" data-type="water">Water</span>
-                            <span class="choice-description">Balanced difficulty throughout</span>
-                        </span>
-                    </label>
-                </div>
-            </fieldset>
-        </div>
+            .demo-section h3 {
+                color: var(--text-secondary);
+                margin-top: var(--space-lg);
+            }
 
-        <h3>Name Input Step</h3>
-        <div class="code-example">
-            <div class="step name-input-step" data-step-id="player-name" data-tags="story,required,personalization" data-category="setup">
-                <label for="player-name-input" class="input-label">
-                    <span class="label-text">Enter your player name:</span>
-                    <span class="label-help" id="player-name-help">This will personalize the walkthrough (max 7 characters)</span>
-                </label>
-                <input type="text" id="player-name-input" class="name-input" 
-                       maxlength="7" placeholder="ASH" data-field="playerName" 
-                       aria-describedby="player-name-help" data-validation="required">
-            </div>
-        </div>
-    </section>
+            .code-example {
+                background-color: var(--bg-primary);
+                border: 1px solid var(--bg-tertiary);
+                border-radius: 4px;
+                padding: var(--space-md);
+                margin: var(--space-md) 0;
+            }
 
-    <!-- Location Container Pattern -->
-    <section class="demo-section">
-        <h2>Location Container Pattern</h2>
-        <div class="code-example">
-            <details class="location-section" data-location-id="pallet-town" data-region="kanto">
-                <summary class="location-header">
-                    <span class="location-name">Pallet Town</span>
-                    <span class="step-counter" data-location="pallet-town" aria-label="steps remaining">
-                        <span class="counter-number">5</span>
-                        <span class="counter-text">steps remaining</span>
-                    </span>
-                    <span class="location-meta">
-                        <span class="location-type" data-type="town">Town</span>
-                        <span class="completion-status" data-status="incomplete" aria-label="Location completion status">
-                            <span class="sr-only">Incomplete</span>
-                        </span>
-                    </span>
-                </summary>
-                
-                <div class="location-content">
-                    <div class="location-description">
-                        <p>Your hometown and the starting point of your Pokemon journey.</p>
-                    </div>
-                    
-                    <fieldset class="steps-container" aria-labelledby="pallet-town-steps">
-                        <legend id="pallet-town-steps" class="sr-only">Steps for Pallet Town</legend>
-                        
-                        <!-- Steps go here -->
-                        <div class="step" data-step-id="talk-to-mom">
-                            <input type="checkbox" id="talk-to-mom" class="step-checkbox">
-                            <label for="talk-to-mom" class="step-label">
-                                <span class="step-text">Talk to your mom</span>
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-            </details>
-        </div>
-    </section>
+            /* Apply gen1 theme for demo */
+            :root {
+                --primary-color: #ff1744;
+                --secondary-color: #1976d2;
+                --accent-color: #4caf50;
+            }
+        </style>
+    </head>
+    <body class="rich-mode gen1-theme">
+        <header>
+            <h1>Pokemon Walkthrough - HTML Component Templates</h1>
+            <p>
+                Complete semantic HTML templates with accessibility attributes and data structure
+                for the Pokemon Walkthrough Project.
+            </p>
+        </header>
 
-    <!-- Settings Panel Structure -->
-    <section class="demo-section">
-        <h2>Settings Panel Structure</h2>
-        <div class="code-example">
-            <aside id="settings-panel-demo" class="settings-panel" aria-labelledby="settings-heading-demo" aria-hidden="false">
-                <header class="settings-header">
-                    <h2 id="settings-heading-demo">Settings & Filters</h2>
-                    <button type="button" class="settings-close" aria-label="Close settings panel">
-                        <span aria-hidden="true">&times;</span>
+        <!-- Document Structure Template -->
+        <section class="demo-section">
+            <h2>Document Structure Template</h2>
+            <p>Complete page structure with semantic HTML5 elements and accessibility features.</p>
+
+            <div class="code-example">
+                <!-- Skip to content link for screen readers -->
+                <a href="#main-content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+                <!-- Header with game selection and settings -->
+                <header class="site-header" role="banner">
+                    <h1>Pokemon Walkthrough Tracker</h1>
+                    <nav class="game-nav" aria-label="Game selection">
+                        <select id="game-selector" aria-label="Select Pokemon game">
+                            <option value="red">Pokemon Red</option>
+                            <option value="blue">Pokemon Blue</option>
+                            <option value="yellow">Pokemon Yellow</option>
+                        </select>
+                    </nav>
+                    <button
+                        id="settings-toggle"
+                        aria-label="Open settings panel"
+                        aria-expanded="false"
+                    >
+                        Settings
                     </button>
                 </header>
-                
-                <div class="settings-content">
-                    <!-- Display Mode Toggle -->
-                    <section class="settings-section" aria-labelledby="display-mode-heading">
-                        <h3 id="display-mode-heading">Display Mode</h3>
-                        <div class="mode-toggle">
-                            <input type="radio" name="display-mode-demo" id="simple-mode-demo" value="simple">
-                            <label for="simple-mode-demo">Simple Checklist</label>
-                            
-                            <input type="radio" name="display-mode-demo" id="rich-mode-demo" value="rich" checked>
-                            <label for="rich-mode-demo">Rich Interactive</label>
+
+                <!-- Main content area -->
+                <main id="main-content" class="walkthrough-container">
+                    <!-- Progress overview -->
+                    <section class="progress-overview" aria-labelledby="progress-heading">
+                        <h2 id="progress-heading">Game Progress</h2>
+                        <div class="progress-stats">
+                            <progress
+                                class="progress-bar"
+                                value="0"
+                                max="100"
+                                aria-label="Game completion progress"
+                            >
+                                0% Complete
+                            </progress>
                         </div>
                     </section>
-                    
-                    <!-- Filter Presets -->
-                    <section class="settings-section" aria-labelledby="filter-presets-heading">
-                        <h3 id="filter-presets-heading">Content Filters</h3>
-                        <fieldset class="preset-buttons" aria-labelledby="filter-presets-heading">
-                            <legend class="sr-only">Content Filter Presets</legend>
-                            <button type="button" class="preset-btn" data-preset="all">Show All</button>
-                            <button type="button" class="preset-btn" data-preset="story">Story Only</button>
-                            <button type="button" class="preset-btn" data-preset="completionist">100% Complete</button>
-                            <button type="button" class="preset-btn" data-preset="pokemon">Pokemon Only</button>
+
+                    <!-- Walkthrough content -->
+                    <section class="walkthrough-content" aria-labelledby="walkthrough-heading">
+                        <h2 id="walkthrough-heading">Walkthrough Steps</h2>
+                        <!-- Dynamic content loaded here -->
+                    </section>
+                </main>
+
+                <!-- Settings panel -->
+                <aside
+                    id="settings-panel"
+                    class="settings-panel"
+                    aria-labelledby="settings-heading"
+                    aria-hidden="true"
+                >
+                    <h2 id="settings-heading">Settings & Filters</h2>
+                    <!-- Settings content -->
+                </aside>
+            </div>
+        </section>
+
+        <!-- Step Element Patterns -->
+        <section class="demo-section">
+            <h2>Step Element Patterns</h2>
+
+            <h3>Basic Step Structure</h3>
+            <div class="code-example">
+                <!-- Standard step with checkbox -->
+                <div
+                    class="step"
+                    data-step-id="unique-identifier"
+                    data-tags="story,required"
+                    data-category="progression"
+                >
+                    <input
+                        type="checkbox"
+                        id="step-unique-id"
+                        class="step-checkbox"
+                        data-location="location-id"
+                    />
+                    <label for="step-unique-id" class="step-label">
+                        <span class="step-text">Step description goes here</span>
+                        <span class="step-meta" aria-label="Additional information"
+                            >Optional meta info</span
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <h3>Pokemon Catch Step</h3>
+            <div class="code-example">
+                <div
+                    class="step pokemon-step"
+                    data-step-id="catch-pidgey-route01"
+                    data-tags="pokemon,optional,wild"
+                    data-category="pokemon"
+                >
+                    <input
+                        type="checkbox"
+                        id="catch-pidgey-route01"
+                        class="step-checkbox"
+                        data-location="route-01"
+                        data-pokemon="pidgey"
+                        data-pokemon-id="016"
+                    />
+                    <label for="catch-pidgey-route01" class="step-label">
+                        <span class="step-text">Catch Pidgey</span>
+                        <span class="pokemon-meta">
+                            <span class="encounter-rate" title="Encounter rate">50%</span>
+                            <span class="pokemon-type" data-type="normal-flying"
+                                >Normal/Flying</span
+                            >
+                        </span>
+                    </label>
+
+                    <!-- Expandable details for data capture -->
+                    <div class="step-details" aria-labelledby="catch-pidgey-route01">
+                        <div class="input-group">
+                            <label for="pidgey-level">Level caught:</label>
+                            <input
+                                type="number"
+                                id="pidgey-level"
+                                class="level-input"
+                                min="1"
+                                max="100"
+                                placeholder="Level"
+                                data-field="level"
+                            />
+                        </div>
+
+                        <div class="input-group">
+                            <label for="pidgey-encounters">Encounters before catch:</label>
+                            <input
+                                type="number"
+                                id="pidgey-encounters"
+                                class="encounters-input"
+                                min="1"
+                                placeholder="1"
+                                data-field="encountersBeforeCatch"
+                                title="How many times did you encounter this Pokemon before catching it?"
+                            />
+                        </div>
+
+                        <div class="location-info">
+                            <span class="location-tag" data-location="route-01">Route 01</span>
+                            <button
+                                type="button"
+                                class="encounter-tracker"
+                                data-pokemon="pidgey"
+                                data-location="route-01"
+                                title="Track encounter without catching"
+                            >
+                                +1 Encounter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Trainer Battle Step</h3>
+            <div class="code-example">
+                <div
+                    class="step battle-step gym-battle"
+                    data-step-id="battle-brock"
+                    data-tags="story,required,gym-battle,pewter-city"
+                    data-category="trainer-battle"
+                >
+                    <input
+                        type="checkbox"
+                        id="battle-brock"
+                        class="step-checkbox"
+                        data-location="pewter-gym"
+                        data-trainer="brock"
+                        data-trainer-id="gym-01"
+                    />
+                    <label for="battle-brock" class="step-label">
+                        <span class="step-text">Battle Brock (Gym Leader #1)</span>
+                        <span class="battle-meta">
+                            <span class="gym-badge" data-badge="boulder">Boulder Badge</span>
+                            <span class="battle-type" data-type="rock">Rock-type specialist</span>
+                        </span>
+                    </label>
+
+                    <div class="step-details trainer-details" aria-labelledby="battle-brock">
+                        <div class="trainer-team">
+                            <h4>Brock's Team:</h4>
+                            <ul class="pokemon-list">
+                                <li class="trainer-pokemon" data-pokemon="geodude">
+                                    <span class="pokemon-name">Geodude</span>
+                                    <span class="pokemon-level">Lv. 12</span>
+                                    <span class="pokemon-type" data-type="rock-ground"
+                                        >Rock/Ground</span
+                                    >
+                                </li>
+                                <li class="trainer-pokemon" data-pokemon="onix">
+                                    <span class="pokemon-name">Onix</span>
+                                    <span class="pokemon-level">Lv. 14</span>
+                                    <span class="pokemon-type" data-type="rock-ground"
+                                        >Rock/Ground</span
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="battle-strategy">
+                            <h4>Strategy Tips:</h4>
+                            <ul class="strategy-list">
+                                <li>Use Water, Grass, Fighting, or Ground-type moves</li>
+                                <li>Avoid Normal, Flying, Poison, and Fire-type attacks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Choice Step (Radio Buttons)</h3>
+            <div class="code-example">
+                <fieldset
+                    class="step-group choice-step"
+                    data-step-id="choose-starter"
+                    data-tags="story,required,choice"
+                    data-category="pokemon"
+                >
+                    <legend class="choice-legend">Choose your starter Pokemon</legend>
+
+                    <div class="choice-option">
+                        <input
+                            type="radio"
+                            name="starter-choice"
+                            id="starter-bulbasaur"
+                            value="bulbasaur"
+                            data-choice="bulbasaur"
+                            data-pokemon-id="001"
+                        />
+                        <label for="starter-bulbasaur" class="choice-label">
+                            <span
+                                class="pokemon-sprite"
+                                data-pokemon="bulbasaur"
+                                aria-hidden="true"
+                            ></span>
+                            <span class="choice-content">
+                                <span class="pokemon-name">Bulbasaur</span>
+                                <span class="pokemon-type" data-type="grass-poison"
+                                    >Grass/Poison</span
+                                >
+                                <span class="choice-description">Good against first two gyms</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="choice-option">
+                        <input
+                            type="radio"
+                            name="starter-choice"
+                            id="starter-charmander"
+                            value="charmander"
+                            data-choice="charmander"
+                            data-pokemon-id="004"
+                        />
+                        <label for="starter-charmander" class="choice-label">
+                            <span
+                                class="pokemon-sprite"
+                                data-pokemon="charmander"
+                                aria-hidden="true"
+                            ></span>
+                            <span class="choice-content">
+                                <span class="pokemon-name">Charmander</span>
+                                <span class="pokemon-type" data-type="fire">Fire</span>
+                                <span class="choice-description"
+                                    >Challenging early game, powerful late game</span
+                                >
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="choice-option">
+                        <input
+                            type="radio"
+                            name="starter-choice"
+                            id="starter-squirtle"
+                            value="squirtle"
+                            data-choice="squirtle"
+                            data-pokemon-id="007"
+                        />
+                        <label for="starter-squirtle" class="choice-label">
+                            <span
+                                class="pokemon-sprite"
+                                data-pokemon="squirtle"
+                                aria-hidden="true"
+                            ></span>
+                            <span class="choice-content">
+                                <span class="pokemon-name">Squirtle</span>
+                                <span class="pokemon-type" data-type="water">Water</span>
+                                <span class="choice-description"
+                                    >Balanced difficulty throughout</span
+                                >
+                            </span>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <h3>Name Input Step</h3>
+            <div class="code-example">
+                <div
+                    class="step name-input-step"
+                    data-step-id="player-name"
+                    data-tags="story,required,personalization"
+                    data-category="setup"
+                >
+                    <label for="player-name-input" class="input-label">
+                        <span class="label-text">Enter your player name:</span>
+                        <span class="label-help" id="player-name-help"
+                            >This will personalize the walkthrough (max 7 characters)</span
+                        >
+                    </label>
+                    <input
+                        type="text"
+                        id="player-name-input"
+                        class="name-input"
+                        maxlength="7"
+                        placeholder="ASH"
+                        data-field="playerName"
+                        aria-describedby="player-name-help"
+                        data-validation="required"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Container Pattern -->
+        <section class="demo-section">
+            <h2>Location Container Pattern</h2>
+            <div class="code-example">
+                <details
+                    class="location-section"
+                    data-location-id="pallet-town"
+                    data-region="kanto"
+                >
+                    <summary class="location-header">
+                        <span class="location-name">Pallet Town</span>
+                        <span
+                            class="step-counter"
+                            data-location="pallet-town"
+                            aria-label="steps remaining"
+                        >
+                            <span class="counter-number">5</span>
+                            <span class="counter-text">steps remaining</span>
+                        </span>
+                        <span class="location-meta">
+                            <span class="location-type" data-type="town">Town</span>
+                            <span
+                                class="completion-status"
+                                data-status="incomplete"
+                                aria-label="Location completion status"
+                            >
+                                <span class="sr-only">Incomplete</span>
+                            </span>
+                        </span>
+                    </summary>
+
+                    <div class="location-content">
+                        <div class="location-description">
+                            <p>Your hometown and the starting point of your Pokemon journey.</p>
+                        </div>
+
+                        <fieldset class="steps-container" aria-labelledby="pallet-town-steps">
+                            <legend id="pallet-town-steps" class="sr-only">
+                                Steps for Pallet Town
+                            </legend>
+
+                            <!-- Steps go here -->
+                            <div class="step" data-step-id="talk-to-mom">
+                                <input type="checkbox" id="talk-to-mom" class="step-checkbox" />
+                                <label for="talk-to-mom" class="step-label">
+                                    <span class="step-text">Talk to your mom</span>
+                                </label>
+                            </div>
                         </fieldset>
-                    </section>
-                    
-                    <!-- Granular Filters -->
-                    <section class="settings-section" aria-labelledby="granular-filters-heading">
-                        <h3 id="granular-filters-heading">Show/Hide Content</h3>
-                        <div class="filter-checkboxes">
-                            <div class="filter-group">
-                                <input type="checkbox" id="show-optional-demo" checked>
-                                <label for="show-optional-demo">Optional steps</label>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <input type="checkbox" id="show-completed-demo" checked>
-                                <label for="show-completed-demo">Completed steps</label>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <input type="checkbox" id="show-pokemon-demo">
-                                <label for="show-pokemon-demo">Pokemon catching</label>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <input type="checkbox" id="show-battles-demo">
-                                <label for="show-battles-demo">Trainer battles</label>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- User Preferences -->
-                    <section class="settings-section" aria-labelledby="preferences-heading">
-                        <h3 id="preferences-heading">Preferences</h3>
-                        <div class="preference-controls">
-                            <div class="preference-group">
-                                <input type="checkbox" id="auto-check-pokemon-demo">
-                                <label for="auto-check-pokemon-demo">Auto-check Pokemon across locations</label>
-                            </div>
-                            
-                            <div class="preference-group">
-                                <label for="theme-select-demo">Theme:</label>
-                                <select id="theme-select-demo">
-                                    <option value="gen1">Generation 1 (Red/Blue)</option>
-                                    <option value="gen2">Generation 2 (Gold/Silver)</option>
-                                    <option value="high-contrast">High Contrast</option>
-                                </select>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                
-                <footer class="settings-footer">
-                    <button type="button" class="btn-secondary" id="export-progress-demo">Export Progress</button>
-                    <button type="button" class="btn-secondary" id="import-progress-demo">Import Progress</button>
-                    <button type="button" class="btn-primary" id="save-settings-demo">Save Settings</button>
-                </footer>
-            </aside>
-        </div>
-    </section>
-
-    <!-- Form Accessibility Patterns -->
-    <section class="demo-section">
-        <h2>Form Accessibility Patterns</h2>
-        
-        <h3>Input and Label Association</h3>
-        <div class="code-example">
-            <!-- Proper form labeling -->
-            <div class="input-group">
-                <label for="pokemon-level-demo" class="input-label">
-                    Level caught:
-                    <span class="required-indicator" aria-label="required">*</span>
-                </label>
-                <input type="number" 
-                       id="pokemon-level-demo" 
-                       class="level-input"
-                       min="1" 
-                       max="100" 
-                       required
-                       aria-describedby="level-help-demo level-error-demo"
-                       aria-invalid="false">
-                <div id="level-help-demo" class="input-help">
-                    Enter the level at which you caught this Pokemon (1-100)
-                </div>
-                <div id="level-error-demo" class="input-error" role="alert" aria-live="polite">
-                    <!-- Error messages appear here -->
-                </div>
-            </div>
-
-            <!-- Fieldset grouping for related inputs -->
-            <fieldset class="settings-section">
-                <legend>Filter Options</legend>
-                <div class="filter-controls">
-                    <div class="filter-group">
-                        <input type="checkbox" id="filter-story-demo">
-                        <label for="filter-story-demo">Story steps only</label>
                     </div>
-                    <div class="filter-group">
-                        <input type="checkbox" id="filter-pokemon-demo">
-                        <label for="filter-pokemon-demo">Pokemon encounters only</label>
+                </details>
+            </div>
+        </section>
+
+        <!-- Settings Panel Structure -->
+        <section class="demo-section">
+            <h2>Settings Panel Structure</h2>
+            <div class="code-example">
+                <aside
+                    id="settings-panel-demo"
+                    class="settings-panel"
+                    aria-labelledby="settings-heading-demo"
+                    aria-hidden="false"
+                >
+                    <header class="settings-header">
+                        <h2 id="settings-heading-demo">Settings & Filters</h2>
+                        <button
+                            type="button"
+                            class="settings-close"
+                            aria-label="Close settings panel"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </header>
+
+                    <div class="settings-content">
+                        <!-- Display Mode Toggle -->
+                        <section class="settings-section" aria-labelledby="display-mode-heading">
+                            <h3 id="display-mode-heading">Display Mode</h3>
+                            <div class="mode-toggle">
+                                <input
+                                    type="radio"
+                                    name="display-mode-demo"
+                                    id="simple-mode-demo"
+                                    value="simple"
+                                />
+                                <label for="simple-mode-demo">Simple Checklist</label>
+
+                                <input
+                                    type="radio"
+                                    name="display-mode-demo"
+                                    id="rich-mode-demo"
+                                    value="rich"
+                                    checked
+                                />
+                                <label for="rich-mode-demo">Rich Interactive</label>
+                            </div>
+                        </section>
+
+                        <!-- Filter Presets -->
+                        <section class="settings-section" aria-labelledby="filter-presets-heading">
+                            <h3 id="filter-presets-heading">Content Filters</h3>
+                            <fieldset
+                                class="preset-buttons"
+                                aria-labelledby="filter-presets-heading"
+                            >
+                                <legend class="sr-only">Content Filter Presets</legend>
+                                <button type="button" class="preset-btn" data-preset="all">
+                                    Show All
+                                </button>
+                                <button type="button" class="preset-btn" data-preset="story">
+                                    Story Only
+                                </button>
+                                <button
+                                    type="button"
+                                    class="preset-btn"
+                                    data-preset="completionist"
+                                >
+                                    100% Complete
+                                </button>
+                                <button type="button" class="preset-btn" data-preset="pokemon">
+                                    Pokemon Only
+                                </button>
+                            </fieldset>
+                        </section>
+
+                        <!-- Granular Filters -->
+                        <section
+                            class="settings-section"
+                            aria-labelledby="granular-filters-heading"
+                        >
+                            <h3 id="granular-filters-heading">Show/Hide Content</h3>
+                            <div class="filter-checkboxes">
+                                <div class="filter-group">
+                                    <input type="checkbox" id="show-optional-demo" checked />
+                                    <label for="show-optional-demo">Optional steps</label>
+                                </div>
+
+                                <div class="filter-group">
+                                    <input type="checkbox" id="show-completed-demo" checked />
+                                    <label for="show-completed-demo">Completed steps</label>
+                                </div>
+
+                                <div class="filter-group">
+                                    <input type="checkbox" id="show-pokemon-demo" />
+                                    <label for="show-pokemon-demo">Pokemon catching</label>
+                                </div>
+
+                                <div class="filter-group">
+                                    <input type="checkbox" id="show-battles-demo" />
+                                    <label for="show-battles-demo">Trainer battles</label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- User Preferences -->
+                        <section class="settings-section" aria-labelledby="preferences-heading">
+                            <h3 id="preferences-heading">Preferences</h3>
+                            <div class="preference-controls">
+                                <div class="preference-group">
+                                    <input type="checkbox" id="auto-check-pokemon-demo" />
+                                    <label for="auto-check-pokemon-demo"
+                                        >Auto-check Pokemon across locations</label
+                                    >
+                                </div>
+
+                                <div class="preference-group">
+                                    <label for="theme-select-demo">Theme:</label>
+                                    <select id="theme-select-demo">
+                                        <option value="gen1">Generation 1 (Red/Blue)</option>
+                                        <option value="gen2">Generation 2 (Gold/Silver)</option>
+                                        <option value="high-contrast">High Contrast</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <footer class="settings-footer">
+                        <button type="button" class="btn-secondary" id="export-progress-demo">
+                            Export Progress
+                        </button>
+                        <button type="button" class="btn-secondary" id="import-progress-demo">
+                            Import Progress
+                        </button>
+                        <button type="button" class="btn-primary" id="save-settings-demo">
+                            Save Settings
+                        </button>
+                    </footer>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Form Accessibility Patterns -->
+        <section class="demo-section">
+            <h2>Form Accessibility Patterns</h2>
+
+            <h3>Input and Label Association</h3>
+            <div class="code-example">
+                <!-- Proper form labeling -->
+                <div class="input-group">
+                    <label for="pokemon-level-demo" class="input-label">
+                        Level caught:
+                        <span class="required-indicator" aria-label="required">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="pokemon-level-demo"
+                        class="level-input"
+                        min="1"
+                        max="100"
+                        required
+                        aria-describedby="level-help-demo level-error-demo"
+                        aria-invalid="false"
+                    />
+                    <div id="level-help-demo" class="input-help">
+                        Enter the level at which you caught this Pokemon (1-100)
+                    </div>
+                    <div id="level-error-demo" class="input-error" role="alert" aria-live="polite">
+                        <!-- Error messages appear here -->
                     </div>
                 </div>
-            </fieldset>
-        </div>
 
-        <h3>Error Handling</h3>
-        <div class="code-example">
-            <!-- Error state pattern -->
-            <div class="input-group has-error">
-                <label for="invalid-input-demo">Required Field:</label>
-                <input type="text" 
-                       id="invalid-input-demo" 
-                       class="form-input" 
-                       aria-invalid="true"
-                       aria-describedby="input-error-demo">
-                <div id="input-error-demo" class="input-error" role="alert">
-                    This field is required and cannot be empty.
+                <!-- Fieldset grouping for related inputs -->
+                <fieldset class="settings-section">
+                    <legend>Filter Options</legend>
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <input type="checkbox" id="filter-story-demo" />
+                            <label for="filter-story-demo">Story steps only</label>
+                        </div>
+                        <div class="filter-group">
+                            <input type="checkbox" id="filter-pokemon-demo" />
+                            <label for="filter-pokemon-demo">Pokemon encounters only</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <h3>Error Handling</h3>
+            <div class="code-example">
+                <!-- Error state pattern -->
+                <div class="input-group has-error">
+                    <label for="invalid-input-demo">Required Field:</label>
+                    <input
+                        type="text"
+                        id="invalid-input-demo"
+                        class="form-input"
+                        aria-invalid="true"
+                        aria-describedby="input-error-demo"
+                    />
+                    <div id="input-error-demo" class="input-error" role="alert">
+                        This field is required and cannot be empty.
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Data Attribute Reference -->
-    <section class="demo-section">
-        <h2>Data Attribute Reference</h2>
-        <div class="code-example">
-            <!-- Step with all required data attributes -->
-            <div class="step" 
-                 data-step-id="example-step" 
-                 data-tags="story,required,progression" 
-                 data-category="story"
-                 data-pokemon="pikachu"
-                 data-pokemon-id="025"
-                 data-location="viridian-forest"
-                 data-trainer="youngster-joey"
-                 data-trainer-id="route-30-01">
-                <input type="checkbox" 
-                       id="example-step" 
-                       class="step-checkbox"
-                       data-field="completed"
-                       data-validation="none">
-                <label for="example-step" class="step-label">
-                    <span class="step-text">Example step with comprehensive data attributes</span>
-                </label>
+        <!-- Data Attribute Reference -->
+        <section class="demo-section">
+            <h2>Data Attribute Reference</h2>
+            <div class="code-example">
+                <!-- Step with all required data attributes -->
+                <div
+                    class="step"
+                    data-step-id="example-step"
+                    data-tags="story,required,progression"
+                    data-category="story"
+                    data-pokemon="pikachu"
+                    data-pokemon-id="025"
+                    data-location="viridian-forest"
+                    data-trainer="youngster-joey"
+                    data-trainer-id="route-30-01"
+                >
+                    <input
+                        type="checkbox"
+                        id="example-step"
+                        class="step-checkbox"
+                        data-field="completed"
+                        data-validation="none"
+                    />
+                    <label for="example-step" class="step-label">
+                        <span class="step-text"
+                            >Example step with comprehensive data attributes</span
+                        >
+                    </label>
+                </div>
             </div>
-        </div>
-        
-        <h3>Required Data Attributes</h3>
-        <ul>
-            <li><code>data-step-id</code> - Unique identifier for progress tracking</li>
-            <li><code>data-tags</code> - Comma-separated tags for filtering</li>
-            <li><code>data-category</code> - Primary category for organization</li>
-            <li><code>data-pokemon</code> - Pokemon name (lowercase, no spaces)</li>
-            <li><code>data-pokemon-id</code> - National Pokedex number</li>
-            <li><code>data-location</code> - Location identifier</li>
-            <li><code>data-trainer</code> - Trainer name (lowercase, hyphenated)</li>
-            <li><code>data-field</code> - Field name for data storage</li>
-        </ul>
-        
-        <h3>Accessibility Attributes</h3>
-        <ul>
-            <li><code>aria-label</code> - Descriptive label</li>
-            <li><code>aria-labelledby</code> - Reference to labeling element</li>
-            <li><code>aria-describedby</code> - Reference to description</li>
-            <li><code>aria-expanded</code> - For collapsible elements</li>
-            <li><code>aria-hidden</code> - For decorative elements</li>
-            <li><code>role</code> - ARIA role when semantic HTML isn't sufficient</li>
-        </ul>
-    </section>
 
-    <footer>
-        <p>These HTML templates demonstrate semantic markup, accessibility best practices, and consistent data structure for the Pokemon Walkthrough Project. All templates integrate with the CSS architecture and JavaScript modules for complete functionality.</p>
-    </footer>
-</body>
+            <h3>Required Data Attributes</h3>
+            <ul>
+                <li><code>data-step-id</code> - Unique identifier for progress tracking</li>
+                <li><code>data-tags</code> - Comma-separated tags for filtering</li>
+                <li><code>data-category</code> - Primary category for organization</li>
+                <li><code>data-pokemon</code> - Pokemon name (lowercase, no spaces)</li>
+                <li><code>data-pokemon-id</code> - National Pokedex number</li>
+                <li><code>data-location</code> - Location identifier</li>
+                <li><code>data-trainer</code> - Trainer name (lowercase, hyphenated)</li>
+                <li><code>data-field</code> - Field name for data storage</li>
+            </ul>
+
+            <h3>Accessibility Attributes</h3>
+            <ul>
+                <li><code>aria-label</code> - Descriptive label</li>
+                <li><code>aria-labelledby</code> - Reference to labeling element</li>
+                <li><code>aria-describedby</code> - Reference to description</li>
+                <li><code>aria-expanded</code> - For collapsible elements</li>
+                <li><code>aria-hidden</code> - For decorative elements</li>
+                <li><code>role</code> - ARIA role when semantic HTML isn't sufficient</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>
+                These HTML templates demonstrate semantic markup, accessibility best practices, and
+                consistent data structure for the Pokemon Walkthrough Project. All templates
+                integrate with the CSS architecture and JavaScript modules for complete
+                functionality.
+            </p>
+        </footer>
+    </body>
 </html>

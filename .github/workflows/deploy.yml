@@ -24,6 +24,9 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                  # Ensure we get the full history for proper builds
+                  fetch-depth: 0
 
             - name: Setup Pages
               uses: actions/configure-pages@v4

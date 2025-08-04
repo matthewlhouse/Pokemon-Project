@@ -7,7 +7,10 @@
     "validate-single": "node scripts/validation-runner.js single",
     "validate-batch": "node scripts/validation-runner.js batch",
     "install-deps": "npm install cheerio axios",
-    "test-validation": "node scripts/validation-runner.js batch"
+    "test-validation": "node scripts/validation-runner.js batch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:staged": "prettier --write $(git diff --cached --name-only --diff-filter=ACMR | grep -E '\\.(js|json|md|css|html)$')"
   },
   "keywords": [
     "pokemon",
@@ -22,7 +25,9 @@
     "cheerio": "^1.0.0-rc.12",
     "axios": "^1.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  },
   "engines": {
     "node": ">=14.0.0"
   },

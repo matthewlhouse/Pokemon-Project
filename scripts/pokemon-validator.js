@@ -56,7 +56,11 @@ class PokemonValidator {
             
             return true;
         } catch (error) {
-            console.log('No in-game validation file found - starting fresh');
+            // No in-game validation file found - this is expected for new setups
+            // Log for debugging but don't treat as an error
+            if (error.code !== 'ENOENT') {
+                console.warn('⚠️ Error loading in-game validation:', error.message);
+            }
             return false;
         }
     }
@@ -148,7 +152,11 @@ class PokemonValidator {
             
             return true;
         } catch (error) {
-            console.log('No validation statistics file found - starting fresh');
+            // No validation statistics file found - this is expected for new setups
+            // Log for debugging but don't treat as an error
+            if (error.code !== 'ENOENT') {
+                console.warn('⚠️ Error loading validation statistics:', error.message);
+            }
             return false;
         }
     }
@@ -193,85 +201,102 @@ class PokemonValidator {
             'evolutionChain', 'learnset', 'tmCompatibility', 'pokedexEntry'
         ];
 
-        // Calculate detailed field validation status
+        const fieldValidation = this.calculateFieldValidation(pokemonId, validationResult, requiredFields);
+        const accurateFields = this.countAccurateFields(fieldValidation);
+        const validationScores = this.calculateValidationScores(accurateFields, requiredFields.length, pokemonId);
+
+        this.storeValidationStatistics(pokemonId, fieldValidation, validationScores, validationResult);
+    }
+
+    /**
+     * Calculate field validation status for all required fields
+     */
+    calculateFieldValidation(pokemonId, validationResult, requiredFields) {
         const fieldValidation = {};
         const inGameValidatedFields = this.getInGameValidatedFields(pokemonId);
         
-        let accurateFields = 0;
         for (const field of requiredFields) {
-            const isInGameValidated = inGameValidatedFields.has(field);
-            const hasAcceptedIssue = this.hasAcceptedIssueForField(pokemonId, field);
-            
-            // Find any issue for this field in the validation results
-            const fieldIssue = validationResult.issues.find(issue => issue.field === field);
-            
-            let isAccurate = true;
-            let status = 'accurate';
-            
-            if (fieldIssue) {
-                isAccurate = false;
-                // Use the actual issue severity to determine status
-                if (fieldIssue.severity === 'no_reference') {
-                    if (hasAcceptedIssue) {
-                        status = 'accepted_override';
-                    } else if (isInGameValidated) {
-                        status = 'in_game_validated';
-                    } else {
-                        status = 'no_reference'; // New status for no external reference data
-                    }
-                } else if (fieldIssue.severity === 'inaccurate') {
-                    if (hasAcceptedIssue) {
-                        status = 'accepted_override';
-                    } else {
-                        status = 'inaccurate';
-                    }
-                } else if (fieldIssue.severity === 'partial_match') {
-                    if (hasAcceptedIssue) {
-                        status = 'accepted_override';
-                    } else {
-                        status = 'partial_match'; // New status for partial matches (0 weight)
-                    }
-                } else if (fieldIssue.severity === 'source_conflict') {
-                    if (hasAcceptedIssue) {
-                        status = 'accepted_override';
-                    } else {
-                        status = 'source_conflict'; // New status for source conflicts (0 weight)
-                    }
-                }
-            } else {
-                // No issue means the field is accurate
-                if (isInGameValidated) {
-                    status = 'accurate'; // Still accurate but also has in-game validation
-                } else {
-                    status = 'accurate';
-                }
-            }
-            
-            fieldValidation[field] = {
-                accurate: isAccurate,
-                inGameValidated: isInGameValidated,
-                hasAcceptedIssue: hasAcceptedIssue,
-                status: status
-            };
-            
-            // Count as accurate if naturally accurate or has accepted issue
-            if (isAccurate || hasAcceptedIssue) {
-                accurateFields++;
-            }
+            const fieldData = this.processFieldValidation(pokemonId, field, validationResult, inGameValidatedFields);
+            fieldValidation[field] = fieldData;
         }
 
-        // Calculate validation scores
-        const externalAccuracy = (accurateFields / requiredFields.length) * 0.75;
-        const inGameValidation = (inGameValidatedFields.size / requiredFields.length) * 0.25;
+        return fieldValidation;
+    }
+
+    /**
+     * Process validation status for a single field
+     */
+    processFieldValidation(pokemonId, field, validationResult, inGameValidatedFields) {
+        const isInGameValidated = inGameValidatedFields.has(field);
+        const hasAcceptedIssue = this.hasAcceptedIssueForField(pokemonId, field);
+        const fieldIssue = validationResult.issues.find(issue => issue.field === field);
+        
+        const status = this.determineFieldStatus(fieldIssue, hasAcceptedIssue, isInGameValidated);
+        const isAccurate = !fieldIssue;
+
+        return {
+            accurate: isAccurate,
+            inGameValidated: isInGameValidated,
+            hasAcceptedIssue: hasAcceptedIssue,
+            status: status
+        };
+    }
+
+    /**
+     * Determine the validation status for a field
+     */
+    determineFieldStatus(fieldIssue, hasAcceptedIssue, isInGameValidated) {
+        if (!fieldIssue) {
+            return 'accurate';
+        }
+
+        if (hasAcceptedIssue) {
+            return 'accepted_override';
+        }
+
+        if (fieldIssue.severity === 'no_reference' && isInGameValidated) {
+            return 'in_game_validated';
+        }
+
+        return fieldIssue.severity;
+    }
+
+    /**
+     * Count fields that are considered accurate (naturally accurate or have accepted issues)
+     */
+    countAccurateFields(fieldValidation) {
+        return Object.values(fieldValidation).filter(field => 
+            field.accurate || field.hasAcceptedIssue
+        ).length;
+    }
+
+    /**
+     * Calculate validation scores (external + in-game)
+     */
+    calculateValidationScores(accurateFields, totalFields, pokemonId) {
+        const inGameValidatedFields = this.getInGameValidatedFields(pokemonId);
+        
+        const externalAccuracy = (accurateFields / totalFields) * 0.75;
+        const inGameValidation = (inGameValidatedFields.size / totalFields) * 0.25;
         const totalCompleteness = externalAccuracy + inGameValidation;
 
-        // Store statistics
-        this.validationStatistics.set(pokemonId, {
-            completeness: Math.round(totalCompleteness * 100),
-            lastValidated: new Date().toISOString(),
-            fieldValidation: fieldValidation,
+        return {
             externalAccuracy: Math.round(externalAccuracy * 100),
             inGameValidation: Math.round(inGameValidation * 100),
+            completeness: Math.round(totalCompleteness * 100)
+        };
+    }
+
+    /**
+     * Store validation statistics in the map
+     */
+    storeValidationStatistics(pokemonId, fieldValidation, validationScores, validationResult) {
+        this.validationStatistics.set(pokemonId, {
+            completeness: validationScores.completeness,
+            lastValidated: new Date().toISOString(),
+            fieldValidation: fieldValidation,
+            externalAccuracy: validationScores.externalAccuracy,
+            inGameValidation: validationScores.inGameValidation,
             totalIssues: validationResult.totalIssues || 0,
             acceptedIssues: validationResult.acceptedIssues || 0
         });
@@ -333,7 +358,11 @@ class PokemonValidator {
             
             return true;
         } catch (error) {
-            console.log('No accepted issues file found - starting fresh');
+            // No accepted issues file found - this is expected for new setups
+            // Log for debugging but don't treat as an error
+            if (error.code !== 'ENOENT') {
+                console.warn('⚠️ Error loading accepted issues:', error.message);
+            }
             return false;
         }
     }
@@ -648,106 +677,148 @@ class PokemonValidator {
      * Compare a field for accuracy - enhanced to detect partial matches
      */
     compareFieldAccuracy(fieldName, currentValue, bulbapediaValue, serebiiValue, result) {
+        const sourceInfo = this.analyzeSourceAvailability(bulbapediaValue, serebiiValue);
+        
+        if (!sourceInfo.hasAny) {
+            this.addNoReferenceIssue(fieldName, currentValue, result);
+            return;
+        }
+
+        const matchInfo = this.analyzeMatches(currentValue, bulbapediaValue, serebiiValue, sourceInfo);
+
+        if (sourceInfo.hasBoth) {
+            this.handleBothSourcesComparison(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result);
+        } else {
+            this.handleSingleSourceComparison(fieldName, currentValue, matchInfo, sourceInfo, result);
+        }
+    }
+
+    /**
+     * Analyze source availability
+     */
+    analyzeSourceAvailability(bulbapediaValue, serebiiValue) {
         const hasBulbapedia = bulbapediaValue !== undefined;
         const hasSerebii = serebiiValue !== undefined;
         
-        // No external data to compare against
-        if (!hasBulbapedia && !hasSerebii) {
-            result.issues.push({
-                field: fieldName,
-                severity: 'no_reference',
-                message: `${fieldName} has no external reference data`,
-                current: currentValue
-            });
+        return {
+            hasBulbapedia,
+            hasSerebii,
+            hasBoth: hasBulbapedia && hasSerebii,
+            hasAny: hasBulbapedia || hasSerebii,
+            authoritativeValue: hasBulbapedia ? bulbapediaValue : serebiiValue,
+            authoritativeSource: hasBulbapedia ? 'Bulbapedia' : 'Serebii'
+        };
+    }
+
+    /**
+     * Analyze match results against sources
+     */
+    analyzeMatches(currentValue, bulbapediaValue, serebiiValue, sourceInfo) {
+        return {
+            matchesBulbapedia: sourceInfo.hasBulbapedia ? this.exactMatch(currentValue, bulbapediaValue) : null,
+            matchesSerebii: sourceInfo.hasSerebii ? this.exactMatch(currentValue, serebiiValue) : null,
+            sourcesAgree: sourceInfo.hasBoth ? this.exactMatch(bulbapediaValue, serebiiValue) : true
+        };
+    }
+
+    /**
+     * Handle comparison when both sources are available
+     */
+    handleBothSourcesComparison(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result) {
+        if (matchInfo.matchesBulbapedia && matchInfo.matchesSerebii) {
+            // Perfect match - both sources agree and current value matches
             return;
         }
-        
-        // Check matches against available sources
-        const matchesBulbapedia = hasBulbapedia ? this.exactMatch(currentValue, bulbapediaValue) : null;
-        const matchesSerebii = hasSerebii ? this.exactMatch(currentValue, serebiiValue) : null;
-        
-        // Both sources available - comprehensive comparison
-        if (hasBulbapedia && hasSerebii) {
-            if (matchesBulbapedia && matchesSerebii) {
-                // Perfect match - both sources agree and current value matches
-                return;
-            } else if (matchesBulbapedia || matchesSerebii) {
-                // Partial match - sources disagree but current matches one of them
-                const matchingSource = matchesBulbapedia ? 'Bulbapedia' : 'Serebii';
-                const conflictingSource = matchesBulbapedia ? 'Serebii' : 'Bulbapedia';
-                const conflictingValue = matchesBulbapedia ? serebiiValue : bulbapediaValue;
-                
-                result.issues.push({
-                    field: fieldName,
-                    severity: 'partial_match',
-                    message: `${fieldName} matches ${matchingSource} but conflicts with ${conflictingSource}`,
-                    current: currentValue,
-                    matchingSource: matchingSource,
-                    matchingValue: currentValue,
-                    conflictingSource: conflictingSource,
-                    conflictingValue: conflictingValue
-                });
-                
-                // Note: No suggestions added for partial matches as they need manual review
-                return;
-            } else {
-                // No match to either source
-                // Check if external sources agree with each other
-                if (this.exactMatch(bulbapediaValue, serebiiValue)) {
-                    // Sources agree, current value is wrong
-                    result.issues.push({
-                        field: fieldName,
-                        severity: 'inaccurate',
-                        message: `${fieldName} does not match external sources (both Bulbapedia and Serebii agree)`,
-                        current: currentValue,
-                        expected: bulbapediaValue,
-                        source: 'Bulbapedia & Serebii'
-                    });
-                    
-                    result.suggestions.push({
-                        field: fieldName,
-                        action: 'correct',
-                        value: bulbapediaValue,
-                        source: 'Both sources'
-                    });
-                } else {
-                    // Sources disagree and current doesn't match either
-                    result.issues.push({
-                        field: fieldName,
-                        severity: 'source_conflict',
-                        message: `${fieldName} conflicts - external sources disagree and current value matches neither`,
-                        current: currentValue,
-                        bulbapediaValue: bulbapediaValue,
-                        serebiiValue: serebiiValue
-                    });
-                    
-                    // No suggestions when sources conflict and current matches neither
-                }
-                return;
-            }
+
+        if (matchInfo.matchesBulbapedia || matchInfo.matchesSerebii) {
+            this.addPartialMatchIssue(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result);
+            return;
         }
-        
-        // Only one source available - fallback to original logic
-        const authoritativeValue = hasBulbapedia ? bulbapediaValue : serebiiValue;
-        const authoritativeSource = hasBulbapedia ? 'Bulbapedia' : 'Serebii';
-        
-        if (!this.exactMatch(currentValue, authoritativeValue)) {
-            result.issues.push({
-                field: fieldName,
-                severity: 'inaccurate',
-                message: `${fieldName} does not match ${authoritativeSource}`,
-                current: currentValue,
-                expected: authoritativeValue,
-                source: authoritativeSource
-            });
-            
-            result.suggestions.push({
-                field: fieldName,
-                action: 'correct',
-                value: authoritativeValue,
-                source: authoritativeSource
-            });
+
+        // No match to either source
+        if (matchInfo.sourcesAgree) {
+            this.addInaccurateIssue(fieldName, currentValue, bulbapediaValue, 'Bulbapedia & Serebii', result);
+        } else {
+            this.addSourceConflictIssue(fieldName, currentValue, bulbapediaValue, serebiiValue, result);
         }
+    }
+
+    /**
+     * Handle comparison when only one source is available
+     */
+    handleSingleSourceComparison(fieldName, currentValue, matchInfo, sourceInfo, result) {
+        const matchesSource = sourceInfo.hasBulbapedia ? matchInfo.matchesBulbapedia : matchInfo.matchesSerebii;
+        
+        if (!matchesSource) {
+            this.addInaccurateIssue(fieldName, currentValue, sourceInfo.authoritativeValue, sourceInfo.authoritativeSource, result);
+        }
+    }
+
+    /**
+     * Add no reference data issue
+     */
+    addNoReferenceIssue(fieldName, currentValue, result) {
+        result.issues.push({
+            field: fieldName,
+            severity: 'no_reference',
+            message: `${fieldName} has no external reference data`,
+            current: currentValue
+        });
+    }
+
+    /**
+     * Add partial match issue
+     */
+    addPartialMatchIssue(fieldName, currentValue, matchInfo, bulbapediaValue, serebiiValue, result) {
+        const matchingSource = matchInfo.matchesBulbapedia ? 'Bulbapedia' : 'Serebii';
+        const conflictingSource = matchInfo.matchesBulbapedia ? 'Serebii' : 'Bulbapedia';
+        const conflictingValue = matchInfo.matchesBulbapedia ? serebiiValue : bulbapediaValue;
+        
+        result.issues.push({
+            field: fieldName,
+            severity: 'partial_match',
+            message: `${fieldName} matches ${matchingSource} but conflicts with ${conflictingSource}`,
+            current: currentValue,
+            matchingSource: matchingSource,
+            matchingValue: currentValue,
+            conflictingSource: conflictingSource,
+            conflictingValue: conflictingValue
+        });
+    }
+
+    /**
+     * Add inaccurate data issue
+     */
+    addInaccurateIssue(fieldName, currentValue, expectedValue, source, result) {
+        result.issues.push({
+            field: fieldName,
+            severity: 'inaccurate',
+            message: `${fieldName} does not match ${source}`,
+            current: currentValue,
+            expected: expectedValue,
+            source: source
+        });
+        
+        result.suggestions.push({
+            field: fieldName,
+            action: 'correct',
+            value: expectedValue,
+            source: source === 'Bulbapedia & Serebii' ? 'Both sources' : source
+        });
+    }
+
+    /**
+     * Add source conflict issue
+     */
+    addSourceConflictIssue(fieldName, currentValue, bulbapediaValue, serebiiValue, result) {
+        result.issues.push({
+            field: fieldName,
+            severity: 'source_conflict',
+            message: `${fieldName} conflicts - external sources disagree and current value matches neither`,
+            current: currentValue,
+            bulbapediaValue: bulbapediaValue,
+            serebiiValue: serebiiValue
+        });
     }
 
     /**
@@ -799,7 +870,6 @@ class PokemonValidator {
     createHTMLReport(results) {
         const timestamp = new Date().toLocaleString();
         const totalPokemon = results.length;
-        const completedValidations = results.filter(r => r.status === 'completed').length;
         const totalIssues = results.reduce((sum, r) => sum + (r.totalIssues || 0), 0);
         
         // Calculate validation level statistics
@@ -1346,7 +1416,7 @@ class PokemonValidator {
         const stats = this.getValidationStatistics(result.id);
         let fieldsHTML = '';
         
-        if (stats && stats.fieldValidation) {
+        if (stats?.fieldValidation) {
             // Display all fields from validation statistics
             const allFields = [
                 'name', 'species', 'types', 'baseStats', 'height', 'weight', 
@@ -1355,130 +1425,7 @@ class PokemonValidator {
             ];
             
             fieldsHTML = allFields.map(field => {
-                const fieldInfo = stats.fieldValidation[field];
-                if (!fieldInfo) {
-                    return `
-                    <div class="issue no_reference" data-signature="unknown:${field}">
-                        <div class="issue-header">
-                            <div class="issue-field">${field}</div>
-                            <div class="issue-badges">
-                                <span class="accepted-badge">❓ NO DATA</span>
-                            </div>
-                        </div>
-                        <div class="issue-message">No validation data available for this field</div>
-                    </div>`;
-                }
-                
-                // Get the appropriate styling and badges for this field
-                let issueClass = '';
-                let statusIcon = '';
-                let statusText = '';
-                const issueBadges = [];
-                
-                switch (fieldInfo.status) {
-                    case 'accurate':
-                        issueClass = 'accepted'; // Use accepted styling for accurate fields
-                        statusIcon = '✅';
-                        statusText = 'Matches external sources';
-                        break;
-                    case 'accepted_override':
-                        issueClass = 'accepted';
-                        statusIcon = '🔄';
-                        statusText = 'Override accepted (manual verification)';
-                        issueBadges.push('<span class="accepted-badge">✅ ACCEPTED</span>');
-                        break;
-                    case 'in_game_validated':
-                        issueClass = 'accepted';
-                        statusIcon = '🎮';
-                        statusText = 'Validated through gameplay (no external match)';
-                        issueBadges.push('<span class="in-game-badge">🎮 IN-GAME</span>');
-                        break;
-                    case 'inaccurate':
-                        issueClass = 'inaccurate';
-                        statusIcon = '❌';
-                        statusText = 'Does not match external sources';
-                        break;
-                    case 'no_reference':
-                        issueClass = 'no_reference';
-                        statusIcon = '❓';
-                        statusText = 'No external reference data available';
-                        break;
-                    case 'partial_match':
-                        issueClass = 'partial_match';
-                        statusIcon = '⚠️';
-                        statusText = 'Matches one source but conflicts with another (0 weight)';
-                        break;
-                    case 'source_conflict':
-                        issueClass = 'source_conflict';
-                        statusIcon = '⚡';
-                        statusText = 'External sources disagree, current matches neither (0 weight)';
-                        break;
-                    default:
-                        issueClass = 'no_reference';
-                        statusIcon = '❓';
-                        statusText = 'Unknown validation status';
-                }
-                
-                // Add additional badges
-                if (fieldInfo.inGameValidated && fieldInfo.status !== 'in_game_validated') {
-                    issueBadges.push('<span class="in-game-badge">🎮 IN-GAME</span>');
-                }
-                if (fieldInfo.hasAcceptedIssue && fieldInfo.status !== 'accepted_override') {
-                    issueBadges.push('<span class="accepted-badge">✅ ACCEPTED</span>');
-                }
-                
-                // Find any related issue for comparison data
-                const relatedIssue = result.issues.find(issue => issue.field === field);
-                let comparisonHTML = '';
-                
-                if (relatedIssue && relatedIssue.severity === 'inaccurate') {
-                    comparisonHTML = `
-                        <div class="comparison">
-                            <strong>Current:</strong> ${JSON.stringify(relatedIssue.current)}<br>
-                            <strong>Expected (${relatedIssue.source}):</strong> ${JSON.stringify(relatedIssue.expected)}
-                            ${relatedIssue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
-                        </div>
-                    `;
-                } else if (relatedIssue && relatedIssue.severity === 'partial_match') {
-                    comparisonHTML = `
-                        <div class="comparison">
-                            <strong>Current:</strong> ${JSON.stringify(relatedIssue.current)}<br>
-                            <strong>✅ Matches ${relatedIssue.matchingSource}:</strong> ${JSON.stringify(relatedIssue.matchingValue)}<br>
-                            <strong>❌ Conflicts with ${relatedIssue.conflictingSource}:</strong> ${JSON.stringify(relatedIssue.conflictingValue)}<br>
-                            <em>⚠️ Sources disagree - manual review required (0 weight score)</em>
-                            ${relatedIssue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
-                        </div>
-                    `;
-                } else if (relatedIssue && relatedIssue.severity === 'source_conflict') {
-                    comparisonHTML = `
-                        <div class="comparison">
-                            <strong>Current:</strong> ${JSON.stringify(relatedIssue.current)}<br>
-                            <strong>Bulbapedia:</strong> ${JSON.stringify(relatedIssue.bulbapediaValue)}<br>
-                            <strong>Serebii:</strong> ${JSON.stringify(relatedIssue.serebiiValue)}<br>
-                            <em>⚡ External sources disagree and current matches neither - manual review required (0 weight score)</em>
-                            ${relatedIssue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
-                        </div>
-                    `;
-                } else if (relatedIssue && relatedIssue.current !== undefined) {
-                    comparisonHTML = `
-                        <div class="comparison">
-                            <strong>Current:</strong> ${JSON.stringify(relatedIssue.current)}
-                            ${relatedIssue.accepted ? `<br><br><strong>✅ Accepted Override:</strong> This issue has been manually verified and accepted.` : ''}
-                        </div>
-                    `;
-                }
-                
-                return `
-                <div class="issue ${issueClass}" data-signature="${field}:${fieldInfo.status}">
-                    <div class="issue-header">
-                        <div class="issue-field">${statusIcon} ${field}</div>
-                        <div class="issue-badges">
-                            ${issueBadges.join('')}
-                        </div>
-                    </div>
-                    <div class="issue-message">${statusText}</div>
-                    ${comparisonHTML}
-                </div>`;
+                return this.generateFieldHTML(field, stats.fieldValidation[field], result);
             }).join('');
         } else {
             // Fallback to showing only issues if no statistics available
@@ -1569,3 +1516,4 @@ class PokemonValidator {
 }
 
 module.exports = PokemonValidator;
+

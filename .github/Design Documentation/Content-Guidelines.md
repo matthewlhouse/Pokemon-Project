@@ -17,21 +17,27 @@ This document establishes standards for writing, organizing, and maintaining con
 
 ```markdown
 <!-- GOOD: Clear, direct instructions -->
+
 Go to Professor Oak's lab and choose your starter Pokemon.
 
 <!-- AVOID: Vague or flowery language -->
+
 Make your way over to the esteemed Professor Oak's research facility where you'll embark on the momentous decision of selecting your loyal companion.
 
 <!-- GOOD: Specific actions -->
+
 Heal your Pokemon at the Pokemon Center before challenging Brock.
 
 <!-- AVOID: Assumptions about player knowledge -->
+
 Obviously, you'll want to heal up before the gym battle.
 
 <!-- GOOD: Inclusive language -->
+
 Choose the starter that matches your preferred play style.
 
 <!-- AVOID: Gendered assumptions -->
+
 Pick the starter any guy would want for this game.
 ```
 
@@ -41,24 +47,31 @@ Pick the starter any guy would want for this game.
 <!-- Structure: Action + Location/Context + Purpose (if helpful) -->
 
 <!-- Basic Step Pattern -->
+
 - Talk to the girl near the PC to receive a Potion
 - Battle the Youngster on Route 1 (optional)
 - Enter Viridian City and visit the Pokemon Center
 
 <!-- Choice Steps -->
+
 Choose your starter Pokemon:
+
 - **Bulbasaur** (Grass/Poison) - Good against first two gyms
-- **Charmander** (Fire) - Challenging early game, powerful late game  
+- **Charmander** (Fire) - Challenging early game, powerful late game
 - **Squirtle** (Water) - Balanced throughout the game
 
 <!-- Battle Instructions -->
+
 Battle Brock (Pewter Gym Leader):
+
 - His team: Geodude (Lv. 12), Onix (Lv. 14)
 - Effective types: Water, Grass, Fighting, Ground, Steel
 - Reward: Boulder Badge, TM39 (Rock Tomb)
 
 <!-- Item Collection -->
+
 Find the hidden items in Viridian Forest:
+
 - **Antidote** - Behind the tree near the northwest entrance
 - **Poké Ball** - In the grass patch near the Bug Catcher
 - **Potion** - Next to the large tree in the center area
@@ -68,6 +81,7 @@ Find the hidden items in Viridian Forest:
 
 ```markdown
 <!-- Spoiler Levels -->
+
 [spoiler-free] - No story details, character names, or plot points
 [minor-spoilers] - Basic story context, no major reveals
 [major-spoilers] - Full story details, character motivations, plot twists
@@ -92,12 +106,15 @@ Giovanni is the leader of Team Rocket and also the Viridian City Gym Leader.
 # Game Title (Pokemon Red/Blue)
 
 ## Location (Pallet Town)
+
 Brief description of the location and its significance.
 
 ### Sub-location or Major Event (Professor Oak's Lab)
+
 Context for this specific area or event.
 
 #### Individual Steps
+
 - Specific actionable instructions
 - Each step should be independently completable
 - Steps should flow logically from one to the next
@@ -109,34 +126,42 @@ Context for this specific area or event.
 
 ```markdown
 <!-- Story Progression -->
+
 data-category="story"
 data-tags="required,story-critical"
 
 <!-- Pokemon Encounters -->
-data-category="pokemon" 
+
+data-category="pokemon"
 data-tags="pokemon-encounter,wild-pokemon"
 
 <!-- Trainer Battles -->
+
 data-category="trainer-battle"
 data-tags="trainer-battle,experience"
 
 <!-- Gym Battles -->
+
 data-category="gym-battle"
 data-tags="gym-battle,story-critical,required"
 
 <!-- Item Collection -->
+
 data-category="item"
 data-tags="item-collection,useful-item"
 
 <!-- Game Progression -->
+
 data-category="progression"
 data-tags="required,story-progression"
 
 <!-- Player Choices -->
+
 data-category="choice"
 data-tags="player-choice,permanent-effect"
 
 <!-- Setup/Preparation -->
+
 data-category="setup"
 data-tags="preparation,optional"
 ```
@@ -145,24 +170,31 @@ data-tags="preparation,optional"
 
 ```markdown
 <!-- Required story steps -->
+
 data-tags="required,story-critical,no-skip"
 
 <!-- Optional but recommended -->
+
 data-tags="optional,recommended,helpful"
 
 <!-- Pokemon-focused content -->
+
 data-tags="pokemon-encounter,pokedex,completionist"
 
 <!-- Battle preparation -->
+
 data-tags="preparation,trainer-battle,level-grinding"
 
 <!-- Version differences -->
+
 data-tags="version-red,version-blue,version-specific"
 
 <!-- Accessibility considerations -->
+
 data-tags="audio-cue,visual-indicator,timing-sensitive"
 
 <!-- Spoiler classifications -->
+
 data-tags="spoiler-free,minor-spoilers,major-spoilers"
 ```
 
@@ -170,7 +202,9 @@ data-tags="spoiler-free,minor-spoilers,major-spoilers"
 
 ```markdown
 <!-- Location Header Template -->
+
 ## Pallet Town
+
 **Region:** Kanto  
 **Population:** 2 (Red/Blue)  
 **Notable Features:** Professor Oak's Lab, Your House, Rival's House  
@@ -178,21 +212,25 @@ data-tags="spoiler-free,minor-spoilers,major-spoilers"
 **Connected Routes:** Route 1 (North), Route 21 (South via Surf)
 
 ### Your House
+
 Starting location. Your mom will heal your Pokemon throughout the game.
 
 #### Initial Setup
+
 - [Setup] Check the PC in your room (optional)
-- [Setup] Check the TV for game hints (optional)  
+- [Setup] Check the TV for game hints (optional)
 - [Story] Go downstairs and talk to your mom
 
 ### Professor Oak's Lab
+
 Where you'll receive your starter Pokemon and Pokedex.
 
 #### Getting Your Starter
+
 - [Story] Enter the lab and approach Professor Oak
 - [Choice] Choose your starter Pokemon:
   - **Bulbasaur** (Grass/Poison) - Easiest early game
-  - **Charmander** (Fire) - Moderate difficulty  
+  - **Charmander** (Fire) - Moderate difficulty
   - **Squirtle** (Water) - Balanced difficulty
 - [Story] Your rival will choose the Pokemon with type advantage
 - [Story] Battle your rival (first battle tutorial)
@@ -319,11 +357,13 @@ The content system uses version-specific tags to enable users to filter content 
 **Quality Assurance Workflow:**
 
 1. **Source Verification**: All information must be verified against reliable sources
+
    - Official strategy guides and game documentation
    - Reputable fan sites (Serebii, Bulbapedia) for comprehensive data
    - In-game testing when possible for accuracy confirmation
 
 2. **Cross-Reference Checking**: Compare data across multiple sources
+
    - Pokemon stats, movesets, and type effectiveness
    - Trainer rosters, levels, and battle rewards
    - Item locations, effects, and availability

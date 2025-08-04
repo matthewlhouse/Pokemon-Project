@@ -90,7 +90,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 **Chosen Shortcuts**:
 
 - `Alt+S`: Toggle Settings Panel
-- `Alt+F`: Focus Filter Controls  
+- `Alt+F`: Focus Filter Controls
 - `Alt+E`: Export Progress
 - `Ctrl+/`: Show Help
 - `F1`: Alternative Help (browser standard)
@@ -121,10 +121,12 @@ This document defines the accessibility design philosophy, standards, and decisi
 **Key Design Decisions**:
 
 1. **Polite vs Assertive**:
+
    - Polite for progress updates, filter changes
    - Assertive only for errors and critical warnings
 
 2. **Duplicate Filtering**:
+
    - 2-second window to prevent announcement spam
    - Preserves user focus during rapid interactions
 
@@ -139,7 +141,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 **Component ARIA Patterns**:
 
 - **Progress Indicators**: `role="progressbar"` with live value updates
-- **Location Sections**: `<details>` with `aria-controls` relationships  
+- **Location Sections**: `<details>` with `aria-controls` relationships
 - **Step Groups**: `<fieldset>` with `<legend>` for logical grouping
 - **Dynamic Updates**: Dedicated `aria-live` regions for announcements
 
@@ -158,7 +160,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 **Target Ratios**:
 
 - **Normal Text**: 4.5:1 minimum contrast ratio
-- **Large Text**: 3:1 minimum contrast ratio  
+- **Large Text**: 3:1 minimum contrast ratio
 - **Interactive Elements**: 4.5:1 for text, 3:1 for boundaries
 
 **Why These Standards**:
@@ -224,7 +226,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 
 - **Label**: `<label for="id">` or `aria-labelledby`
 - **Description**: `aria-describedby` for help text
-- **Error**: `aria-describedby` for error messages  
+- **Error**: `aria-describedby` for error messages
 - **Group**: `<fieldset>` and `<legend>` for related inputs
 
 ### Error Handling Strategy
@@ -244,7 +246,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 
 ## Focus Management Strategy
 
-### Focus Indicator Philosophy  
+### Focus Indicator Philosophy
 
 **High Visibility**: 3px outlines with adequate color contrast
 
@@ -280,7 +282,7 @@ This document defines the accessibility design philosophy, standards, and decisi
 
 - **Natural Language**: "complete step", "next location"
 - **Unambiguous**: Unique command phrases with clear intent
-- **Discoverable**: "help" command lists all available options  
+- **Discoverable**: "help" command lists all available options
 - **Contextual**: Commands work based on current focus
 
 ### Voice Command Strategy

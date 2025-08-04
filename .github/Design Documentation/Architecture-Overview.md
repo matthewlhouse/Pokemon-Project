@@ -84,7 +84,7 @@ Game-specific files can override ANY property from base data, ensuring complete 
 
 ### High-Level Component Diagram
 
-```text
+````text
 ┌───────────────────────────────────────────────────────────────────┐
 │                        User Interface Layer                       │
 ├───────────────────────────────────────────────────────────────────┤
@@ -129,7 +129,7 @@ Storage Persistence (localStorage)
 UI Updates (Event-driven)
        ↓
 Accessibility Announcements
-```
+````
 
 ## Core Design Patterns
 

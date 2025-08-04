@@ -243,7 +243,7 @@ Build an interactive, accessible Pokemon walkthrough app for Red, Blue, and Yell
 **Implementation Goals (No Data Dependencies):**
 
 - [ ] Theme switching system (Red/Blue/Yellow theme toggle)
-- [ ] Game selection button states (active/inactive visual feedback)  
+- [ ] Game selection button states (active/inactive visual feedback)
 - [ ] Settings panel toggle functionality
 - [ ] Basic keyboard navigation enhancements
 - [ ] localStorage for theme preference
@@ -313,7 +313,7 @@ Add data-dependent functionality once content and data are available.
 
 **Cross-Browser Testing:**
 
-- [ ] Chrome, Firefox, Safari, Edge compatibility  
+- [ ] Chrome, Firefox, Safari, Edge compatibility
 - [ ] Mobile responsive behavior
 - [ ] JavaScript functionality across browsers
 - [ ] CSS rendering consistency
@@ -350,7 +350,7 @@ This serves as your **proof of concept** and **template** for all future content
 **Learning Milestones:**
 
 - [ ] **HTML Skills**: Semantic structure, accessibility features, proper nesting
-- [ ] **CSS Skills**: Responsive design, component styling, accessibility considerations  
+- [ ] **CSS Skills**: Responsive design, component styling, accessibility considerations
 - [ ] **JavaScript Skills**: DOM manipulation, event handling, data management
 - [ ] **Content Skills**: Technical writing, accuracy verification, user experience design
 

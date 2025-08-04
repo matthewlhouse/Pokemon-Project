@@ -21,7 +21,7 @@ These examples provide ready-to-use implementations that can be copied directly 
 **Core Design Principles:**
 
 - **Mobile-first responsive design**: Optimized for on-the-go gameplay
-- **CSS custom properties**: Generation-based theming and consistent color management  
+- **CSS custom properties**: Generation-based theming and consistent color management
 - **Component-based organization**: Modular CSS structure for maintainability
 - **Accessibility features**: Focus indicators, screen reader support, motion preferences
 - **Progressive enhancement**: Visual enhancements layered on accessible foundation
@@ -42,18 +42,18 @@ css/
     reset.css           (normalize/reset styles)
     typography.css      (font definitions, text styles)
     accessibility.css   (focus indicators, screen reader support)
-  
+
   components/
     steps.css          (step styling, checkboxes, labels)
     locations.css      (collapsible sections, details/summary)
     settings.css       (settings panel, toolbar styling)
     filters.css        (tag filtering, mode switching)
-  
+
   themes/
     gen1.css          (Red/Blue/Yellow color schemes)
     gen2.css          (Gold/Silver/Crystal color schemes)
     accessibility.css  (high contrast, reduced motion)
-  
+
   layouts/
     mobile.css        (responsive breakpoints)
     desktop.css       (larger screen optimizations)
@@ -115,7 +115,7 @@ The Pokemon Walkthrough Project employs a mobile-first responsive design strateg
 **Breakpoint Strategy:**
 
 - **Small (640px+)**: Enhanced mobile layouts with improved spacing
-- **Medium (768px+)**: Tablet layouts with modal dialogs and grid enhancements  
+- **Medium (768px+)**: Tablet layouts with modal dialogs and grid enhancements
 - **Large (1024px+)**: Desktop layouts with sidebar positioning and advanced interactions
 - **Extra Large (1280px+)**: Wide desktop optimizations with expanded content areas
 

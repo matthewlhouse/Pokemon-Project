@@ -39,9 +39,14 @@ Collapsible sections using HTML5 `<details>` and `<summary>` elements
 
 ```html
 <details class="location">
-    <summary>Location Name (<span class="step-counter">3</span> steps remaining)</summary>
+    <summary>
+        Location Name (<span class="step-counter">3</span> steps remaining)
+    </summary>
     <div class="steps">
-        <div><input type="checkbox" data-location="location-id"> <label>Step description</label></div>
+        <div>
+            <input type="checkbox" data-location="location-id" />
+            <label>Step description</label>
+        </div>
         <!-- more steps -->
     </div>
 </details>
@@ -64,9 +69,33 @@ For decisions like starter Pokemon - only one option selectable, but all remain 
 ```html
 <fieldset class="step-group choice-step">
     <legend>Choose your starter Pokemon</legend>
-    <div><input type="radio" name="starter" id="bulbasaur" data-choice="bulbasaur"> <label for="bulbasaur">Bulbasaur</label></div>
-    <div><input type="radio" name="starter" id="charmander" data-choice="charmander"> <label for="charmander">Charmander</label></div>
-    <div><input type="radio" name="starter" id="squirtle" data-choice="squirtle"> <label for="squirtle">Squirtle</label></div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="bulbasaur"
+            data-choice="bulbasaur"
+        />
+        <label for="bulbasaur">Bulbasaur</label>
+    </div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="charmander"
+            data-choice="charmander"
+        />
+        <label for="charmander">Charmander</label>
+    </div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="squirtle"
+            data-choice="squirtle"
+        />
+        <label for="squirtle">Squirtle</label>
+    </div>
 </fieldset>
 ```
 
@@ -76,11 +105,28 @@ Pokemon catching with level and location tracking:
 
 ```html
 <div class="step collection-step" data-tags="pokemon,optional">
-    <input type="checkbox" id="catch-pidgey" data-pokemon="pidgey" data-location="route-01">
+    <input
+        type="checkbox"
+        id="catch-pidgey"
+        data-pokemon="pidgey"
+        data-location="route-01"
+    />
     <label for="catch-pidgey">Catch Pidgey (50% encounter rate)</label>
     <div class="step-details">
-        <input type="number" placeholder="Level caught" min="1" max="100" data-field="level">
-        <input type="number" placeholder="Encounters before catch" min="1" data-field="encountersBeforeCatch" title="How many times did you encounter this Pokemon before catching it?">
+        <input
+            type="number"
+            placeholder="Level caught"
+            min="1"
+            max="100"
+            data-field="level"
+        />
+        <input
+            type="number"
+            placeholder="Encounters before catch"
+            min="1"
+            data-field="encountersBeforeCatch"
+            title="How many times did you encounter this Pokemon before catching it?"
+        />
         <span class="location-tag">Route 01</span>
     </div>
 </div>
@@ -93,19 +139,53 @@ Player and rival name selection for personalization:
 ```html
 <fieldset class="step-group choice-step">
     <legend>Choose your starter Pokemon</legend>
-    <div><input type="radio" name="starter" id="bulbasaur" data-choice="bulbasaur"> <label for="bulbasaur">Bulbasaur</label></div>
-    <div><input type="radio" name="starter" id="charmander" data-choice="charmander"> <label for="charmander">Charmander</label></div>
-    <div><input type="radio" name="starter" id="squirtle" data-choice="squirtle"> <label for="squirtle">Squirtle</label></div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="bulbasaur"
+            data-choice="bulbasaur"
+        />
+        <label for="bulbasaur">Bulbasaur</label>
+    </div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="charmander"
+            data-choice="charmander"
+        />
+        <label for="charmander">Charmander</label>
+    </div>
+    <div>
+        <input
+            type="radio"
+            name="starter"
+            id="squirtle"
+            data-choice="squirtle"
+        />
+        <label for="squirtle">Squirtle</label>
+    </div>
 </fieldset>
 
 <div class="step name-input" data-tags="story,required">
     <label for="player-name">Enter your player name:</label>
-    <input type="text" id="player-name" data-field="playerName" placeholder="ASH">
+    <input
+        type="text"
+        id="player-name"
+        data-field="playerName"
+        placeholder="ASH"
+    />
 </div>
 
 <div class="step name-input" data-tags="story,required">
     <label for="rival-name">Enter your rival's name:</label>
-    <input type="text" id="rival-name" data-field="rivalName" placeholder="GARY">
+    <input
+        type="text"
+        id="rival-name"
+        data-field="rivalName"
+        placeholder="GARY"
+    />
 </div>
 ```
 
@@ -114,13 +194,21 @@ Player and rival name selection for personalization:
 Robust tagging for step filtering:
 
 ```html
-<div class="step" data-tags="story,required,gym-battle" data-category="trainer-battle">
-    <input type="checkbox" id="brock-battle" data-trainer="brock">
+<div
+    class="step"
+    data-tags="story,required,gym-battle"
+    data-category="trainer-battle"
+>
+    <input type="checkbox" id="brock-battle" data-trainer="brock" />
     <label for="brock-battle">Battle Brock (Gym Leader)</label>
 </div>
 
-<div class="step" data-tags="optional,legendary,postgame" data-category="pokemon">
-    <input type="checkbox" id="catch-mewtwo" data-pokemon="mewtwo">
+<div
+    class="step"
+    data-tags="optional,legendary,postgame"
+    data-category="pokemon"
+>
+    <input type="checkbox" id="catch-mewtwo" data-pokemon="mewtwo" />
     <label for="catch-mewtwo">Catch Mewtwo</label>
 </div>
 ```

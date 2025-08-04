@@ -121,18 +121,16 @@ This document defines the accessibility design philosophy, standards, and decisi
 **Key Design Decisions**:
 
 1. **Polite vs Assertive**:
-
-   - Polite for progress updates, filter changes
-   - Assertive only for errors and critical warnings
+    - Polite for progress updates, filter changes
+    - Assertive only for errors and critical warnings
 
 2. **Duplicate Filtering**:
-
-   - 2-second window to prevent announcement spam
-   - Preserves user focus during rapid interactions
+    - 2-second window to prevent announcement spam
+    - Preserves user focus during rapid interactions
 
 3. **Context-Aware Messaging**:
-   - Include location, category, and status in announcements
-   - "Pokemon catching step in Route 1 completed" vs "Step completed"
+    - Include location, category, and status in announcements
+    - "Pokemon catching step in Route 1 completed" vs "Step completed"
 
 ### ARIA Structure Decisions
 

@@ -1,347 +1,412 @@
 <!-- Content Template Examples for Pokemon Walkthrough Project
      This file contains HTML template patterns referenced in Content-Guidelines.md -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Walkthrough Content Templates</title>
-    <style>
-        /* Basic styling for examples */
-        .step { 
-            margin: 1rem 0; 
-            padding: 0.5rem; 
-            border-left: 3px solid #ccc; 
-        }
-        .version-content { 
-            margin: 0.5rem 0; 
-            padding: 0.5rem; 
-            background-color: #f5f5f5; 
-        }
-        .spoiler { 
-            margin: 0.5rem 0; 
-        }
-        .location-section { 
-            margin: 2rem 0; 
-            border: 1px solid #ddd; 
-            padding: 1rem; 
-        }
-    </style>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pokemon Walkthrough Content Templates</title>
+        <style>
+            /* Basic styling for examples */
+            .step {
+                margin: 1rem 0;
+                padding: 0.5rem;
+                border-left: 3px solid #ccc;
+            }
+            .version-content {
+                margin: 0.5rem 0;
+                padding: 0.5rem;
+                background-color: #f5f5f5;
+            }
+            .spoiler {
+                margin: 0.5rem 0;
+            }
+            .location-section {
+                margin: 2rem 0;
+                border: 1px solid #ddd;
+                padding: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Step Template Examples -->
+        <section class="template-examples">
+            <h1>Content Template Examples</h1>
 
-<!-- Step Template Examples -->
-<section class="template-examples">
-    <h1>Content Template Examples</h1>
-    
-    <!-- Basic Step Pattern -->
-    <h2>Basic Step Patterns</h2>
-    
-    <!-- Story Progression Step -->
-    <div class="step" 
-         data-step-id="pallet-town-1"
-         data-category="story"
-         data-location="pallet-town"
-         data-tags="required,story-critical,tutorial,spoiler-free,easy">
-        <input type="checkbox" class="step-checkbox" id="step-pallet-town-1">
-        <label for="step-pallet-town-1" class="step-text">
-            Leave your house and head north to Route 1
-        </label>
-    </div>
+            <!-- Basic Step Pattern -->
+            <h2>Basic Step Patterns</h2>
 
-    <!-- Pokemon Encounter Step -->
-    <div class="step"
-         data-step-id="route-1-pikachu"
-         data-category="pokemon"
-         data-location="route-1" 
-         data-tags="pokemon-encounter,optional,yellow-only,beginner-friendly,audio-cue">
-        <input type="checkbox" class="step-checkbox" id="step-route-1-pikachu">
-        <label for="step-route-1-pikachu" class="step-text">
-            (Yellow Version) Encounter Pikachu in the tall grass - listen for its cry
-        </label>
-    </div>
-
-    <!-- Gym Battle Step -->
-    <div class="step"
-         data-step-id="brock-battle"
-         data-category="gym-battle"
-         data-location="pewter-gym"
-         data-tags="required,gym-battle,moderate,story-critical,preparation-recommended">
-        <input type="checkbox" class="step-checkbox" id="step-brock-battle">
-        <label for="step-brock-battle" class="step-text">
-            Challenge Brock to a gym battle
-        </label>
-    </div>
-
-    <!-- Choice Step Template -->
-    <h2>Choice Step Template</h2>
-    <fieldset class="step-group choice-step" 
-              data-step-id="choose-starter" 
-              data-tags="story,required,choice" 
-              data-category="pokemon">
-        <legend class="choice-legend">Choose your starter Pokemon</legend>
-        
-        <div class="choice-option">
-            <input type="radio" name="starter-choice" id="starter-bulbasaur" 
-                   value="bulbasaur" data-choice="bulbasaur" data-pokemon-id="001">
-            <label for="starter-bulbasaur" class="choice-label">
-                <span class="pokemon-name">Bulbasaur</span>
-                <span class="pokemon-type" data-type="grass-poison">Grass/Poison</span>
-                <span class="choice-description">Good against first two gyms</span>
-            </label>
-        </div>
-        
-        <div class="choice-option">
-            <input type="radio" name="starter-choice" id="starter-charmander" 
-                   value="charmander" data-choice="charmander" data-pokemon-id="004">
-            <label for="starter-charmander" class="choice-label">
-                <span class="pokemon-name">Charmander</span>
-                <span class="pokemon-type" data-type="fire">Fire</span>
-                <span class="choice-description">Challenging early game, powerful late game</span>
-            </label>
-        </div>
-        
-        <div class="choice-option">
-            <input type="radio" name="starter-choice" id="starter-squirtle" 
-                   value="squirtle" data-choice="squirtle" data-pokemon-id="007">
-            <label for="starter-squirtle" class="choice-label">
-                <span class="pokemon-name">Squirtle</span>
-                <span class="pokemon-type" data-type="water">Water</span>
-                <span class="choice-description">Balanced difficulty throughout</span>
-            </label>
-        </div>
-    </fieldset>
-
-    <!-- Location Organization Template -->
-    <h2>Location Organization Template</h2>
-    <section class="location-section" data-location-id="pallet-town" data-region="kanto">
-        <header class="location-header">
-            <h3>Pallet Town</h3>
-            <div class="location-meta">
-                <span class="region">Region: Kanto</span>
-                <span class="population">Population: 2 (Red/Blue)</span>
+            <!-- Story Progression Step -->
+            <div
+                class="step"
+                data-step-id="pallet-town-1"
+                data-category="story"
+                data-location="pallet-town"
+                data-tags="required,story-critical,tutorial,spoiler-free,easy"
+            >
+                <input type="checkbox" class="step-checkbox" id="step-pallet-town-1" />
+                <label for="step-pallet-town-1" class="step-text">
+                    Leave your house and head north to Route 1
+                </label>
             </div>
-        </header>
-        
-        <div class="location-info">
-            <p><strong>Notable Features:</strong> Professor Oak's Lab, Your House, Rival's House</p>
-            <p><strong>Key Items:</strong> Pokedex, Starter Pokemon, Town Map</p>
-            <p><strong>Connected Routes:</strong> Route 1 (North), Route 21 (South via Surf)</p>
-        </div>
 
-        <details class="location-subsection">
-            <summary>Your House</summary>
-            <p>Starting location. Your mom will heal your Pokemon throughout the game.</p>
-            
-            <div class="steps-container">
-                <h4>Initial Setup</h4>
-                <div class="step" data-category="setup" data-tags="setup,optional">
-                    <input type="checkbox" id="check-pc">
-                    <label for="check-pc">[Setup] Check the PC in your room (optional)</label>
+            <!-- Pokemon Encounter Step -->
+            <div
+                class="step"
+                data-step-id="route-1-pikachu"
+                data-category="pokemon"
+                data-location="route-1"
+                data-tags="pokemon-encounter,optional,yellow-only,beginner-friendly,audio-cue"
+            >
+                <input type="checkbox" class="step-checkbox" id="step-route-1-pikachu" />
+                <label for="step-route-1-pikachu" class="step-text">
+                    (Yellow Version) Encounter Pikachu in the tall grass - listen for its cry
+                </label>
+            </div>
+
+            <!-- Gym Battle Step -->
+            <div
+                class="step"
+                data-step-id="brock-battle"
+                data-category="gym-battle"
+                data-location="pewter-gym"
+                data-tags="required,gym-battle,moderate,story-critical,preparation-recommended"
+            >
+                <input type="checkbox" class="step-checkbox" id="step-brock-battle" />
+                <label for="step-brock-battle" class="step-text">
+                    Challenge Brock to a gym battle
+                </label>
+            </div>
+
+            <!-- Choice Step Template -->
+            <h2>Choice Step Template</h2>
+            <fieldset
+                class="step-group choice-step"
+                data-step-id="choose-starter"
+                data-tags="story,required,choice"
+                data-category="pokemon"
+            >
+                <legend class="choice-legend">Choose your starter Pokemon</legend>
+
+                <div class="choice-option">
+                    <input
+                        type="radio"
+                        name="starter-choice"
+                        id="starter-bulbasaur"
+                        value="bulbasaur"
+                        data-choice="bulbasaur"
+                        data-pokemon-id="001"
+                    />
+                    <label for="starter-bulbasaur" class="choice-label">
+                        <span class="pokemon-name">Bulbasaur</span>
+                        <span class="pokemon-type" data-type="grass-poison">Grass/Poison</span>
+                        <span class="choice-description">Good against first two gyms</span>
+                    </label>
                 </div>
-                <div class="step" data-category="setup" data-tags="setup,optional">
-                    <input type="checkbox" id="check-tv">
-                    <label for="check-tv">[Setup] Check the TV for game hints (optional)</label>
+
+                <div class="choice-option">
+                    <input
+                        type="radio"
+                        name="starter-choice"
+                        id="starter-charmander"
+                        value="charmander"
+                        data-choice="charmander"
+                        data-pokemon-id="004"
+                    />
+                    <label for="starter-charmander" class="choice-label">
+                        <span class="pokemon-name">Charmander</span>
+                        <span class="pokemon-type" data-type="fire">Fire</span>
+                        <span class="choice-description"
+                            >Challenging early game, powerful late game</span
+                        >
+                    </label>
                 </div>
-                <div class="step" data-category="story" data-tags="story,required">
-                    <input type="checkbox" id="talk-mom">
-                    <label for="talk-mom">[Story] Go downstairs and talk to your mom</label>
+
+                <div class="choice-option">
+                    <input
+                        type="radio"
+                        name="starter-choice"
+                        id="starter-squirtle"
+                        value="squirtle"
+                        data-choice="squirtle"
+                        data-pokemon-id="007"
+                    />
+                    <label for="starter-squirtle" class="choice-label">
+                        <span class="pokemon-name">Squirtle</span>
+                        <span class="pokemon-type" data-type="water">Water</span>
+                        <span class="choice-description">Balanced difficulty throughout</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Location Organization Template -->
+            <h2>Location Organization Template</h2>
+            <section class="location-section" data-location-id="pallet-town" data-region="kanto">
+                <header class="location-header">
+                    <h3>Pallet Town</h3>
+                    <div class="location-meta">
+                        <span class="region">Region: Kanto</span>
+                        <span class="population">Population: 2 (Red/Blue)</span>
+                    </div>
+                </header>
+
+                <div class="location-info">
+                    <p>
+                        <strong>Notable Features:</strong> Professor Oak's Lab, Your House, Rival's
+                        House
+                    </p>
+                    <p><strong>Key Items:</strong> Pokedex, Starter Pokemon, Town Map</p>
+                    <p>
+                        <strong>Connected Routes:</strong> Route 1 (North), Route 21 (South via
+                        Surf)
+                    </p>
+                </div>
+
+                <details class="location-subsection">
+                    <summary>Your House</summary>
+                    <p>Starting location. Your mom will heal your Pokemon throughout the game.</p>
+
+                    <div class="steps-container">
+                        <h4>Initial Setup</h4>
+                        <div class="step" data-category="setup" data-tags="setup,optional">
+                            <input type="checkbox" id="check-pc" />
+                            <label for="check-pc"
+                                >[Setup] Check the PC in your room (optional)</label
+                            >
+                        </div>
+                        <div class="step" data-category="setup" data-tags="setup,optional">
+                            <input type="checkbox" id="check-tv" />
+                            <label for="check-tv"
+                                >[Setup] Check the TV for game hints (optional)</label
+                            >
+                        </div>
+                        <div class="step" data-category="story" data-tags="story,required">
+                            <input type="checkbox" id="talk-mom" />
+                            <label for="talk-mom">[Story] Go downstairs and talk to your mom</label>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="location-subsection">
+                    <summary>Professor Oak's Lab</summary>
+                    <p>Where you'll receive your starter Pokemon and Pokedex.</p>
+
+                    <div class="steps-container">
+                        <h4>Getting Your Starter</h4>
+                        <div class="step" data-category="story" data-tags="story,required">
+                            <input type="checkbox" id="enter-lab" />
+                            <label for="enter-lab"
+                                >[Story] Enter the lab and approach Professor Oak</label
+                            >
+                        </div>
+                        <div class="step" data-category="choice" data-tags="choice,required">
+                            <input type="checkbox" id="choose-starter" />
+                            <label for="choose-starter"
+                                >[Choice] Choose your starter Pokemon (see above)</label
+                            >
+                        </div>
+                        <div class="step" data-category="story" data-tags="story,required">
+                            <input type="checkbox" id="rival-choice" />
+                            <label for="rival-choice"
+                                >[Story] Your rival will choose the Pokemon with type
+                                advantage</label
+                            >
+                        </div>
+                        <div
+                            class="step"
+                            data-category="trainer-battle"
+                            data-tags="trainer-battle,required,tutorial"
+                        >
+                            <input type="checkbox" id="first-battle" />
+                            <label for="first-battle"
+                                >[Story] Battle your rival (first battle tutorial)</label
+                            >
+                        </div>
+                    </div>
+                </details>
+            </section>
+
+            <!-- Version Differences Template -->
+            <h2>Version Differences Template</h2>
+            <section class="version-differences">
+                <h3>Route 1 - Wild Pokemon Encounters</h3>
+                <p>
+                    Connect Pallet Town to Viridian City. Your first opportunity to encounter wild
+                    Pokemon.
+                </p>
+
+                <!-- Version-specific content -->
+                <div class="version-content" data-versions="red,blue">
+                    <h4>Red/Blue Version:</h4>
+                    <ul>
+                        <li>Pidgey (45% encounter rate, Level 2-5)</li>
+                        <li>Rattata (55% encounter rate, Level 2-4)</li>
+                    </ul>
+                </div>
+
+                <div class="version-content" data-versions="yellow">
+                    <h4>Yellow Version:</h4>
+                    <ul>
+                        <li>Pidgey (55% encounter rate, Level 2-5)</li>
+                        <li>Rattata (35% encounter rate, Level 2-4)</li>
+                        <li>Pikachu (5% encounter rate, Level 3-5) - Special encounter</li>
+                    </ul>
+                </div>
+
+                <!-- Shared content continues -->
+                <h4>Trainer Battles</h4>
+                <p>All versions have the same trainer roster on this route.</p>
+            </section>
+
+            <!-- Spoiler Management Template -->
+            <h2>Spoiler Management Template</h2>
+
+            <details class="spoiler minor-spoilers">
+                <summary>Story Context (Minor Spoilers)</summary>
+                <p>
+                    Team Rocket is causing trouble in the Silph Co. building. You'll need to help
+                    stop them.
+                </p>
+            </details>
+
+            <details class="spoiler major-spoilers">
+                <summary>Full Story Details (Major Spoilers)</summary>
+                <p>Giovanni is the leader of Team Rocket and also the Viridian City Gym Leader.</p>
+            </details>
+
+            <!-- Data Templates -->
+            <h2>Pokemon Information Template</h2>
+            <div class="pokemon-info">
+                <h3>Pikachu</h3>
+                <div class="pokemon-data">
+                    <p><strong>Species:</strong> Pikachu</p>
+                    <p><strong>National Dex #:</strong> 025</p>
+                    <p><strong>Type:</strong> Electric</p>
+                    <p><strong>Locations Found:</strong> Route 25, Viridian Forest</p>
+                    <p><strong>Encounter Rate:</strong> 5% (Red/Blue), 20% (Yellow)</p>
+                    <p><strong>Level Range:</strong> 3-5 (Viridian Forest), 8-12 (Route 25)</p>
+                    <p><strong>Evolution:</strong> Evolves into Raichu with Thunder Stone</p>
+                    <p><strong>Notable Stats:</strong> Speed (90), Attack (55), Defense (40)</p>
+                </div>
+
+                <div class="moveset">
+                    <h4>Moveset at Encounter:</h4>
+                    <ul>
+                        <li>Level 3: Thunder Shock, Growl</li>
+                        <li>Level 5: Thunder Shock, Growl, Thunder Wave</li>
+                    </ul>
                 </div>
             </div>
-        </details>
 
-        <details class="location-subsection">
-            <summary>Professor Oak's Lab</summary>
-            <p>Where you'll receive your starter Pokemon and Pokedex.</p>
-            
-            <div class="steps-container">
-                <h4>Getting Your Starter</h4>
-                <div class="step" data-category="story" data-tags="story,required">
-                    <input type="checkbox" id="enter-lab">
-                    <label for="enter-lab">[Story] Enter the lab and approach Professor Oak</label>
+            <!-- Battle Information Template -->
+            <h2>Trainer Battle Template</h2>
+            <div class="trainer-battle">
+                <h3>Gym Leader Brock</h3>
+                <div class="battle-info">
+                    <p><strong>Location:</strong> Pewter City Gym</p>
+                    <p><strong>Specialty:</strong> Rock-type Pokemon</p>
+                    <p><strong>Badge Reward:</strong> Boulder Badge</p>
+                    <p><strong>TM Reward:</strong> TM39 (Rock Tomb) - Only in newer games</p>
+                    <p><strong>Prize Money:</strong> $1,386</p>
                 </div>
-                <div class="step" data-category="choice" data-tags="choice,required">
-                    <input type="checkbox" id="choose-starter">
-                    <label for="choose-starter">[Choice] Choose your starter Pokemon (see above)</label>
+
+                <div class="trainer-team">
+                    <h4>Team:</h4>
+                    <div class="pokemon-entry">
+                        <h5>1. Geodude (Level 12)</h5>
+                        <p><strong>Type:</strong> Rock/Ground</p>
+                        <p><strong>Moves:</strong> Defense Curl, Rock Throw</p>
+                        <p><strong>Strategy:</strong> Low-level, easy to defeat</p>
+                    </div>
+
+                    <div class="pokemon-entry">
+                        <h5>2. Onix (Level 14)</h5>
+                        <p><strong>Type:</strong> Rock/Ground</p>
+                        <p><strong>Moves:</strong> Screech, Bide, Bind, Rock Throw</p>
+                        <p>
+                            <strong>Strategy:</strong> High defense, low attack. Watch out for Bide.
+                        </p>
+                    </div>
                 </div>
-                <div class="step" data-category="story" data-tags="story,required">
-                    <input type="checkbox" id="rival-choice">
-                    <label for="rival-choice">[Story] Your rival will choose the Pokemon with type advantage</label>
-                </div>
-                <div class="step" data-category="trainer-battle" data-tags="trainer-battle,required,tutorial">
-                    <input type="checkbox" id="first-battle">
-                    <label for="first-battle">[Story] Battle your rival (first battle tutorial)</label>
+
+                <div class="battle-strategy">
+                    <h4>Recommended Strategy:</h4>
+                    <ul>
+                        <li>Use Water or Grass-type moves for 4x damage</li>
+                        <li>Fighting-type moves are also effective (2x damage)</li>
+                        <li>Avoid Normal, Flying, Poison, and Fire attacks</li>
+                        <li>Bring plenty of Potions - Onix can be tanky</li>
+                    </ul>
+
+                    <h4>Counter Strategies:</h4>
+                    <ul>
+                        <li><strong>Bulbasaur:</strong> Vine Whip defeats both Pokemon easily</li>
+                        <li><strong>Squirtle:</strong> Water Gun is very effective</li>
+                        <li>
+                            <strong>Charmander:</strong> Very difficult - recommend catching Mankey
+                            on Route 22
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </details>
-    </section>
 
-    <!-- Version Differences Template -->
-    <h2>Version Differences Template</h2>
-    <section class="version-differences">
-        <h3>Route 1 - Wild Pokemon Encounters</h3>
-        <p>Connect Pallet Town to Viridian City. Your first opportunity to encounter wild Pokemon.</p>
-        
-        <!-- Version-specific content -->
-        <div class="version-content" data-versions="red,blue">
-            <h4>Red/Blue Version:</h4>
-            <ul>
-                <li>Pidgey (45% encounter rate, Level 2-5)</li>
-                <li>Rattata (55% encounter rate, Level 2-4)</li>
-            </ul>
-        </div>
+            <!-- Item Information Template -->
+            <h2>Item Information Template</h2>
+            <div class="item-info">
+                <h3>Rare Candy</h3>
+                <div class="item-data">
+                    <p><strong>Category:</strong> Medicine/Enhancement</p>
+                    <p><strong>Effect:</strong> Increases Pokemon level by 1</p>
+                    <p><strong>Value:</strong> Cannot be sold</p>
+                </div>
 
-        <div class="version-content" data-versions="yellow">
-            <h4>Yellow Version:</h4>
-            <ul>
-                <li>Pidgey (55% encounter rate, Level 2-5)</li>
-                <li>Rattata (35% encounter rate, Level 2-4)</li>
-                <li>Pikachu (5% encounter rate, Level 3-5) - Special encounter</li>
-            </ul>
-        </div>
-
-        <!-- Shared content continues -->
-        <h4>Trainer Battles</h4>
-        <p>All versions have the same trainer roster on this route.</p>
-    </section>
-
-    <!-- Spoiler Management Template -->
-    <h2>Spoiler Management Template</h2>
-    
-    <details class="spoiler minor-spoilers">
-        <summary>Story Context (Minor Spoilers)</summary>
-        <p>Team Rocket is causing trouble in the Silph Co. building. You'll need to help stop them.</p>
-    </details>
-
-    <details class="spoiler major-spoilers">
-        <summary>Full Story Details (Major Spoilers)</summary>
-        <p>Giovanni is the leader of Team Rocket and also the Viridian City Gym Leader.</p>
-    </details>
-
-    <!-- Data Templates -->
-    <h2>Pokemon Information Template</h2>
-    <div class="pokemon-info">
-        <h3>Pikachu</h3>
-        <div class="pokemon-data">
-            <p><strong>Species:</strong> Pikachu</p>
-            <p><strong>National Dex #:</strong> 025</p>
-            <p><strong>Type:</strong> Electric</p>
-            <p><strong>Locations Found:</strong> Route 25, Viridian Forest</p>
-            <p><strong>Encounter Rate:</strong> 5% (Red/Blue), 20% (Yellow)</p>
-            <p><strong>Level Range:</strong> 3-5 (Viridian Forest), 8-12 (Route 25)</p>
-            <p><strong>Evolution:</strong> Evolves into Raichu with Thunder Stone</p>
-            <p><strong>Notable Stats:</strong> Speed (90), Attack (55), Defense (40)</p>
-        </div>
-        
-        <div class="moveset">
-            <h4>Moveset at Encounter:</h4>
-            <ul>
-                <li>Level 3: Thunder Shock, Growl</li>
-                <li>Level 5: Thunder Shock, Growl, Thunder Wave</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Battle Information Template -->
-    <h2>Trainer Battle Template</h2>
-    <div class="trainer-battle">
-        <h3>Gym Leader Brock</h3>
-        <div class="battle-info">
-            <p><strong>Location:</strong> Pewter City Gym</p>
-            <p><strong>Specialty:</strong> Rock-type Pokemon</p>
-            <p><strong>Badge Reward:</strong> Boulder Badge</p>
-            <p><strong>TM Reward:</strong> TM39 (Rock Tomb) - Only in newer games</p>
-            <p><strong>Prize Money:</strong> $1,386</p>
-        </div>
-        
-        <div class="trainer-team">
-            <h4>Team:</h4>
-            <div class="pokemon-entry">
-                <h5>1. Geodude (Level 12)</h5>
-                <p><strong>Type:</strong> Rock/Ground</p>
-                <p><strong>Moves:</strong> Defense Curl, Rock Throw</p>
-                <p><strong>Strategy:</strong> Low-level, easy to defeat</p>
+                <div class="item-locations">
+                    <h4>Locations:</h4>
+                    <ul>
+                        <li>Cerulean Cave: 2 found</li>
+                        <li>Route 12: 1 hidden behind fence post</li>
+                        <li>Silph Co.: 1 on 2F</li>
+                        <li>Victory Road: 1 hidden near ladder</li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="pokemon-entry">
-                <h5>2. Onix (Level 14)</h5>
-                <p><strong>Type:</strong> Rock/Ground</p>
-                <p><strong>Moves:</strong> Screech, Bide, Bind, Rock Throw</p>
-                <p><strong>Strategy:</strong> High defense, low attack. Watch out for Bide.</p>
+
+            <!-- Hidden Item Template -->
+            <div class="hidden-item">
+                <h3>Hidden Item: Rare Candy (Route 25)</h3>
+                <div class="hidden-item-data">
+                    <p><strong>Location:</strong> Route 25</p>
+                    <p><strong>Item:</strong> Rare Candy</p>
+                    <p><strong>Position:</strong> Behind the house near Bill's cottage</p>
+                    <p>
+                        <strong>Description:</strong> Use the Item Finder to locate it more easily
+                    </p>
+                    <p>
+                        <strong>Coordinates:</strong> 3 steps right, 2 steps down from the house
+                        door
+                    </p>
+                </div>
             </div>
-        </div>
-        
-        <div class="battle-strategy">
-            <h4>Recommended Strategy:</h4>
-            <ul>
-                <li>Use Water or Grass-type moves for 4x damage</li>
-                <li>Fighting-type moves are also effective (2x damage)</li>
-                <li>Avoid Normal, Flying, Poison, and Fire attacks</li>
-                <li>Bring plenty of Potions - Onix can be tanky</li>
-            </ul>
-            
-            <h4>Counter Strategies:</h4>
-            <ul>
-                <li><strong>Bulbasaur:</strong> Vine Whip defeats both Pokemon easily</li>
-                <li><strong>Squirtle:</strong> Water Gun is very effective</li>
-                <li><strong>Charmander:</strong> Very difficult - recommend catching Mankey on Route 22</li>
-            </ul>
-        </div>
-    </div>
+        </section>
 
-    <!-- Item Information Template -->
-    <h2>Item Information Template</h2>
-    <div class="item-info">
-        <h3>Rare Candy</h3>
-        <div class="item-data">
-            <p><strong>Category:</strong> Medicine/Enhancement</p>
-            <p><strong>Effect:</strong> Increases Pokemon level by 1</p>
-            <p><strong>Value:</strong> Cannot be sold</p>
-        </div>
-        
-        <div class="item-locations">
-            <h4>Locations:</h4>
-            <ul>
-                <li>Cerulean Cave: 2 found</li>
-                <li>Route 12: 1 hidden behind fence post</li>
-                <li>Silph Co.: 1 on 2F</li>
-                <li>Victory Road: 1 hidden near ladder</li>
-            </ul>
-        </div>
-    </div>
+        <!-- Internationalization Template -->
+        <section class="i18n-examples">
+            <h2>Internationalization Template</h2>
 
-    <!-- Hidden Item Template -->
-    <div class="hidden-item">
-        <h3>Hidden Item: Rare Candy (Route 25)</h3>
-        <div class="hidden-item-data">
-            <p><strong>Location:</strong> Route 25</p>
-            <p><strong>Item:</strong> Rare Candy</p>
-            <p><strong>Position:</strong> Behind the house near Bill's cottage</p>
-            <p><strong>Description:</strong> Use the Item Finder to locate it more easily</p>
-            <p><strong>Coordinates:</strong> 3 steps right, 2 steps down from the house door</p>
-        </div>
-    </div>
-</section>
+            <!-- English (base) -->
+            <div class="i18n-content" lang="en">
+                <span class="step-text" data-i18n="pallet.oak-lab.starter-choice">
+                    Choose your starter Pokemon from Professor Oak
+                </span>
+            </div>
 
-<!-- Internationalization Template -->
-<section class="i18n-examples">
-    <h2>Internationalization Template</h2>
-    
-    <!-- English (base) -->
-    <div class="i18n-content" lang="en">
-        <span class="step-text" data-i18n="pallet.oak-lab.starter-choice">
-            Choose your starter Pokemon from Professor Oak
-        </span>
-    </div>
-    
-    <!-- Spanish example -->
-    <div class="i18n-content" lang="es">
-        <span class="step-text" data-i18n="pallet.oak-lab.starter-choice">
-            Elige tu Pokémon inicial del Profesor Oak
-        </span>
-    </div>
-</section>
-
-</body>
+            <!-- Spanish example -->
+            <div class="i18n-content" lang="es">
+                <span class="step-text" data-i18n="pallet.oak-lab.starter-choice">
+                    Elige tu Pokémon inicial del Profesor Oak
+                </span>
+            </div>
+        </section>
+    </body>
 </html>

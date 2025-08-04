@@ -9,11 +9,11 @@ This document provides practical code examples and implementation patterns for t
 ```javascript
 // Merge base and game-specific Pokemon data
 const getPokemonData = (pokemonId, gameId) => {
-  const baseData = pokemonBase[pokemonId];
-  const gameData = gameSpecific[gameId][pokemonId] || {};
-  
-  // Game data completely overrides base data properties
-  return { ...baseData, ...gameData };
+    const baseData = pokemonBase[pokemonId];
+    const gameData = gameSpecific[gameId][pokemonId] || {};
+
+    // Game data completely overrides base data properties
+    return { ...baseData, ...gameData };
 };
 ```
 
@@ -22,18 +22,28 @@ const getPokemonData = (pokemonId, gameId) => {
 ```javascript
 // Update step counter when checkbox state changes
 function updateStepCounter(locationId) {
-  const checkboxes = document.querySelectorAll(`input[data-location="${locationId}"]`);
-  const uncheckedCount = Array.from(checkboxes).filter(cb => !cb.checked).length;
-  const counter = document.querySelector(`.step-counter[data-location="${locationId}"]`);
-  
-  if (counter) {
-    counter.textContent = uncheckedCount;
-    
-    // Visual completion indicator
-    if (uncheckedCount === 0) {
-      counter.parentElement.innerHTML = counter.parentElement.innerHTML.replace(' steps remaining', ' steps - ✅ Complete!');
+    const checkboxes = document.querySelectorAll(
+        `input[data-location="${locationId}"]`
+    );
+    const uncheckedCount = Array.from(checkboxes).filter(
+        cb => !cb.checked
+    ).length;
+    const counter = document.querySelector(
+        `.step-counter[data-location="${locationId}"]`
+    );
+
+    if (counter) {
+        counter.textContent = uncheckedCount;
+
+        // Visual completion indicator
+        if (uncheckedCount === 0) {
+            counter.parentElement.innerHTML =
+                counter.parentElement.innerHTML.replace(
+                    ' steps remaining',
+                    ' steps - ✅ Complete!'
+                );
+        }
     }
-  }
 }
 ```
 
@@ -42,32 +52,36 @@ function updateStepCounter(locationId) {
 ```javascript
 // Capture rich data when steps are completed
 function handleStepCompletion(stepElement) {
-  const stepData = {
-    stepId: stepElement.id,
-    completed: stepElement.checked,
-    timestamp: new Date().toISOString(),
-    tags: stepElement.dataset.tags?.split(',') || [],
-    category: stepElement.dataset.category
-  };
-  
-  // Capture additional data based on step type
-  if (stepElement.dataset.pokemon) {
-    const levelInput = stepElement.parentElement.querySelector('[data-field="level"]');
-    const encountersInput = stepElement.parentElement.querySelector('[data-field="encountersBeforeCatch"]');
-    stepData.pokemon = {
-      name: stepElement.dataset.pokemon,
-      level: levelInput?.value || null,
-      location: stepElement.dataset.location,
-      encountersBeforeCatch: encountersInput?.value || 1
+    const stepData = {
+        stepId: stepElement.id,
+        completed: stepElement.checked,
+        timestamp: new Date().toISOString(),
+        tags: stepElement.dataset.tags?.split(',') || [],
+        category: stepElement.dataset.category,
     };
-  }
-  
-  if (stepElement.dataset.choice) {
-    stepData.choice = stepElement.dataset.choice;
-  }
-  
-  // Save to progress tracking
-  saveStepProgress(stepData);
+
+    // Capture additional data based on step type
+    if (stepElement.dataset.pokemon) {
+        const levelInput = stepElement.parentElement.querySelector(
+            '[data-field="level"]'
+        );
+        const encountersInput = stepElement.parentElement.querySelector(
+            '[data-field="encountersBeforeCatch"]'
+        );
+        stepData.pokemon = {
+            name: stepElement.dataset.pokemon,
+            level: levelInput?.value || null,
+            location: stepElement.dataset.location,
+            encountersBeforeCatch: encountersInput?.value || 1,
+        };
+    }
+
+    if (stepElement.dataset.choice) {
+        stepData.choice = stepElement.dataset.choice;
+    }
+
+    // Save to progress tracking
+    saveStepProgress(stepData);
 }
 ```
 
@@ -76,21 +90,22 @@ function handleStepCompletion(stepElement) {
 ```javascript
 // Filter steps based on user preferences
 function filterStepsByTags(includeTags = [], excludeTags = []) {
-  const steps = document.querySelectorAll('.step');
-  
-  steps.forEach(step => {
-    const stepTags = step.dataset.tags?.split(',') || [];
-    
-    const shouldInclude = includeTags.length === 0 || 
-                         includeTags.some(tag => stepTags.includes(tag));
-    const shouldExclude = excludeTags.some(tag => stepTags.includes(tag));
-    
-    if (shouldInclude && !shouldExclude) {
-      step.style.display = '';
-    } else {
-      step.style.display = 'none';
-    }
-  });
+    const steps = document.querySelectorAll('.step');
+
+    steps.forEach(step => {
+        const stepTags = step.dataset.tags?.split(',') || [];
+
+        const shouldInclude =
+            includeTags.length === 0 ||
+            includeTags.some(tag => stepTags.includes(tag));
+        const shouldExclude = excludeTags.some(tag => stepTags.includes(tag));
+
+        if (shouldInclude && !shouldExclude) {
+            step.style.display = '';
+        } else {
+            step.style.display = 'none';
+        }
+    });
 }
 
 // Example usage:
@@ -103,24 +118,29 @@ function filterStepsByTags(includeTags = [], excludeTags = []) {
 ```javascript
 // Auto-check Pokemon across all locations when one is caught
 function handlePokemonCaught(pokemonName, gameId) {
-  const autoCheckEnabled = this.globalProgress.preferences.autoCheckPokemon;
-  
-  if (autoCheckEnabled) {
-    // Find all checkboxes for this Pokemon in the current game
-    const pokemonCheckboxes = document.querySelectorAll(`input[data-pokemon="${pokemonName}"]`);
-    
-    pokemonCheckboxes.forEach(checkbox => {
-      if (!checkbox.checked) {
-        checkbox.checked = true;
-        // Trigger the completion handler for each location
-        handleStepCompletion(checkbox);
-        // Update step counters for affected locations
-        updateStepCounter(checkbox.dataset.location);
-      }
-    });
-    
-    this.emit('pokemon:auto-completed', { pokemon: pokemonName, locations: pokemonCheckboxes.length });
-  }
+    const autoCheckEnabled = this.globalProgress.preferences.autoCheckPokemon;
+
+    if (autoCheckEnabled) {
+        // Find all checkboxes for this Pokemon in the current game
+        const pokemonCheckboxes = document.querySelectorAll(
+            `input[data-pokemon="${pokemonName}"]`
+        );
+
+        pokemonCheckboxes.forEach(checkbox => {
+            if (!checkbox.checked) {
+                checkbox.checked = true;
+                // Trigger the completion handler for each location
+                handleStepCompletion(checkbox);
+                // Update step counters for affected locations
+                updateStepCounter(checkbox.dataset.location);
+            }
+        });
+
+        this.emit('pokemon:auto-completed', {
+            pokemon: pokemonName,
+            locations: pokemonCheckboxes.length,
+        });
+    }
 }
 ```
 
@@ -129,21 +149,21 @@ function handlePokemonCaught(pokemonName, gameId) {
 ```javascript
 // Replace placeholder names throughout the walkthrough
 function personalizeContent(playerName, rivalName) {
-  // Replace all instances of placeholder names in labels and text
-  const walkthrough = document.querySelector('.walkthrough-content');
-  
-  if (walkthrough) {
-    walkthrough.innerHTML = walkthrough.innerHTML
-      .replace(/\{PLAYER\}/g, playerName || 'PLAYER')
-      .replace(/\{RIVAL\}/g, rivalName || 'RIVAL')
-      .replace(/your rival/g, rivalName || 'your rival')
-      .replace(/You \(/g, `${playerName || 'You'} (`);
-  }
-  
-  // Save names to progress data
-  this.gameProgress.choices.playerName = playerName;
-  this.gameProgress.choices.rivalName = rivalName;
-  this.saveProgress();
+    // Replace all instances of placeholder names in labels and text
+    const walkthrough = document.querySelector('.walkthrough-content');
+
+    if (walkthrough) {
+        walkthrough.innerHTML = walkthrough.innerHTML
+            .replace(/\{PLAYER\}/g, playerName || 'PLAYER')
+            .replace(/\{RIVAL\}/g, rivalName || 'RIVAL')
+            .replace(/your rival/g, rivalName || 'your rival')
+            .replace(/You \(/g, `${playerName || 'You'} (`);
+    }
+
+    // Save names to progress data
+    this.gameProgress.choices.playerName = playerName;
+    this.gameProgress.choices.rivalName = rivalName;
+    this.saveProgress();
 }
 ```
 
@@ -151,103 +171,110 @@ function personalizeContent(playerName, rivalName) {
 
 ```javascript
 // Track Pokemon encounters without catching (for Floating Action Panel)
-function incrementPokemonEncounter(pokemonName, location, encounterType = 'wild', trainer = null) {
-  const encounterId = `encounter-${pokemonName}-${location}`;
-  
-  // Update encounter count in temporary tracking
-  if (!this.encounterTracking) {
-    this.encounterTracking = {};
-  }
-  
-  if (!this.encounterTracking[encounterId]) {
-    this.encounterTracking[encounterId] = {
-      pokemon: pokemonName,
-      location: location,
-      encounters: 0
-    };
-  }
-  
-  this.encounterTracking[encounterId].encounters++;
-  
-  // Also add to permanent encounter log
-  this.addPokemonEncounter(pokemonName, {
-    location: location,
-    type: encounterType,
-    trainer: trainer,
-    timestamp: new Date().toISOString()
-  });
-  
-  // Update UI to show encounter count
-  const encounterDisplay = document.querySelector(`[data-encounter="${encounterId}"]`);
-  if (encounterDisplay) {
-    encounterDisplay.textContent = `${this.encounterTracking[encounterId].encounters} encounters`;
-  }
-  
-  this.emit('pokemon:encountered', { 
-    pokemon: pokemonName, 
-    location: location, 
-    type: encounterType,
-    totalEncounters: this.encounterTracking[encounterId].encounters 
-  });
+function incrementPokemonEncounter(
+    pokemonName,
+    location,
+    encounterType = 'wild',
+    trainer = null
+) {
+    const encounterId = `encounter-${pokemonName}-${location}`;
+
+    // Update encounter count in temporary tracking
+    if (!this.encounterTracking) {
+        this.encounterTracking = {};
+    }
+
+    if (!this.encounterTracking[encounterId]) {
+        this.encounterTracking[encounterId] = {
+            pokemon: pokemonName,
+            location: location,
+            encounters: 0,
+        };
+    }
+
+    this.encounterTracking[encounterId].encounters++;
+
+    // Also add to permanent encounter log
+    this.addPokemonEncounter(pokemonName, {
+        location: location,
+        type: encounterType,
+        trainer: trainer,
+        timestamp: new Date().toISOString(),
+    });
+
+    // Update UI to show encounter count
+    const encounterDisplay = document.querySelector(
+        `[data-encounter="${encounterId}"]`
+    );
+    if (encounterDisplay) {
+        encounterDisplay.textContent = `${this.encounterTracking[encounterId].encounters} encounters`;
+    }
+
+    this.emit('pokemon:encountered', {
+        pokemon: pokemonName,
+        location: location,
+        type: encounterType,
+        totalEncounters: this.encounterTracking[encounterId].encounters,
+    });
 }
 
 // Add encounter to permanent log
 function addPokemonEncounter(pokemonName, encounterData) {
-  if (!this.gameProgress.pokemon[pokemonName]) {
-    this.gameProgress.pokemon[pokemonName] = {
-      totalEncounters: 0,
-      encounters: [],
-      catches: []
-    };
-  }
-  
-  this.gameProgress.pokemon[pokemonName].encounters.push(encounterData);
-  this.gameProgress.pokemon[pokemonName].totalEncounters++;
-  
-  this.saveProgress();
+    if (!this.gameProgress.pokemon[pokemonName]) {
+        this.gameProgress.pokemon[pokemonName] = {
+            totalEncounters: 0,
+            encounters: [],
+            catches: [],
+        };
+    }
+
+    this.gameProgress.pokemon[pokemonName].encounters.push(encounterData);
+    this.gameProgress.pokemon[pokemonName].totalEncounters++;
+
+    this.saveProgress();
 }
 
 // When Pokemon is actually caught, merge encounter data
 function handlePokemonCaught(pokemonName, location, level) {
-  const encounterId = `encounter-${pokemonName}-${location}`;
-  const encounterData = this.encounterTracking?.[encounterId];
-  
-  const catchData = {
-    location: location,
-    level: level,
-    timestamp: new Date().toISOString(),
-    encountersBeforeCatch: encounterData?.encounters || 1
-  };
-  
-  // Add to catches array
-  if (!this.gameProgress.pokemon[pokemonName]) {
-    this.gameProgress.pokemon[pokemonName] = {
-      totalEncounters: 0,
-      encounters: [],
-      catches: []
+    const encounterId = `encounter-${pokemonName}-${location}`;
+    const encounterData = this.encounterTracking?.[encounterId];
+
+    const catchData = {
+        location: location,
+        level: level,
+        timestamp: new Date().toISOString(),
+        encountersBeforeCatch: encounterData?.encounters || 1,
     };
-  }
-  
-  this.gameProgress.pokemon[pokemonName].catches.push(catchData);
-  
-  // Set first caught location if this is the first catch
-  if (!this.gameProgress.pokemon[pokemonName].firstCaught) {
-    this.gameProgress.pokemon[pokemonName].firstCaught = location;
-  }
-  
-  // Clear temporary encounter tracking for this Pokemon/location
-  if (this.encounterTracking?.[encounterId]) {
-    delete this.encounterTracking[encounterId];
-  }
-  
-  return {
-    pokemon: {
-      name: pokemonName,
-      level: level,
-      location: location,
-      encountersBeforeCatch: catchData.encountersBeforeCatch
+
+    // Add to catches array
+    if (!this.gameProgress.pokemon[pokemonName]) {
+        this.gameProgress.pokemon[pokemonName] = {
+            totalEncounters: 0,
+            encounters: [],
+            catches: [],
+        };
     }
-  };
+
+    this.gameProgress.pokemon[pokemonName].catches.push(catchData);
+
+    // Set first caught location if this is the first catch
+    if (!this.gameProgress.pokemon[pokemonName].firstCaught) {
+        this.gameProgress.pokemon[pokemonName].firstCaught = location;
+    }
+
+    // Clear temporary encounter tracking for this Pokemon/location
+    if (this.encounterTracking?.[encounterId]) {
+        delete this.encounterTracking[encounterId];
+    }
+
+    return {
+        pokemon: {
+            name: pokemonName,
+            level: level,
+            location: location,
+            encountersBeforeCatch: catchData.encountersBeforeCatch,
+        },
+    };
 }
 ```
 

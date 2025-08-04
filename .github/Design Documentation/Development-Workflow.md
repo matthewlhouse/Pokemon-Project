@@ -22,7 +22,7 @@ refactor/component-name # Code refactoring without new features
 
 # Examples
 feature/cross-game-progress-sync
-content/cerulean-city-walkthrough  
+content/cerulean-city-walkthrough
 fix/checkbox-persistence-safari
 docs/accessibility-standards
 refactor/progress-manager-class
@@ -52,7 +52,7 @@ git add .
 git commit -m "Add Pokemon encounter tracking to progress manager
 
 - Implement encounter counting for wild Pokemon
-- Add encounter data to localStorage persistence  
+- Add encounter data to localStorage persistence
 - Update UI to show encounter counts in step tooltips
 - Add accessibility announcements for encounter updates"
 
@@ -60,7 +60,7 @@ git commit -m "Add Pokemon encounter tracking to progress manager
 # type(scope): description
 #
 # body explaining what and why
-# 
+#
 # footer with breaking changes or issue references
 
 # Push to remote branch regularly
@@ -108,7 +108,7 @@ BREAKING CHANGE: Changed localStorage key format
 
 ```bash
 feat:     # New feature for users
-fix:      # Bug fix for users  
+fix:      # Bug fix for users
 docs:     # Documentation changes
 style:    # Code formatting, no logic changes
 refactor: # Code restructuring, no behavior changes
@@ -120,7 +120,7 @@ a11y:     # Accessibility improvements
 # Examples
 feat(progress): add cross-game Pokemon tracking
 fix(ui): resolve checkbox state persistence in Safari
-docs(api): update module interface documentation  
+docs(api): update module interface documentation
 style(css): standardize color variable naming
 refactor(data): extract shared Pokemon data structures
 test(progress): add unit tests for localStorage manager
@@ -137,22 +137,26 @@ a11y(nav): improve keyboard navigation for step lists
 
 ```markdown
 ## Description
+
 Brief summary of changes and motivation.
 
 ## Type of Change
+
 - [ ] Bug fix (non-breaking change that fixes an issue)
-- [ ] New feature (non-breaking change that adds functionality)  
+- [ ] New feature (non-breaking change that adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
 - [ ] Content addition/update
 - [ ] Accessibility improvement
 
 ## Changes Made
+
 - Specific change 1
 - Specific change 2
 - Specific change 3
 
 ## Testing Performed
+
 - [ ] Manual testing completed
 - [ ] Automated tests pass
 - [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
@@ -161,17 +165,21 @@ Brief summary of changes and motivation.
 - [ ] Content accuracy verified
 
 ## Screenshots
+
 [Include screenshots for UI changes]
 
 ## Accessibility Considerations
+
 - Describe any accessibility impacts
 - Note screen reader testing results
 - List keyboard navigation changes
 
 ## Breaking Changes
+
 List any breaking changes and migration steps needed.
 
-## Related Issues  
+## Related Issues
+
 Closes #123
 Related to #456
 ```
@@ -190,7 +198,7 @@ Related to #456
 ##### Functionality
 
 - [ ] Feature works as described in requirements
-- [ ] Edge cases are handled appropriately  
+- [ ] Edge cases are handled appropriately
 - [ ] User input is validated properly
 - [ ] Error states provide helpful feedback
 - [ ] Performance impact is acceptable
@@ -235,6 +243,7 @@ Related to #456
 
 ```markdown
 ## Review Approach
+
 1. **Understand the Context**: Read the PR description and related issues
 2. **Test Locally**: Check out the branch and test the changes
 3. **Focus on Impact**: Prioritize user-facing and accessibility impacts
@@ -242,25 +251,31 @@ Related to #456
 5. **Ask Questions**: Clarify unclear changes rather than assuming
 
 ## Feedback Categories
+
 **Critical (Must Fix)**: Security, accessibility, breaking changes
 **Important (Should Fix)**: Performance, maintainability, user experience  
 **Suggestion (Consider)**: Style preferences, alternative approaches
 **Praise**: Highlight good practices and clever solutions
 
 ## Review Comments
+
 <!-- GOOD: Specific and actionable -->
-This function doesn't handle the case where localStorage is unavailable. 
+
+This function doesn't handle the case where localStorage is unavailable.
 Consider adding a try-catch block and falling back to memory storage.
 
 <!-- AVOID: Vague criticism -->
+
 This doesn't look right.
 
 <!-- GOOD: Explain the why -->
-This approach could cause memory leaks in long sessions. Consider using 
+
+This approach could cause memory leaks in long sessions. Consider using
 WeakMap instead of Map for automatic garbage collection.
 
 <!-- GOOD: Acknowledge good work -->
-Nice use of semantic HTML here! The aria-describedby relationship will 
+
+Nice use of semantic HTML here! The aria-describedby relationship will
 work really well for screen readers.
 ```
 
@@ -268,13 +283,15 @@ work really well for screen readers.
 
 ```markdown
 ## Preparing for Review
+
 1. **Self-Review First**: Review your own changes before requesting review
 2. **Test Thoroughly**: Ensure all functionality works as expected
 3. **Document Changes**: Update relevant documentation
 4. **Write Clear Commits**: Use descriptive commit messages
 5. **Respond to Feedback**: Address all review comments
 
-## Responding to Feedback  
+## Responding to Feedback
+
 1. **Thank Reviewers**: Acknowledge the time spent reviewing
 2. **Ask for Clarification**: Don't guess what reviewers mean
 3. **Explain Decisions**: When declining suggestions, explain why
@@ -295,9 +312,9 @@ import 'jest-localstorage-mock';
 
 // Setup DOM environment
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
-  url: 'http://localhost',
-  pretendToBeVisual: true,
-  resources: 'usable'
+    url: 'http://localhost',
+    pretendToBeVisual: true,
+    resources: 'usable',
 });
 
 global.window = dom.window;
@@ -306,7 +323,7 @@ global.navigator = dom.window.navigator;
 
 // Mock localStorage
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+    value: localStorageMock,
 });
 
 // Mock CSS.supports for feature detection
@@ -314,9 +331,9 @@ window.CSS = { supports: jest.fn(() => true) };
 
 // Mock IntersectionObserver
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn()
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
 }));
 ```
 
@@ -327,93 +344,104 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 import { ProgressManager } from '../js/modules/progress.js';
 
 describe('ProgressManager', () => {
-  let progressManager;
-  
-  beforeEach(() => {
-    // Clear localStorage before each test
-    localStorage.clear();
-    progressManager = new ProgressManager();
-  });
+    let progressManager;
 
-  describe('Step Management', () => {
-    test('should mark step as completed', () => {
-      const stepId = 'pallet-town-1';
-      const completed = true;
-      
-      progressManager.updateStepProgress(stepId, completed);
-      
-      expect(progressManager.getStepProgress(stepId)).toBe(true);
-      expect(localStorage.getItem('pokemon-walkthrough-progress')).toContain(stepId);
+    beforeEach(() => {
+        // Clear localStorage before each test
+        localStorage.clear();
+        progressManager = new ProgressManager();
     });
 
-    test('should handle invalid step IDs gracefully', () => {
-      expect(() => {
-        progressManager.updateStepProgress(null, true);
-      }).not.toThrow();
-      
-      expect(() => {
-        progressManager.updateStepProgress('', true);  
-      }).not.toThrow();
+    describe('Step Management', () => {
+        test('should mark step as completed', () => {
+            const stepId = 'pallet-town-1';
+            const completed = true;
+
+            progressManager.updateStepProgress(stepId, completed);
+
+            expect(progressManager.getStepProgress(stepId)).toBe(true);
+            expect(
+                localStorage.getItem('pokemon-walkthrough-progress')
+            ).toContain(stepId);
+        });
+
+        test('should handle invalid step IDs gracefully', () => {
+            expect(() => {
+                progressManager.updateStepProgress(null, true);
+            }).not.toThrow();
+
+            expect(() => {
+                progressManager.updateStepProgress('', true);
+            }).not.toThrow();
+        });
+
+        test('should restore progress from localStorage', () => {
+            // Setup existing progress
+            const existingProgress = {
+                'red-blue': {
+                    steps: { 'pallet-town-1': true, 'pallet-town-2': false },
+                },
+            };
+            localStorage.setItem(
+                'pokemon-walkthrough-progress',
+                JSON.stringify(existingProgress)
+            );
+
+            // Create new manager instance
+            const newManager = new ProgressManager();
+
+            expect(newManager.getStepProgress('pallet-town-1')).toBe(true);
+            expect(newManager.getStepProgress('pallet-town-2')).toBe(false);
+        });
     });
 
-    test('should restore progress from localStorage', () => {
-      // Setup existing progress
-      const existingProgress = {
-        'red-blue': {
-          steps: { 'pallet-town-1': true, 'pallet-town-2': false }
-        }
-      };
-      localStorage.setItem('pokemon-walkthrough-progress', JSON.stringify(existingProgress));
-      
-      // Create new manager instance
-      const newManager = new ProgressManager();
-      
-      expect(newManager.getStepProgress('pallet-town-1')).toBe(true);
-      expect(newManager.getStepProgress('pallet-town-2')).toBe(false);
-    });
-  });
+    describe('Cross-Game Integration', () => {
+        test('should aggregate Pokemon across games', () => {
+            progressManager.updatePokemonCaught('red-blue', 'pikachu', {
+                level: 5,
+                location: 'viridian-forest',
+            });
+            progressManager.updatePokemonCaught('yellow', 'pikachu', {
+                level: 5,
+                location: 'route-25',
+            });
 
-  describe('Cross-Game Integration', () => {
-    test('should aggregate Pokemon across games', () => {
-      progressManager.updatePokemonCaught('red-blue', 'pikachu', { level: 5, location: 'viridian-forest' });
-      progressManager.updatePokemonCaught('yellow', 'pikachu', { level: 5, location: 'route-25' });
-      
-      const globalPokedex = progressManager.getGlobalPokedex();
-      
-      expect(globalPokedex.pikachu).toBeDefined();
-      expect(globalPokedex.pikachu.games).toContain('red-blue');
-      expect(globalPokedex.pikachu.games).toContain('yellow');
-    });
-  });
+            const globalPokedex = progressManager.getGlobalPokedex();
 
-  describe('Data Persistence', () => {
-    test('should export progress data', () => {
-      progressManager.updateStepProgress('test-step', true);
-      
-      const exportData = progressManager.exportProgress();
-      
-      expect(exportData).toHaveProperty('version');
-      expect(exportData).toHaveProperty('timestamp');
-      expect(exportData).toHaveProperty('games');
+            expect(globalPokedex.pikachu).toBeDefined();
+            expect(globalPokedex.pikachu.games).toContain('red-blue');
+            expect(globalPokedex.pikachu.games).toContain('yellow');
+        });
     });
 
-    test('should import valid progress data', () => {
-      const importData = {
-        version: '1.0.0',
-        timestamp: Date.now(),
-        games: {
-          'red-blue': {
-            steps: { 'imported-step': true }
-          }
-        }
-      };
-      
-      const result = progressManager.importProgress(importData);
-      
-      expect(result.success).toBe(true);
-      expect(progressManager.getStepProgress('imported-step')).toBe(true);
+    describe('Data Persistence', () => {
+        test('should export progress data', () => {
+            progressManager.updateStepProgress('test-step', true);
+
+            const exportData = progressManager.exportProgress();
+
+            expect(exportData).toHaveProperty('version');
+            expect(exportData).toHaveProperty('timestamp');
+            expect(exportData).toHaveProperty('games');
+        });
+
+        test('should import valid progress data', () => {
+            const importData = {
+                version: '1.0.0',
+                timestamp: Date.now(),
+                games: {
+                    'red-blue': {
+                        steps: { 'imported-step': true },
+                    },
+                },
+            };
+
+            const result = progressManager.importProgress(importData);
+
+            expect(result.success).toBe(true);
+            expect(progressManager.getStepProgress('imported-step')).toBe(true);
+        });
     });
-  });
 });
 ```
 
@@ -426,42 +454,44 @@ import { axe, toHaveNoViolations } from 'jest-axe';
 expect.extend(toHaveNoViolations);
 
 describe('Accessibility Tests', () => {
-  beforeEach(async () => {
-    // Load main application markup
-    document.body.innerHTML = await fs.readFile('./index.html', 'utf8');
-    
-    // Initialize application
-    await import('../js/app.js');
-  });
+    beforeEach(async () => {
+        // Load main application markup
+        document.body.innerHTML = await fs.readFile('./index.html', 'utf8');
 
-  test('should have no accessibility violations on main page', async () => {
-    const results = await axe(document.body);
-    expect(results).toHaveNoViolations();
-  });
+        // Initialize application
+        await import('../js/app.js');
+    });
 
-  test('should handle keyboard navigation correctly', () => {
-    const firstStep = document.querySelector('.step-checkbox');
-    firstStep.focus();
-    
-    // Simulate Tab key
-    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab' });
-    document.dispatchEvent(tabEvent);
-    
-    expect(document.activeElement).not.toBe(firstStep);
-    expect(document.activeElement.matches('.step-checkbox, button, input')).toBe(true);
-  });
+    test('should have no accessibility violations on main page', async () => {
+        const results = await axe(document.body);
+        expect(results).toHaveNoViolations();
+    });
 
-  test('should announce step completion to screen readers', () => {
-    const liveRegion = document.querySelector('[aria-live="polite"]');
-    const checkbox = document.querySelector('.step-checkbox');
-    
-    // Simulate checking a step
-    checkbox.checked = true;
-    checkbox.dispatchEvent(new Event('change'));
-    
-    // Check that announcement was made
-    expect(liveRegion.textContent).toContain('completed');
-  });
+    test('should handle keyboard navigation correctly', () => {
+        const firstStep = document.querySelector('.step-checkbox');
+        firstStep.focus();
+
+        // Simulate Tab key
+        const tabEvent = new KeyboardEvent('keydown', { key: 'Tab' });
+        document.dispatchEvent(tabEvent);
+
+        expect(document.activeElement).not.toBe(firstStep);
+        expect(
+            document.activeElement.matches('.step-checkbox, button, input')
+        ).toBe(true);
+    });
+
+    test('should announce step completion to screen readers', () => {
+        const liveRegion = document.querySelector('[aria-live="polite"]');
+        const checkbox = document.querySelector('.step-checkbox');
+
+        // Simulate checking a step
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new Event('change'));
+
+        // Check that announcement was made
+        expect(liveRegion.textContent).toContain('completed');
+    });
 });
 ```
 
@@ -471,6 +501,7 @@ describe('Accessibility Tests', () => {
 
 ```markdown
 ## Required Browser Support
+
 - **Chrome**: Latest stable version (primary development browser)
 - **Firefox**: Latest stable version
 - **Safari**: Latest stable version (macOS and iOS)
@@ -479,6 +510,7 @@ describe('Accessibility Tests', () => {
 - **Mobile Safari**: Latest stable version (iOS)
 
 ## Testing Checklist Per Browser
+
 - [ ] Page loads without errors
 - [ ] All interactive elements function correctly
 - [ ] Responsive design works at different screen sizes
@@ -492,17 +524,20 @@ describe('Accessibility Tests', () => {
 
 ```markdown
 ## Desktop Testing
+
 - **Resolution**: Test at 1920x1080, 1366x768, and 1280x720
 - **Zoom Levels**: Test at 100%, 125%, 150%, and 200% zoom
 - **Window Sizes**: Test responsive breakpoints
 
-## Mobile Testing  
+## Mobile Testing
+
 - **Portrait and Landscape**: Both orientations
 - **Touch Interactions**: Tap, swipe, pinch-to-zoom
 - **Keyboard**: On-screen keyboard behavior
 - **Performance**: Smooth scrolling and interactions
 
 ## Tablet Testing
+
 - **iPad/Android Tablets**: Test on available devices
 - **Hybrid Input**: Touch and keyboard combinations
 ```
@@ -511,12 +546,14 @@ describe('Accessibility Tests', () => {
 
 ```markdown
 ## Screen Reader Testing
+
 - **NVDA (Windows)**: Primary testing screen reader
-- **JAWS (Windows)**: Secondary testing if available  
+- **JAWS (Windows)**: Secondary testing if available
 - **VoiceOver (macOS/iOS)**: Apple device testing
 - **TalkBack (Android)**: Android device testing
 
 ## Testing Checklist
+
 - [ ] All content is announced correctly
 - [ ] Navigation landmarks work properly
 - [ ] Form fields have proper labels and descriptions
@@ -526,6 +563,7 @@ describe('Accessibility Tests', () => {
 - [ ] Lists are structured correctly
 
 ## Keyboard Testing
+
 - [ ] All functionality accessible via keyboard
 - [ ] Focus indicators are visible and clear
 - [ ] Tab order is logical
@@ -534,6 +572,7 @@ describe('Accessibility Tests', () => {
 - [ ] Skip links function properly
 
 ## Color and Contrast Testing
+
 - [ ] All text meets WCAG AA contrast requirements
 - [ ] Information is not conveyed by color alone
 - [ ] High contrast mode works correctly
@@ -547,56 +586,60 @@ describe('Accessibility Tests', () => {
 ```javascript
 // js/performance-monitoring.js
 class PerformanceMonitor {
-  constructor() {
-    this.metrics = {};
-    this.initializeMonitoring();
-  }
-  
-  initializeMonitoring() {
-    // Largest Contentful Paint
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      this.metrics.lcp = lastEntry.startTime;
-    }).observe({ entryTypes: ['largest-contentful-paint'] });
-    
-    // First Input Delay
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      entries.forEach(entry => {
-        this.metrics.fid = entry.processingStart - entry.startTime;
-      });
-    }).observe({ entryTypes: ['first-input'] });
-    
-    // Cumulative Layout Shift
-    let clsValue = 0;
-    new PerformanceObserver((entryList) => {
-      for (const entry of entryList.getEntries()) {
-        if (!entry.hadRecentInput) {
-          clsValue += entry.value;
-        }
-      }
-      this.metrics.cls = clsValue;
-    }).observe({ entryTypes: ['layout-shift'] });
-  }
-  
-  getMetrics() {
-    return {
-      ...this.metrics,
-      // Add custom metrics
-      domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart,
-      windowLoad: performance.timing.loadEventEnd - performance.timing.navigationStart
-    };
-  }
+    constructor() {
+        this.metrics = {};
+        this.initializeMonitoring();
+    }
+
+    initializeMonitoring() {
+        // Largest Contentful Paint
+        new PerformanceObserver(entryList => {
+            const entries = entryList.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            this.metrics.lcp = lastEntry.startTime;
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+
+        // First Input Delay
+        new PerformanceObserver(entryList => {
+            const entries = entryList.getEntries();
+            entries.forEach(entry => {
+                this.metrics.fid = entry.processingStart - entry.startTime;
+            });
+        }).observe({ entryTypes: ['first-input'] });
+
+        // Cumulative Layout Shift
+        let clsValue = 0;
+        new PerformanceObserver(entryList => {
+            for (const entry of entryList.getEntries()) {
+                if (!entry.hadRecentInput) {
+                    clsValue += entry.value;
+                }
+            }
+            this.metrics.cls = clsValue;
+        }).observe({ entryTypes: ['layout-shift'] });
+    }
+
+    getMetrics() {
+        return {
+            ...this.metrics,
+            // Add custom metrics
+            domContentLoaded:
+                performance.timing.domContentLoadedEventEnd -
+                performance.timing.navigationStart,
+            windowLoad:
+                performance.timing.loadEventEnd -
+                performance.timing.navigationStart,
+        };
+    }
 }
 
 // Performance benchmarks
 const PERFORMANCE_THRESHOLDS = {
-  lcp: 2500,    // Largest Contentful Paint (ms)
-  fid: 100,     // First Input Delay (ms)  
-  cls: 0.1,     // Cumulative Layout Shift
-  domContentLoaded: 1500, // DOM ready (ms)
-  windowLoad: 3000        // Full page load (ms)
+    lcp: 2500, // Largest Contentful Paint (ms)
+    fid: 100, // First Input Delay (ms)
+    cls: 0.1, // Cumulative Layout Shift
+    domContentLoaded: 1500, // DOM ready (ms)
+    windowLoad: 3000, // Full page load (ms)
 };
 ```
 
@@ -609,104 +652,104 @@ const PERFORMANCE_THRESHOLDS = {
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Run linting
-      run: npm run lint
-    
-    - name: Run tests
-      run: npm test
-    
-    - name: Run accessibility tests
-      run: npm run test:a11y
-    
-    - name: Content validation
-      run: npm run validate:content
-    
-    - name: Build application
-      run: npm run build
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v3
-      if: failure()
-      with:
-        name: test-results
-        path: test-results/
+    test:
+        runs-on: ubuntu-latest
 
-  accessibility-audit:
-    runs-on: ubuntu-latest
-    needs: test
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Build application
-      run: npm run build
-    
-    - name: Start local server
-      run: npm run serve &
-      
-    - name: Wait for server
-      run: sleep 10
-    
-    - name: Run Lighthouse CI
-      run: npx lhci autorun
-      env:
-        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        steps:
+            - uses: actions/checkout@v3
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [test, accessibility-audit]
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Build for production
-      run: npm run build:prod
-    
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        cname: pokemon-walkthrough.example.com
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run linting
+              run: npm run lint
+
+            - name: Run tests
+              run: npm test
+
+            - name: Run accessibility tests
+              run: npm run test:a11y
+
+            - name: Content validation
+              run: npm run validate:content
+
+            - name: Build application
+              run: npm run build
+
+            - name: Upload test results
+              uses: actions/upload-artifact@v3
+              if: failure()
+              with:
+                  name: test-results
+                  path: test-results/
+
+    accessibility-audit:
+        runs-on: ubuntu-latest
+        needs: test
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build application
+              run: npm run build
+
+            - name: Start local server
+              run: npm run serve &
+
+            - name: Wait for server
+              run: sleep 10
+
+            - name: Run Lighthouse CI
+              run: npx lhci autorun
+              env:
+                  LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: [test, accessibility-audit]
+        if: github.ref == 'refs/heads/main'
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build for production
+              run: npm run build:prod
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist
+                  cname: pokemon-walkthrough.example.com
 ```
 
 ### Build Process
@@ -714,24 +757,24 @@ jobs:
 ```json
 // package.json scripts
 {
-  "scripts": {
-    "dev": "vite serve",
-    "build": "vite build",
-    "build:prod": "vite build --mode production",
-    "preview": "vite preview",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:a11y": "jest --testPathPattern=accessibility",
-    "lint": "eslint js/ --ext .js",
-    "lint:fix": "eslint js/ --ext .js --fix",
-    "validate:content": "node scripts/validate-content.js",
-    "validate:html": "html-validate **/*.html",
-    "serve": "http-server dist -p 8080",
-    "lighthouse": "lighthouse http://localhost:8080 --chrome-flags=\"--headless\"",
-    "clean": "rimraf dist",
-    "prepare": "husky install"
-  }
+    "scripts": {
+        "dev": "vite serve",
+        "build": "vite build",
+        "build:prod": "vite build --mode production",
+        "preview": "vite preview",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test:a11y": "jest --testPathPattern=accessibility",
+        "lint": "eslint js/ --ext .js",
+        "lint:fix": "eslint js/ --ext .js --fix",
+        "validate:content": "node scripts/validate-content.js",
+        "validate:html": "html-validate **/*.html",
+        "serve": "http-server dist -p 8080",
+        "lighthouse": "lighthouse http://localhost:8080 --chrome-flags=\"--headless\"",
+        "clean": "rimraf dist",
+        "prepare": "husky install"
+    }
 }
 ```
 
@@ -754,7 +797,7 @@ then
   npm run validate:content
 fi
 
-# Check HTML validity if HTML files changed  
+# Check HTML validity if HTML files changed
 if git diff --cached --name-only | grep -q "\.html$"
 then
   npm run validate:html
@@ -808,18 +851,21 @@ gh release create v1.2.0 --title "Pokemon Walkthrough v1.2.0" --notes-file RELEA
 
 ```markdown
 ## Development Environment
+
 - **URL**: localhost:3000 or localhost:8080
 - **Purpose**: Local development and testing
 - **Database**: Local localStorage only
 - **Features**: All development tools enabled
 
-## Staging Environment  
+## Staging Environment
+
 - **URL**: staging.pokemon-walkthrough.example.com
 - **Purpose**: Pre-production testing and review
 - **Database**: Mirrors production structure
 - **Features**: Production-like but with debug information
 
 ## Production Environment
+
 - **URL**: pokemon-walkthrough.example.com
 - **Purpose**: Live application for users
 - **Database**: Production localStorage with backup systems

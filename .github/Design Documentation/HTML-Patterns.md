@@ -135,7 +135,7 @@ The HTML architecture ensures accessibility compliance at the structural level, 
 - **Heading Hierarchy**: Logical heading structure for screen reader navigation
 - **Landmark Structure**: Proper use of semantic sectioning elements
 
-### Screen Reader Support Philosophy  
+### Screen Reader Support Philosophy
 
 **Comprehensive Labeling Strategy**: Every interactive element has multiple levels of description and context.
 

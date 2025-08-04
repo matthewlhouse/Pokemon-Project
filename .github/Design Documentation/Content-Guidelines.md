@@ -229,9 +229,9 @@ Where you'll receive your starter Pokemon and Pokedex.
 
 - [Story] Enter the lab and approach Professor Oak
 - [Choice] Choose your starter Pokemon:
-  - **Bulbasaur** (Grass/Poison) - Easiest early game
-  - **Charmander** (Fire) - Moderate difficulty
-  - **Squirtle** (Water) - Balanced difficulty
+    - **Bulbasaur** (Grass/Poison) - Easiest early game
+    - **Charmander** (Fire) - Moderate difficulty
+    - **Squirtle** (Water) - Balanced difficulty
 - [Story] Your rival will choose the Pokemon with type advantage
 - [Story] Battle your rival (first battle tutorial)
 ```
@@ -357,22 +357,20 @@ The content system uses version-specific tags to enable users to filter content 
 **Quality Assurance Workflow:**
 
 1. **Source Verification**: All information must be verified against reliable sources
-
-   - Official strategy guides and game documentation
-   - Reputable fan sites (Serebii, Bulbapedia) for comprehensive data
-   - In-game testing when possible for accuracy confirmation
+    - Official strategy guides and game documentation
+    - Reputable fan sites (Serebii, Bulbapedia) for comprehensive data
+    - In-game testing when possible for accuracy confirmation
 
 2. **Cross-Reference Checking**: Compare data across multiple sources
-
-   - Pokemon stats, movesets, and type effectiveness
-   - Trainer rosters, levels, and battle rewards
-   - Item locations, effects, and availability
-   - Evolution requirements and method variations
+    - Pokemon stats, movesets, and type effectiveness
+    - Trainer rosters, levels, and battle rewards
+    - Item locations, effects, and availability
+    - Evolution requirements and method variations
 
 3. **Version Testing**: Verify version-specific content
-   - Test encounter rates where possible
-   - Confirm exclusive Pokemon and unique features
-   - Validate trainer and gym leader differences
+    - Test encounter rates where possible
+    - Confirm exclusive Pokemon and unique features
+    - Validate trainer and gym leader differences
 
 **Implementation Reference:** See [content-validation.js](../../examples/content/content-validation.js) for the complete automated content validation system, including Pokemon data checking, battle information verification, and content quality assurance rules.
 

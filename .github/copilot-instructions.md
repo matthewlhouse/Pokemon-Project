@@ -13,14 +13,18 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 - **Performance**: Fast loading and responsive, even with large datasets
 
 ### Target Audience
+
 **Universal accessibility across all experience levels and ages:**
+
 - **New Pokemon players**: Clear guidance without assuming prior knowledge
 - **Experienced trainers**: Advanced features like completion tracking and optimization
 - **All ages**: Interface and content appropriate for children through adults
 - **Accessibility needs**: Full support for screen readers, keyboard navigation, and motor accessibility
 
 ### Initial Scope
+
 **Generation I Focus for MVP:**
+
 - **Pokemon Red, Blue, and Yellow** as the foundational implementation
 - **Complete walkthroughs** covering all story content, optional content, Pokemon encounters, items, and battles
 - **Maximum detail level** with comprehensive explanations for all experience levels
@@ -39,6 +43,7 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 ## Performance Targets
 
 **Core Web Vitals (Desktop/Mobile):**
+
 - **First Contentful Paint (FCP)**: < 1.2s / < 1.8s
 - **Largest Contentful Paint (LCP)**: < 2.0s / < 2.5s
 - **Cumulative Layout Shift (CLS)**: < 0.1 / < 0.1
@@ -46,12 +51,14 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 - **Interaction to Next Paint (INP)**: < 200ms / < 200ms
 
 **Device Support Strategy:**
+
 - **Desktop**: Current + 2 previous major OS versions (Windows 10+, macOS Monterey+, Ubuntu LTS)
 - **Mobile**: Devices with official OS support (iOS 15+, Android 10+)
 - **Testing Baseline**: iPhone 12 mini, Samsung Galaxy A54, budget devices with 4GB+ RAM
 - **Network**: 4G LTE and WiFi optimization, no 3G targeting
 
 **Resource Budgets:**
+
 - **Total JavaScript Bundle**: < 300KB (gzipped)
 - **Total CSS Bundle**: < 50KB (gzipped)
 - **Initial HTML Load**: < 100KB
@@ -59,6 +66,7 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 - **Image Assets**: < 2MB total (optimized sprites, icons)
 
 **Application Performance:**
+
 - **Step Check/Uncheck Response**: < 50ms
 - **Filter Application**: < 100ms for any filter combination
 - **Progress Save**: < 200ms to localStorage
@@ -66,12 +74,14 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 - **Theme Switch**: < 150ms visual transition
 
 **Network Efficiency:**
+
 - **Static Asset Caching**: 1 year cache headers
 - **JSON Data Compression**: Gzip enabled for all data files
 - **Lazy Loading**: Non-critical content loaded on-demand
 - **Offline Support**: Core functionality works without network
 
 **Memory Management:**
+
 - **Peak Memory Usage**: < 100MB on mobile devices
 - **Memory Leaks**: Zero tolerance - comprehensive cleanup on navigation
 - **DOM Node Count**: < 2000 nodes per route/section
@@ -80,12 +90,14 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 ### Performance Monitoring Strategy
 
 **Development Phase:**
+
 - **Lighthouse CI**: Automated performance audits on every commit
 - **Manual Lighthouse**: Regular performance audits during development
 - **VS Code Extensions**: Performance monitoring via DevTools
 - **Local Testing**: Regular testing on low-end devices
 
 **Production Monitoring:**
+
 - **Real User Monitoring (RUM)**: Core Web Vitals tracking
 - **Error Tracking**: Performance-related JavaScript errors
 - **Usage Analytics**: Identify performance bottlenecks in user flows
@@ -93,13 +105,15 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 
 ### Migration Strategy
 
-**Phase 1 (Generation I MVP)**: 
+**Phase 1 (Generation I MVP)**:
+
 - **Vanilla JavaScript** for rapid prototyping and immediate functionality
 - **Complete feature set** with progress tracking, filtering, and accessibility
 - **Comprehensive content** covering all aspects of Red, Blue, and Yellow
 - **User feedback collection** through integrated forms and social media engagement
 
-**Phase 2 (Technology Evolution)**: 
+**Phase 2 (Technology Evolution)**:
+
 - **Framework, backend, and database decisions** based on Phase 1 results and user feedback
 - **See [Pending Decisions](C:\Users\matth\OneDrive\Documents\.Personal Documents\Pokemon Project\.github\pending-decisions.md#frontend-framework-selection)** for detailed analysis of React vs Vue vs vanilla JS
 - **Migration triggers and criteria** documented for data-driven decision making
@@ -194,18 +208,21 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 ### Performance Optimization Techniques
 
 **DOM Manipulation:**
+
 - **Batch DOM updates**: Use DocumentFragment for multiple insertions
 - **Virtual scrolling**: For large lists (Pokemon, items, locations)
 - **Debounced updates**: Limit high-frequency operations (search, filtering)
 - **Efficient selectors**: Cache DOM queries, use specific selectors
 
 **Memory Management:**
+
 - **Object pooling**: Reuse objects for frequently created/destroyed items
 - **Weak references**: Prevent memory leaks in event systems
 - **Cleanup patterns**: Explicit cleanup methods for all modules
 - **Garbage collection**: Minimize object creation in hot paths
 
 **Data Loading Strategies:**
+
 - **Code splitting**: Load modules only when needed
 - **Data chunking**: Load Pokemon data in logical groups
 - **Preloading**: Critical resources loaded during idle time
@@ -213,6 +230,7 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 - **Loading Strategy**: See [Pending Decisions](C:\Users\matth\OneDrive\Documents\.Personal Documents\Pokemon Project\.github\pending-decisions.md) for evaluation of upfront vs. lazy loading approaches
 
 **Storage Optimization:**
+
 - **Data compression**: JSON compression for large datasets
 - **Incremental saves**: Only save changed progress data
 - **Storage quotas**: Monitor and manage localStorage limits
@@ -263,6 +281,7 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 ### Development Workflow (Two-Person Team)
 
 **Primary Development Pattern**:
+
 1. **Feature Discussion**: Discuss feature requirements and approach
 2. **Implementation**: Code development with Copilot assistance
 3. **Testing**: Manual testing and validation
@@ -270,6 +289,7 @@ Create an interactive, accessible, and comprehensive web application for Pokemon
 5. **Content Integration**: Add walkthrough content as features are ready
 
 **Branch Strategy (Simplified)**:
+
 - **main**: Production-ready code
 - **feature/[name]**: Feature development branches
 - **content/[location]**: Content creation branches
@@ -334,8 +354,6 @@ pokemon-walkthrough-project/
     └── accessibility/
 ```
 
-
-
 ### Branch Naming Conventions (Simplified)
 
 - **Features**: `feature/progress-tracking`, `feature/pokemon-filter`
@@ -366,6 +384,7 @@ docs(readme): update installation instructions
 ### Open Source Transition Planning
 
 **Content Completion Criteria**:
+
 - [ ] All Pokemon walkthroughs complete and tested
 - [ ] Core features fully implemented and stable
 - [ ] Accessibility compliance verified (WCAG 2.1 AA)
@@ -373,6 +392,7 @@ docs(readme): update installation instructions
 - [ ] User testing completed with positive feedback
 
 **Pre-Open Source Checklist**:
+
 - [ ] Code cleanup and documentation review
 - [ ] Remove any sensitive or personal information
 - [ ] Create comprehensive README for public audience
@@ -382,6 +402,7 @@ docs(readme): update installation instructions
 - [ ] License selection and implementation
 
 **Open Source Benefits**:
+
 - Community contributions for additional generations
 - Bug reports and feature requests from broader user base
 - Increased visibility and adoption
@@ -390,12 +411,14 @@ docs(readme): update installation instructions
 ### Testing Strategy
 
 **Manual Testing Priority**:
+
 1. **Accessibility**: Screen reader navigation, keyboard-only interaction
 2. **Cross-browser**: Chrome, Firefox, Safari, Edge (mobile and desktop)
 3. **Performance**: Core Web Vitals, loading speed, localStorage limits
 4. **Content accuracy**: Pokemon data verification, walkthrough step validation
 
 **Automated Testing**:
+
 - **Accessibility**: axe-core integration, WCAG 2.1 AA compliance
 - **HTML validation**: W3C validator integration
 - **Performance**: Lighthouse CI in GitHub Actions
@@ -404,6 +427,7 @@ docs(readme): update installation instructions
 ### Specific Testing Procedures
 
 **Accessibility Testing**:
+
 - **Screen Reader Testing**: NVDA (Windows), VoiceOver (Mac), TalkBack (Android)
 - **Keyboard Navigation**: Tab order, focus indicators, skip links
 - **Color Contrast**: WCAG AA compliance (4.5:1 normal, 3:1 large text)
@@ -411,6 +435,7 @@ docs(readme): update installation instructions
 - **High Contrast**: Windows High Contrast Mode compatibility
 
 **Performance Testing**:
+
 - **Core Web Vitals**: Regular audits on target devices
 - **Memory Leaks**: Extended session testing (2+ hours)
 - **localStorage Limits**: Test data size boundaries and quota exceeded scenarios
@@ -418,6 +443,7 @@ docs(readme): update installation instructions
 - **Bundle Analysis**: Track JavaScript/CSS size over time
 
 **Content Accuracy Testing**:
+
 - **Pokemon Data Verification**: Cross-reference with official sources
 - **Game Mechanics**: Verify damage calculations, type effectiveness
 - **Location Data**: Confirm Pokemon encounter rates and locations
@@ -426,27 +452,30 @@ docs(readme): update installation instructions
 ### Deployment and CI/CD
 
 **Automated Deployment Pipeline**:
+
 - **GitHub Actions**: Automated testing and deployment on push to main
 - **Static Hosting**: GitHub Pages for MVP, with CDN for production
 - **Performance Budgets**: Build fails if performance targets exceeded
 - **Accessibility Gates**: Deployment blocked on accessibility failures
 
 **CI/CD Workflow**:
+
 ```yaml
 # Simplified GitHub Actions workflow for static files
 on: [push, pull_request]
 jobs:
-  test:
-    - HTML validation (W3C validator)
-    - Accessibility testing (axe-core)
-    - Performance audit (Lighthouse CI)
-    - Content validation scripts
-  deploy:
-    - Direct file deployment to GitHub Pages
-    - Cache header configuration
+    test:
+        - HTML validation (W3C validator)
+        - Accessibility testing (axe-core)
+        - Performance audit (Lighthouse CI)
+        - Content validation scripts
+    deploy:
+        - Direct file deployment to GitHub Pages
+        - Cache header configuration
 ```
 
 **Rollback Strategy**:
+
 - **Git-based rollback**: Quick revert to previous working version
 - **Feature flags**: Disable problematic features without full rollback
 - **Monitoring**: Automated alerts for performance regressions
@@ -455,6 +484,7 @@ jobs:
 ### Content Creation Guidelines
 
 **Writing Standards**:
+
 - **Action-oriented language**: Use imperative verbs ("Go to", "Talk to", "Catch")
 - **Clear step numbering**: Sequential, logical progression through content
 - **Consistent terminology**: Standardized names for locations, characters, items
@@ -462,21 +492,26 @@ jobs:
 - **Completionist details**: Include optional content with clear marking
 
 **Content Structure**:
+
 ```markdown
 ## Location Name
+
 ### Story Steps
+
 1. [Action] - Brief description
-   - **Pokemon Available**: List with encounter rates
-   - **Items Available**: List with locations
-   - **Trainer Battles**: Name, Pokemon, levels
+    - **Pokemon Available**: List with encounter rates
+    - **Items Available**: List with locations
+    - **Trainer Battles**: Name, Pokemon, levels
 
 ### Optional Content
+
 - **Hidden Items**: Locations and requirements
 - **Pokemon Encounters**: Rare or version-specific
 - **Side Quests**: Non-story content
 ```
 
 **Tagging System**:
+
 - `story` - Required for game completion
 - `optional` - Side content and extras
 - `pokemon` - Pokemon encounters and catching
@@ -486,6 +521,7 @@ jobs:
 - `spoiler` - Plot reveals or surprises
 
 **Content Validation Process**:
+
 1. **Accuracy Check**: Verify all information against official sources
 2. **Completeness Review**: Ensure all content for location is covered
 3. **Accessibility Check**: Screen reader friendly, clear language
@@ -495,18 +531,21 @@ jobs:
 ### Data Management
 
 **Pokemon Data Sources**:
+
 - **Official Sources**: Nintendo, Game Freak official documentation
 - **Verified Databases**: Bulbapedia, Serebii (cross-referenced)
 - **Community Research**: ROM analysis, verified community findings
 - **Primary Verification**: Direct game testing when possible
 
 **Data Integrity Standards**:
+
 - **Dual Source Verification**: All data confirmed by at least two reliable sources
 - **Version Tracking**: Clear documentation of data version and sources
 - **Change Logging**: All data updates tracked with reasoning
 - **Error Reporting**: Clear process for reporting and correcting data errors
 
 **Data Update Process**:
+
 ```
 1. Identify data that needs updating
 2. Research and verify from multiple sources
@@ -517,6 +556,7 @@ jobs:
 ```
 
 **Data File Organization**:
+
 - **Shared Data**: `/data/shared/` - Common across all games
 - **Game-Specific**: `/data/games/{game-id}/` - Overrides and additions
 - **Version Control**: Git tracks all changes with clear commit history
@@ -525,11 +565,13 @@ jobs:
 ### User Feedback Strategy
 
 **Integrated Feedback Collection**:
+
 - **In-app feedback forms**: Contextual feedback on specific walkthrough sections
 - **Bug reporting system**: Easy reporting of content errors or technical issues
 - **Feature request tracking**: User suggestions for improvements and new features
 
 **Social Media Engagement**:
+
 - **Public beta announcement**: Coordinated launch across relevant Pokemon communities
 - **Regular updates**: Progress reports and feature highlights
 - **Community interaction**: Responding to feedback and engaging with users
@@ -548,6 +590,7 @@ For comprehensive implementation details, see the Design Documentation:
 - **[Development Workflow](C:\Users\matth\OneDrive\Documents\.Personal Documents\Pokemon Project\.github\Design Documentation\Development-Workflow.md)** - Git workflow, testing procedures, and deployment process
 
 **Decision Tracking:**
+
 - **[Pending Decisions](C:\Users\matth\OneDrive\Documents\.Personal Documents\Pokemon Project\.github\pending-decisions.md)** - Features and design decisions requiring further testing or discussion
 
 ## Contributing
@@ -557,6 +600,7 @@ For comprehensive implementation details, see the Design Documentation:
 This project is currently in **private development**. External contributions are not accepted at this time.
 
 **Current Focus**:
+
 1. **Core feature development** - Progress tracking, filtering, accessibility
 2. **Generation I content creation** - Complete walkthroughs for Red, Blue, Yellow
 3. **Quality assurance** - Testing, validation, performance optimization
@@ -567,7 +611,8 @@ This project is currently in **private development**. External contributions are
 **Timeline**: Repository will be made public after all Pokemon game walkthroughs are complete
 
 **Anticipated Contribution Areas**:
-- **Feature Enhancements**: User-requested improvements and optimizations  
+
+- **Feature Enhancements**: User-requested improvements and optimizations
 - **Localization**: Multi-language support and translations
 - **Accessibility Improvements**: Enhanced support for diverse user needs
 - **Platform Extensions**: Mobile apps, browser extensions, etc.

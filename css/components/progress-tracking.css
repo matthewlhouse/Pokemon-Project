@@ -1,0 +1,74 @@
+/* ==========================================================================
+   Progress Tracking Component
+   Overview cards showing completion progress across different categories
+   ========================================================================== */
+
+.progress-overview {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.overall-progress-tracker {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+}
+
+.overall-progress-tracker h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    padding: 0;
+}
+
+.overall-progress-tracker p {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 0;
+    text-align: center;
+}
+
+.progress-card {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    text-align: center;
+    transition: transform var(--transition-speed) ease;
+}
+
+.progress-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress type indicators with colored left borders */
+.progress-steps .progress-card {
+    border-left: 4px solid var(--pokemon-blue);
+}
+
+.progress-pokemon .progress-card {
+    border-left: 4px solid var(--pokemon-red);
+}
+
+.progress-items .progress-card {
+    border-left: 4px solid var(--pokemon-yellow);
+}
+
+.progress-battles .progress-card {
+    border-left: 4px solid var(--color-secondary);
+}
+
+.progress-percentage {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    font-weight: normal;
+}

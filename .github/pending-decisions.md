@@ -46,7 +46,163 @@ This document tracks features and design decisions that require further testing,
 
 ---
 
-## Framework Migration Trigger
+## Data Architecture Optimization
+
+**Status**: 🟡 **Pending Gen I Performance Data**
+
+**Decision Required**: Choose optimal data loading strategy for Pokemon data
+
+**Current Implementation**: Generation-based architecture with single files per data type
+
+- `core/gen1/pokemon.json` (8,121 lines) - Complete Pokemon database
+- `core/gen1/moves.json` - Move database
+- `core/gen1/items.json` - Item database  
+- `core/gen1/types.json` - Type effectiveness data
+
+**Testing Needed**:
+
+- [ ] Measure actual loading times for `pokemon.json` (8,121 lines) on target devices
+- [ ] Test network performance: 4G LTE, WiFi, slow connections
+- [ ] Memory usage analysis during walkthrough sessions
+- [ ] Browser parsing performance for large JSON files
+- [ ] Cache effectiveness and invalidation strategies
+- [ ] User experience impact: loading delays vs. responsiveness
+
+### Option A: Keep Current Structure (Recommended for Gen I)
+
+Single file per data type approach
+
+- **Pros**: Simple loading, single source of truth, atomic updates, fewer HTTP requests
+- **Cons**: Larger initial downloads, potential edit conflicts, loading time for large files
+- **Best for**: Small teams, MVP development, data consistency
+
+### Option B: Modular Data by Category
+
+Split Pokemon data into focused files
+
+```text
+core/gen1/pokemon/
+├── basic-info.json      # Names, species, types, stats
+├── evolution.json       # Evolution chains  
+├── learnsets.json       # Move learning data
+├── tm-compatibility.json # TM/HM compatibility
+└── pokedex-entries.json # Pokedex descriptions
+```
+
+- **Pros**: Granular loading, smaller file sizes, team collaboration, targeted updates
+- **Cons**: Multiple HTTP requests, coordination overhead, referential integrity challenges
+- **Best for**: Large teams, performance optimization, granular updates
+
+### Key Performance Questions to Answer
+
+1. **Loading Overhead vs Loading Time Trade-off**
+   - Is 1 large request better than 5 smaller requests?
+   - How much does HTTP request overhead impact total load time?
+   - What's the network performance impact on different connection types?
+
+2. **User Experience Impact**
+   - Do users notice the difference in loading patterns?
+   - How does perceived performance compare to actual performance?
+   - What's the impact on walkthrough flow and usability?
+
+3. **Development Workflow**
+   - How often do we edit different parts of Pokemon data?
+   - What's the impact on merge conflicts and collaboration?
+   - How does data validation complexity change?
+
+**Evaluation Timeline**:
+
+- **Phase 1**: Complete Gen I with current structure
+- **Phase 2**: Collect real performance data from Gen I implementation
+- **Phase 3**: Make data-driven decision based on evidence, not speculation
+
+**Success Metrics**:
+
+- **Core Web Vitals**: First Contentful Paint, Largest Contentful Paint
+- **User Experience**: Time to interactive walkthrough content
+- **Development Velocity**: Time to implement new features and content
+- **Data Accuracy**: Error rates and validation effectiveness
+
+**Next Steps**:
+
+1. Complete Gen I implementation with current architecture
+2. Implement performance monitoring and data collection
+3. Gather user feedback on loading experience
+4. Conduct A/B testing if performance data suggests benefits
+5. Make informed decision based on real-world evidence
+
+### Future Multi-Generation Considerations
+
+**Potential Architecture Evolution**: As additional generations are added, we may need to create shared core files above the generation-specific structure to avoid data duplication.
+
+**Current Structure**:
+
+```text
+data/core/gen1/pokemon.json
+data/core/gen2/pokemon.json  # When added
+data/core/gen3/pokemon.json  # When added
+```
+
+**Future Potential Structure**:
+
+```text
+data/core/shared/
+├── pokemon-universal.json   # Pokemon that exist across generations
+├── moves-universal.json     # Moves shared across generations
+└── types-universal.json     # Type system (mostly consistent)
+data/core/gen1/
+├── pokemon-exclusive.json   # Gen 1 specific Pokemon data
+└── overrides.json          # Gen 1 specific variations
+```
+
+**Decision Trigger**: When data duplication across generations becomes significant enough to impact:
+
+- File size and loading performance
+- Data consistency maintenance
+- Update workflow efficiency
+
+**Evaluation Timeline**: Assess after Gen II implementation to determine actual duplication patterns and maintenance overhead.
+
+---
+
+## Validation Tool Architecture
+
+**Status**: 🟡 **Deferred Until Gen II Development**
+
+**Decision Required**: Refactor validation report tooling for maintainability and multi-generation support
+
+**Context**:
+
+- Current `js/validation-report.js` is a large monolithic file (~2000+ lines)
+- File contains multiple distinct functional areas that could be modularized
+- However, validation tooling is development infrastructure, not user-facing walkthrough code
+- Tool will likely need significant changes for each generation anyway
+
+**Current Approach**:
+
+- Accept large monolithic structure for Gen I development phase
+- Focus modular architecture efforts on walkthrough application code
+- Validation report treated as separate development tool with different architecture standards
+
+**Future Considerations**:
+
+- **Modularization**: Break validation report into focused modules (filtering, charts, quick-fix, virtual scrolling, etc.)
+- **Generation Abstraction**: Create generation-agnostic validation framework
+- **Tool Chain Integration**: Better integration with development workflow
+- **Performance Optimization**: Virtual scrolling and memory management improvements
+
+**Decision Trigger**: Beginning of Gen II development when validation tool modifications become necessary
+
+**Rationale**:
+
+- Validation tool architecture doesn't impact user experience
+- Development effort better spent on walkthrough application architecture
+- Tool will require substantial changes for Gen II regardless of current structure
+- Premature optimization of development tooling vs. user-facing code
+
+---
+
+## Framework Migration Decision
 
 **Status**: 🟡 **Pending Phase 1 Results**
 

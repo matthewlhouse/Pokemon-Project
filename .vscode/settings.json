@@ -1,0 +1,61 @@
+{
+  // Pokemon Walkthrough Project - VS Code Workspace Settings
+  // This project uses VS Code extensions only, no npm dependencies
+
+  // Prettier Configuration - Use bundled version instead of local modules
+  "prettier.requireConfig": false,
+  "prettier.useEditorConfig": false,
+  "prettier.resolveGlobalModules": false,
+
+  // File formatting settings (equivalent to .prettierrc.json)
+  "prettier.semi": true,
+  "prettier.trailingComma": "es5",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 4,
+  "prettier.useTabs": false,
+  "prettier.bracketSpacing": true,
+  "prettier.bracketSameLine": false,
+  "prettier.arrowParens": "avoid",
+  "prettier.endOfLine": "lf",
+
+  // Enable formatting for supported file types
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // File type specific formatting
+  "[markdown]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "prettier.proseWrap": "preserve",
+    "prettier.printWidth": 80
+  },
+
+  "[json]": {
+    "prettier.tabWidth": 2
+  },
+
+  "[jsonc]": {
+    "prettier.tabWidth": 2
+  },
+
+  // Live Server configuration for development
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+
+  // HTML validation
+  "html.validate.scripts": true,
+  "html.validate.styles": true,
+
+  // CSS validation
+  "css.validate": true,
+
+  // JavaScript/ES6 support
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+
+  // Extension management
+  "extensions.ignoreRecommendations": false,
+  "extensions.autoUpdate": true
+}

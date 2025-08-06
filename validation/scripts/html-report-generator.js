@@ -34,7 +34,7 @@ ${this.generateHead()}
     ${this.generateAnalyticsSection(results)}
     ${this.generateControls(results)}
     ${this.generateResultsSection(results)}
-    <script src="../js/validation-report.js"></script>
+    <script src="../validation-report.js"></script>
 </body>
 </html>`;
     }
@@ -49,7 +49,7 @@ ${this.generateHead()}
     <meta name="description" content="Pokemon Validation Report - Database accuracy verification">
     <meta name="author" content="Pokemon Project Validator">
     <title>Pokemon Validation Report - ${this.timestamp}</title>
-    <link rel="stylesheet" href="../css/validation-report.css">
+    <link rel="stylesheet" href="../validation-report.css">
 </head>`;
     }
 

@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "game": "Pokemon Yellow",
+    "version": "1.0.0",
+    "description": "Pokemon Yellow specific encounter data - Pikachu starter and unique encounters",
+    "lastUpdated": "TBD"
+  },
+  "starter": {
+    "pokemon": "025",
+    "name": "Pikachu",
+    "level": 5,
+    "location": "Professor Oak's Lab",
+    "special_notes": "Follows player, different cries, refuses Pokeball initially"
+  },
+  "encounters": {
+    "route_1": {
+      "grass": [
+        {
+          "pokemon": "016", 
+          "name": "Pidgey",
+          "levels": [2, 5],
+          "rate": 45
+        },
+        {
+          "pokemon": "019",
+          "name": "Rattata", 
+          "levels": [2, 4],
+          "rate": 35
+        },
+        {
+          "pokemon": "025",
+          "name": "Pikachu",
+          "levels": [3, 5],
+          "rate": 20,
+          "special_notes": "Yellow exclusive encounter"
+        }
+      ]
+    }
+  }
+}

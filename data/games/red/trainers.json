@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "game": "Pokemon Red",
+    "version": "1.0.0", 
+    "description": "Pokemon Red trainer battle data - names, locations, Pokemon teams",
+    "lastUpdated": "TBD"
+  },
+  "trainers": {
+    "brock": {
+      "name": "Brock",
+      "title": "Pewter Gym Leader",
+      "location": "Pewter Gym",
+      "badge": "Boulder Badge",
+      "team": [
+        {
+          "pokemon": "074",
+          "name": "Geodude",
+          "level": 12,
+          "moves": ["Tackle", "Defense Curl"]
+        },
+        {
+          "pokemon": "095", 
+          "name": "Onix",
+          "level": 14,
+          "moves": ["Tackle", "Screech", "Bide", "Bind"]
+        }
+      ]
+    }
+  }
+}

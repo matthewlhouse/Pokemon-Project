@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "game": "Pokemon Blue", 
+    "version": "1.0.0",
+    "description": "Pokemon Blue specific encounter data - locations, rates, and level ranges",
+    "lastUpdated": "TBD"
+  },
+  "encounters": {
+    "route_1": {
+      "grass": [
+        {
+          "pokemon": "016",
+          "name": "Pidgey",
+          "levels": [2, 5], 
+          "rate": 55
+        },
+        {
+          "pokemon": "019",
+          "name": "Rattata",
+          "levels": [2, 4],
+          "rate": 45
+        }
+      ]
+    }
+  }
+}

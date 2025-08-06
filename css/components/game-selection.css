@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Game Selection Component
+   Interactive buttons for selecting Pokemon Red/Blue/Yellow walkthroughs
+   ========================================================================== */
+
+.game-selection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.pkmred-walkthrough,
+.pkmblue-walkthrough,
+.pkmyellow-walkthrough {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    border: 2px solid;
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    min-height: 3rem;
+}
+
+/* Pokemon-specific border colors */
+.pkmred-walkthrough {
+    border-color: var(--pokemon-red);
+}
+
+.pkmblue-walkthrough {
+    border-color: var(--pokemon-blue);
+}
+
+.pkmyellow-walkthrough {
+    border-color: var(--pokemon-yellow);
+}
+
+/* Hover states */
+.pkmred-walkthrough:hover,
+.pkmblue-walkthrough:hover,
+.pkmyellow-walkthrough:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pkmred-walkthrough:hover {
+    background-color: var(--pokemon-red);
+    color: white;
+}
+
+.pkmblue-walkthrough:hover {
+    background-color: var(--pokemon-blue);
+    color: white;
+}
+
+.pkmyellow-walkthrough:hover {
+    background-color: var(--pokemon-yellow);
+    color: var(--color-text-contrast);
+}
+
+/* Focus states for accessibility */
+.pkmred-walkthrough:focus-visible,
+.pkmblue-walkthrough:focus-visible,
+.pkmyellow-walkthrough:focus-visible {
+    background-color: var(--color-accent);
+}
+
+/* Active/pressed states */
+.pkmred-walkthrough[aria-pressed='true'],
+.pkmblue-walkthrough[aria-pressed='true'],
+.pkmyellow-walkthrough[aria-pressed='true'] {
+    background-color: var(--color-secondary);
+}
+
+.section-summary {
+    background: var(--bg-tertiary);
+    padding: 15px 20px;
+    border-radius: 7px 7px 0 0;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 2px solid var(--border-secondary);
+    transition: all 0.3s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

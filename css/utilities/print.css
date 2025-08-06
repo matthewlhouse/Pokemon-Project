@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Print Styles - Optimize for Print Media
+   ========================================================================== */
+
+@media print {
+    /* Hide interactive elements when printing */
+    nav,
+    .game-selection,
+    button {
+        display: none;
+    }
+
+    /* Hide progress overview when printing */
+    .progress-overview {
+        display: none;
+    }
+
+    /* Optimize typography for print */
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+
+    /* Remove backgrounds and borders for print efficiency */
+    .walkthrough-content {
+        background: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* Ensure all text is readable in black and white */
+    * {
+        background: white !important;
+        color: black !important;
+    }
+}

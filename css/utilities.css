@@ -1,0 +1,8 @@
+/* ==========================================================================
+   Utility Styles - Modular Utility Architecture
+   Individual utility imports for maintainable CSS organization
+   ========================================================================== */
+
+/* Import individual utility stylesheets */
+@import url('utilities/helpers.css');  /* Helper classes, spacing, display, accessibility */
+@import url('utilities/print.css');    /* Print media optimization */

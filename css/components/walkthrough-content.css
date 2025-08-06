@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Walkthrough Content Component
+   Main content area with steps, Pokemon encounters, items, and battle info
+   ========================================================================== */
+
+.walkthrough-content {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-secondary);
+}
+
+.walkthrough-content h2 {
+    background-color: transparent;
+    color: var(--color-text);
+    text-align: left;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+.walkthrough-content h3 {
+    text-align: left;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+}
+
+.walkthrough-step {
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    border-left: 3px solid var(--color-secondary);
+    background-color: var(--color-background);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    transition: all var(--transition-speed) ease;
+}
+
+.walkthrough-step:hover {
+    border-left-color: var(--color-primary);
+    transform: translateX(2px);
+}
+
+.step-completed {
+    border-left-color: var(--pokemon-yellow);
+    background-color: var(--color-surface);
+}
+
+.step-completed::before {
+    content: '✓ ';
+    color: var(--pokemon-yellow);
+    font-weight: bold;
+    margin-right: var(--space-xs);
+}
+
+.walkthrough-content p {
+    text-align: left;
+    max-width: none; /* Override the 65ch limit for walkthrough content */
+    margin: var(--space-sm) 0;
+}
+
+.walkthrough-content ul,
+.walkthrough-content ol {
+    margin-left: var(--space-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.walkthrough-content li {
+    margin-bottom: var(--space-xs);
+}
+
+.walkthrough-content:empty::after {
+    content: 'Select a Pokemon game above to begin your walkthrough adventure!';
+    display: block;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    padding: var(--space-xl);
+}
+
+/* ==========================================================================
+   Inline Element Components for Walkthrough Content
+   ========================================================================== */
+
+.pokemon-encounter {
+    display: inline-block;
+    background-color: var(--pokemon-red);
+    color: white;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.item-found {
+    display: inline-block;
+    background-color: var(--pokemon-yellow);
+    color: var(--color-text-contrast);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.trainer-battle {
+    display: inline-block;
+    background-color: var(--pokemon-blue);
+    color: white;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}

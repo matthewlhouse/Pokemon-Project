@@ -1,0 +1,42 @@
+{
+  // Recommended extensions for Pokemon Walkthrough Project
+  // These extensions support our VS Code-only development approach
+
+  "recommendations": [
+    // Core development extensions
+    "ritwickdey.liveserver", // Live Server - Development server with auto-refresh
+    "esbenp.prettier-vscode", // Prettier - Code formatting
+    "ms-vscode.vscode-eslint", // ESLint - JavaScript linting
+
+    // HTML/CSS development
+    "htmlhint.vshtmlhint", // HTML validation
+    "bradlc.vscode-tailwindcss", // CSS IntelliSense (if using Tailwind later)
+
+    // Accessibility and validation
+    "deque-systems.vscode-axe-linter", // axe Accessibility Linter
+    "webhint.vscode-webhint", // webhint - Web best practices
+
+    // Markdown and documentation
+    "davidanson.vscode-markdownlint", // Markdown linting
+    "shd101wyy.markdown-preview-enhanced", // Enhanced markdown preview
+
+    // Git and version control
+    "mhutchie.git-graph", // Git Graph - Visual git history
+    "eamodio.gitlens", // GitLens - Enhanced git capabilities
+
+    // General productivity
+    "ms-vscode.vscode-json", // JSON language support
+    "formulahendry.auto-rename-tag", // Auto rename paired HTML/XML tag
+    "christian-kohler.path-intellisense" // Path IntelliSense
+  ],
+
+  // Extensions that are not needed due to our architecture choice
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-node-azure-pack", // Azure tools (not using cloud deployment)
+    "ms-vscode.vscode-typescript-next", // Advanced TS features (using vanilla JS)
+    "bradlc.vscode-postcss", // PostCSS (not using build tools)
+    "esbenp.vscode-scss", // Sass/SCSS (using vanilla CSS)
+    "ritwickdey.live-sass", // Live Sass Compiler (not using preprocessors)
+    "ms-vscode.vscode-npm-scripts" // npm Scripts (not using npm)
+  ]
+}

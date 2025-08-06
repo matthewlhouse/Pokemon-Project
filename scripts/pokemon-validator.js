@@ -5,6 +5,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const HTMLReportGenerator = require('./html-report-generator');
 const ServerPokemonDataFetcher = require('./server-data-fetcher.js');
 
 class PokemonValidator {
@@ -52,10 +53,7 @@ class PokemonValidator {
                         'baseStats',
                         'height',
                         'weight',
-                        'growthRate',
-                        'baseExp',
                         'catchRate',
-                        'effortValues',
                         'evolutionChain',
                         'learnset',
                         'tmCompatibility',
@@ -217,10 +215,7 @@ class PokemonValidator {
             'baseStats',
             'height',
             'weight',
-            'growthRate',
-            'baseExp',
             'catchRate',
-            'effortValues',
             'evolutionChain',
             'learnset',
             'tmCompatibility',
@@ -538,7 +533,8 @@ class PokemonValidator {
             // Fetch from external sources
             const externalData = await this.fetcher.fetchAndValidatePokemon(
                 pokemonId,
-                pokemon.name
+                pokemon.name,
+                pokemon // Pass the current Pokemon data for logging comparison
             );
             result.externalData = externalData;
 
@@ -603,10 +599,7 @@ class PokemonValidator {
             'baseStats',
             'height',
             'weight',
-            'growthRate',
-            'baseExp',
             'catchRate',
-            'effortValues',
             'evolutionChain',
             'learnset',
             'tmCompatibility',
@@ -687,12 +680,114 @@ class PokemonValidator {
     exactMatch(current, authoritative) {
         if (current === authoritative) return true;
 
+        // Special handling for baseStats objects to account for different key ordering
+        if (this.isBaseStatsObject(current) && this.isBaseStatsObject(authoritative)) {
+            return this.compareBaseStats(current, authoritative);
+        }
+
+        // Special handling for evolution chains
+        if (this.isEvolutionChainArray(current) && this.isEvolutionChainArray(authoritative)) {
+            return this.compareEvolutionChains(current, authoritative);
+        }
+
         // Deep comparison for objects and arrays
         if (typeof current === 'object' && typeof authoritative === 'object') {
             return JSON.stringify(current) === JSON.stringify(authoritative);
         }
 
         return false;
+    }
+
+    /**
+     * Check if an object is a baseStats object
+     */
+    isBaseStatsObject(obj) {
+        if (!obj || typeof obj !== 'object') return false;
+
+        const expectedKeys = ['hp', 'attack', 'defense', 'speed', 'special'];
+
+        // Check if it has the expected base stat keys (allow for extra keys like specialAttack/specialDefense)
+        return expectedKeys.every(key => obj.hasOwnProperty(key));
+    }
+
+    /**
+     * Check if data is an evolution chain array
+     */
+    isEvolutionChainArray(data) {
+        return (
+            Array.isArray(data) &&
+            data.length > 0 &&
+            data.every(
+                evolution =>
+                    evolution &&
+                    typeof evolution === 'object' &&
+                    evolution.method &&
+                    evolution.evolves_to
+            )
+        );
+    }
+
+    /**
+     * Compare baseStats objects by values, ignoring key order
+     */
+    compareBaseStats(current, authoritative) {
+        if (!current || !authoritative) return false;
+
+        // Compare core Gen I stats
+        const coreStats = ['hp', 'attack', 'defense', 'speed', 'special'];
+
+        for (const stat of coreStats) {
+            if (current[stat] !== authoritative[stat]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Compare evolution chain arrays by normalizng and comparing structures
+     */
+    compareEvolutionChains(current, authoritative) {
+        if (!current || !authoritative) return false;
+        if (current.length !== authoritative.length) return false;
+
+        // Normalize and compare each evolution
+        for (let i = 0; i < current.length; i++) {
+            const currentEvol = current[i];
+            const authEvol = authoritative[i];
+
+            // Compare method
+            if (currentEvol.method !== authEvol.method) return false;
+
+            // Compare level (if applicable)
+            if (currentEvol.level !== authEvol.level) return false;
+
+            // Compare stone/item (if applicable)
+            if (currentEvol.stone !== authEvol.stone) return false;
+            if (currentEvol.item !== authEvol.item) return false;
+
+            // Normalize evolves_to for comparison
+            const currentTarget = this.normalizeEvolutionTarget(currentEvol.evolves_to);
+            const authTarget = this.normalizeEvolutionTarget(authEvol.evolves_to);
+
+            if (currentTarget !== authTarget) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Normalize evolution target to just the Pokemon number for comparison
+     */
+    normalizeEvolutionTarget(target) {
+        if (typeof target === 'string') {
+            // Extract number from formats like "101", "Pokemon #101", etc.
+            const numberRegex = /\d+/;
+            const match = numberRegex.exec(target);
+            return match ? match[0] : target;
+        }
+        return target?.toString() || '';
     }
 
     /**
@@ -704,6 +799,8 @@ class PokemonValidator {
                 return pokemon.height?.meters;
             case 'weight':
                 return pokemon.weight?.kg;
+            case 'types':
+                return pokemon.type; // Map external 'types' to our 'type' field
             default:
                 return pokemon[field];
         }
@@ -733,7 +830,7 @@ class PokemonValidator {
         );
         this.compareFieldAccuracy(
             'types',
-            pokemon.types,
+            pokemon.type,
             bulbapediaData?.types,
             serebiiData?.types,
             result
@@ -757,20 +854,6 @@ class PokemonValidator {
             pokemon.weight?.kg,
             bulbapediaData?.weight,
             serebiiData?.weight,
-            result
-        );
-        this.compareFieldAccuracy(
-            'growthRate',
-            pokemon.growthRate,
-            bulbapediaData?.growthRate,
-            serebiiData?.growthRate,
-            result
-        );
-        this.compareFieldAccuracy(
-            'baseExp',
-            pokemon.baseExp,
-            bulbapediaData?.baseExp,
-            serebiiData?.baseExp,
             result
         );
         this.compareFieldAccuracy(
@@ -802,13 +885,6 @@ class PokemonValidator {
             result
         );
         this.compareFieldAccuracy(
-            'effortValues',
-            pokemon.effortValues,
-            bulbapediaData?.effortValues,
-            serebiiData?.effortValues,
-            result
-        );
-        this.compareFieldAccuracy(
             'pokedexEntry',
             pokemon.pokedexEntry,
             bulbapediaData?.pokedexEntry,
@@ -821,6 +897,12 @@ class PokemonValidator {
      * Compare a field for accuracy - enhanced to detect partial matches
      */
     compareFieldAccuracy(fieldName, currentValue, bulbapediaValue, serebiiValue, result) {
+        // First check if the field is completely missing from our data
+        if (currentValue === undefined) {
+            this.addMissingAttributeIssue(fieldName, bulbapediaValue, serebiiValue, result);
+            return;
+        }
+
         const sourceInfo = this.analyzeSourceAvailability(bulbapediaValue, serebiiValue);
 
         if (!sourceInfo.hasAny) {
@@ -850,7 +932,9 @@ class PokemonValidator {
                 currentValue,
                 matchInfo,
                 sourceInfo,
-                result
+                result,
+                bulbapediaValue,
+                serebiiValue
             );
         }
     }
@@ -940,7 +1024,15 @@ class PokemonValidator {
     /**
      * Handle comparison when only one source is available
      */
-    handleSingleSourceComparison(fieldName, currentValue, matchInfo, sourceInfo, result) {
+    handleSingleSourceComparison(
+        fieldName,
+        currentValue,
+        matchInfo,
+        sourceInfo,
+        result,
+        bulbapediaValue = undefined,
+        serebiiValue = undefined
+    ) {
         const matchesSource = sourceInfo.hasBulbapedia
             ? matchInfo.matchesBulbapedia
             : matchInfo.matchesSerebii;
@@ -951,9 +1043,40 @@ class PokemonValidator {
                 currentValue,
                 sourceInfo.authoritativeValue,
                 sourceInfo.authoritativeSource,
-                result
+                result,
+                bulbapediaValue,
+                serebiiValue
             );
         }
+    }
+
+    /**
+     * Add missing attribute issue - field is completely absent from our data
+     */
+    addMissingAttributeIssue(fieldName, bulbapediaValue, serebiiValue, result) {
+        const availableSources = [];
+
+        if (bulbapediaValue !== undefined) {
+            availableSources.push('Bulbapedia');
+        }
+        if (serebiiValue !== undefined) {
+            availableSources.push('Serebii');
+        }
+
+        const sourceText =
+            availableSources.length > 1
+                ? `${availableSources[0]} and ${availableSources[1]}`
+                : availableSources[0];
+
+        result.issues.push({
+            field: fieldName,
+            severity: 'missing_attribute',
+            message: `${fieldName} is completely missing from our data but available in ${sourceText}`,
+            current: undefined,
+            bulbapediaValue: bulbapediaValue,
+            serebiiValue: serebiiValue,
+            availableSources: availableSources,
+        });
     }
 
     /**
@@ -998,15 +1121,33 @@ class PokemonValidator {
     /**
      * Add inaccurate data issue
      */
-    addInaccurateIssue(fieldName, currentValue, expectedValue, source, result) {
-        result.issues.push({
+    addInaccurateIssue(
+        fieldName,
+        currentValue,
+        expectedValue,
+        source,
+        result,
+        bulbapediaValue = undefined,
+        serebiiValue = undefined
+    ) {
+        const issue = {
             field: fieldName,
             severity: 'inaccurate',
             message: `${fieldName} does not match ${source}`,
             current: currentValue,
             expected: expectedValue,
             source: source,
-        });
+        };
+
+        // For evolution chains and other complex fields, include original source values for HTML display
+        if (bulbapediaValue !== undefined) {
+            issue.bulbapediaValue = bulbapediaValue;
+        }
+        if (serebiiValue !== undefined) {
+            issue.serebiiValue = serebiiValue;
+        }
+
+        result.issues.push(issue);
 
         result.suggestions.push({
             field: fieldName,
@@ -1068,9 +1209,11 @@ class PokemonValidator {
      * Generate HTML validation report
      */
     async generateHTMLReport(results, outputPath) {
-        const html = this.createHTMLReport(results);
-        await fs.writeFile(outputPath, html, 'utf8');
-        return outputPath;
+        // Load validation statistics to ensure field-level data is available for HTML generation
+        await this.loadValidationStatistics();
+
+        const reportGenerator = new HTMLReportGenerator();
+        return await reportGenerator.generateReport(results, outputPath);
     }
 
     /**
@@ -1635,10 +1778,7 @@ class PokemonValidator {
                 'baseStats',
                 'height',
                 'weight',
-                'growthRate',
-                'baseExp',
                 'catchRate',
-                'effortValues',
                 'evolutionChain',
                 'learnset',
                 'tmCompatibility',

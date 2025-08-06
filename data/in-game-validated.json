@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "description": "Pokemon fields that have been validated in-game",
+    "lastUpdated": "2025-08-06T00:11:41.218Z"
+  },
+  "validated": [
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "fields": ["name"],
+      "lastUpdated": "2025-08-06T00:11:41.219Z"
+    }
+  ]
+}

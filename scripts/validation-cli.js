@@ -68,6 +68,11 @@ class ValidationCLI {
      * Handle validation workflow
      */
     async handleValidationWorkflow(options) {
+        // Handle generate-report flag
+        if (options.generateReport) {
+            return await this.handleGenerateReportFromExisting(options);
+        }
+
         // Load Pokemon data
         console.log('📂 Loading pokemon-base.json...');
         await this.validator.loadPokemonData();
@@ -108,6 +113,105 @@ class ValidationCLI {
     }
 
     /**
+     * Handle generate-report from existing validation data
+     */
+    async handleGenerateReportFromExisting(options) {
+        console.log('📊 Generating report from existing validation data...');
+
+        // Load Pokemon data and validation statistics
+        await this.validator.loadPokemonData();
+        await this.validator.loadValidationStatistics();
+        await this.validator.loadAcceptedIssues();
+        await this.validator.loadInGameValidation();
+
+        if (this.validator.validationStatistics.size === 0) {
+            console.log('❌ No existing validation data found.');
+            console.log('💡 Run validations first: node validation-cli.js --test');
+            return;
+        }
+
+        // Create mock results from validation statistics
+        const results = this.createMockResultsFromStatistics();
+
+        console.log(`📋 Found validation data for ${results.length} Pokemon`);
+        await this.generateAndOpenReport(results, options);
+    }
+
+    /**
+     * Create mock validation results from existing statistics
+     */
+    createMockResultsFromStatistics() {
+        const results = [];
+
+        for (const [pokemonId, stats] of this.validator.validationStatistics.entries()) {
+            const pokemon = this.validator.pokemonData.pokemon[pokemonId];
+            if (!pokemon) continue;
+
+            // Create mock issues from field validation
+            const issues = [];
+            for (const [field, fieldInfo] of Object.entries(stats.fieldValidation)) {
+                if (fieldInfo.status !== 'accurate') {
+                    // Create a basic issue representation
+                    issues.push({
+                        field: field,
+                        severity: this.mapFieldStatusToSeverity(fieldInfo.status),
+                        message: this.getFieldStatusMessage(fieldInfo.status, field),
+                        accepted: fieldInfo.hasAcceptedIssue,
+                        inGameValidated: fieldInfo.inGameValidated,
+                        current: 'Mock data for report generation',
+                    });
+                }
+            }
+
+            results.push({
+                id: pokemonId,
+                name: pokemon.name,
+                completeness: stats.completeness || 0,
+                status: 'completed',
+                issues: issues,
+                timestamp: stats.lastValidated,
+                hasInGameValidation: this.validator.inGameValidated.has(pokemonId),
+            });
+        }
+
+        return results.sort((a, b) => a.id.localeCompare(b.id));
+    }
+
+    /**
+     * Map field status to issue severity
+     */
+    mapFieldStatusToSeverity(status) {
+        const statusMap = {
+            missing_attribute: 'missing_attribute',
+            inaccurate: 'inaccurate',
+            no_reference: 'no_reference',
+            partial_match: 'partial_match',
+            source_conflict: 'source_conflict',
+        };
+        return statusMap[status] || 'error';
+    }
+
+    /**
+     * Get field status message for mock issues
+     */
+    getFieldStatusMessage(status, field) {
+        switch (status) {
+            case 'missing_attribute':
+                return `${field} is completely missing from our data`;
+            case 'inaccurate':
+                return `${field} does not match external sources`;
+            case 'no_reference':
+                return `${field} has no external reference data`;
+            case 'partial_match':
+                return `${field} matches one source but conflicts with another`;
+            case 'source_conflict':
+                return `${field} conflicts - external sources disagree`;
+            default:
+                return `${field} has validation issues`;
+        }
+    }
+
+    /**
      * Report validation data loading status
      */
     reportValidationDataStatus(acceptedLoaded, inGameLoaded) {
@@ -127,6 +231,13 @@ class ValidationCLI {
      */
     filterPokemonForValidation(needsValidation, options) {
         let pokemonToValidate = needsValidation;
+
+        // Apply test mode first (overrides other filters)
+        if (options.test) {
+            console.log('🧪 Running in TEST MODE - limiting to first 3 Pokemon for quick testing');
+            pokemonToValidate = needsValidation.slice(0, 3);
+            return pokemonToValidate;
+        }
 
         if (options.pokemon) {
             pokemonToValidate = needsValidation.filter(
@@ -334,6 +445,9 @@ class ValidationCLI {
             `   🎮 In-Game Validated: ${fieldCounts.in_game_validated} (${Math.round((fieldCounts.in_game_validated / fieldCounts.total) * 100)}%)`
         );
         console.log(
+            `   🚫 Missing Attributes: ${fieldCounts.missing_attribute} (${Math.round((fieldCounts.missing_attribute / fieldCounts.total) * 100)}%)`
+        );
+        console.log(
             `   ❌ Inaccurate: ${fieldCounts.inaccurate} (${Math.round((fieldCounts.inaccurate / fieldCounts.total) * 100)}%)`
         );
         console.log(
@@ -355,6 +469,7 @@ class ValidationCLI {
             accurate: 0,
             accepted_override: 0,
             in_game_validated: 0,
+            missing_attribute: 0,
             inaccurate: 0,
             no_reference: 0,
             partial_match: 0,
@@ -383,6 +498,8 @@ class ValidationCLI {
                 return '🔄';
             case 'in_game_validated':
                 return '🎮';
+            case 'missing_attribute':
+                return '🚫';
             case 'inaccurate':
                 return '❌';
             case 'no_reference':
@@ -407,6 +524,8 @@ class ValidationCLI {
                 return 'Override accepted (manual verification)';
             case 'in_game_validated':
                 return 'Validated through gameplay (no external match)';
+            case 'missing_attribute':
+                return 'Completely missing from our data (critical issue)';
             case 'inaccurate':
                 return 'Does not match external sources';
             case 'no_reference':
@@ -427,6 +546,8 @@ class ValidationCLI {
         const options = {
             pokemon: null,
             limit: null,
+            test: false,
+            generateReport: false,
             open: false,
             command: null,
             field: null,
@@ -455,6 +576,14 @@ class ValidationCLI {
             case '--open':
             case '-o':
                 options.open = true;
+                return index + 1;
+            case '--test':
+            case '-t':
+                options.test = true;
+                return index + 1;
+            case '--generate-report':
+            case '-r':
+                options.generateReport = true;
                 return index + 1;
             case 'stats':
                 return this.parseStatsCommand(args, index, options);
@@ -840,14 +969,18 @@ IN-GAME VALIDATION COMMANDS:
 Options:
   -p, --pokemon <name/id>   Validate specific Pokemon (by name or ID)
   -l, --limit <number>      Limit number of Pokemon to validate
+  -t, --test               Test mode: validate only first 3 Pokemon (quick testing)
+  -r, --generate-report    Generate HTML report from existing validation data (no new validation)
   -o, --open               Open HTML report in browser after generation
   -h, --help               Show this help message
 
 Examples:
-  # Validation
-  node validation-cli.js                      # Validate all incomplete Pokemon
-  node validation-cli.js -p Bulbasaur         # Validate only Bulbasaur
-  node validation-cli.js -l 5 -o              # Validate 5 Pokemon and open report
+  # Validation & Testing
+  node validation-cli.js --test                # TESTING: Validate only first 3 Pokemon
+  node validation-cli.js --generate-report -o  # TESTING: Generate report from existing data
+  node validation-cli.js -l 5 -o               # Validate only 5 Pokemon and open report
+  node validation-cli.js                       # Validate all incomplete Pokemon (slow!)
+  node validation-cli.js -p Bulbasaur          # Validate only Bulbasaur
   
   # Statistics
   node validation-cli.js stats                # Show overall statistics

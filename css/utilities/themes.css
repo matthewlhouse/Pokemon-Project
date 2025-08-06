@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Theme Variations - Pokemon Game-Specific Color Themes
+   ========================================================================== */
+
+/* Theme system for different Pokemon games */
+/* These classes override the semantic colors defined in :root */
+
+.theme-red {
+    /* Pokemon Red theme overrides */
+    --color-primary: var(--pokemon-red);
+    --color-secondary: #cc0000;
+    --color-surface: #fff5f5;
+    --color-background: #ffffff;
+}
+
+.theme-blue {
+    /* Pokemon Blue theme overrides */
+    --color-primary: var(--pokemon-blue);
+    --color-secondary: #0d47a1;
+    --color-surface: #f0f4ff;
+    --color-background: #ffffff;
+}
+
+.theme-yellow {
+    /* Pokemon Yellow theme overrides */
+    --color-primary: var(--pokemon-yellow);
+    --color-secondary: #f57c00;
+    --color-surface: #fffbf0;
+    --color-background: #ffffff;
+    --color-text: #1a1a1a;
+}

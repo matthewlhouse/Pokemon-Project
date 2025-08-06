@@ -495,17 +495,16 @@ class ServerPokemonDataFetcher {
      */
     extractExtendedSerebiiData($, data) {
         try {
-            // Extract basic classification and growth rate
+            // Extract basic classification
             this.extractSerebiiBasicData($, data);
 
             // Extract catch rate from main info table
             this.extractSerebiiCatchRate($, data);
 
-            // Extract Effort Values, Learnset, TMs, and Evolution Chain
+            // Extract Learnset, TMs, and Evolution Chain
             this.extractSerebiiMoveAndEvolutionData($, data);
 
             // Add notes for unavailable data
-            data.parsing_notes.push('Base Experience: Not available for Gen I Pokemon on Serebii');
             data.parsing_notes.push('Pokedex Entry: Not available for Gen I Pokemon on Serebii');
         } catch (error) {
             data.parsing_notes.push(`Extended Serebii parsing error: ${error.message}`);
@@ -533,13 +532,6 @@ class ServerPokemonDataFetcher {
                 });
             }
         });
-
-        // Extract Growth Rate (under "Experience Growth" heading)
-        const growthRate = this.extractSerebiiSectionData($, 'Experience Growth');
-        if (growthRate) {
-            data.data.growthRate = growthRate;
-            data.parsing_notes.push(`Growth rate found: ${growthRate}`);
-        }
     }
 
     /**
@@ -598,13 +590,6 @@ class ServerPokemonDataFetcher {
      * Extract move and evolution data from Serebii
      */
     extractSerebiiMoveAndEvolutionData($, data) {
-        // Extract Effort Values (under "Effort Values Earned" heading)
-        const effortValues = this.extractSerebiiEffortValues($);
-        if (effortValues) {
-            data.data.effortValues = effortValues;
-            data.parsing_notes.push(`Effort values found: ${JSON.stringify(effortValues)}`);
-        }
-
         // Extract Learnset (under "Generation I Level Up" heading)
         const learnset = this.extractSerebiiLearnset($);
         if (learnset && learnset.length > 0) {
@@ -725,80 +710,6 @@ class ServerPokemonDataFetcher {
         });
 
         return sectionData;
-    }
-
-    /**
-     * Extract Effort Values from Serebii "Effort Values Earned" section
-     */
-    extractSerebiiEffortValues($) {
-        let effortValues = null;
-
-        $('*').each((i, element) => {
-            const $element = $(element);
-            const text = $element.text().trim();
-
-            if (text.includes('Effort Values Earned')) {
-                // Found the EV section, look for EV data in nearby elements
-                const evData = { hp: 0, attack: 0, defense: 0, speed: 0, special: 0 };
-
-                // Look for EV data in the same table or nearby elements
-                let $searchArea = $element.closest('table');
-                if (!$searchArea.length) {
-                    $searchArea = $element.parent();
-                }
-
-                $searchArea.find('td, div, span').each((j, cell) => {
-                    const cellText = $(cell).text().trim().toLowerCase();
-
-                    // Look for patterns like "1 Special Attack", "2 HP", "1 Defense", etc.
-                    const patterns = [
-                        /(\d+)\s*(hp|health|hit\s*points?)/i,
-                        /(\d+)\s*attack(?!\s*defense)/i,
-                        /(\d+)\s*(defense|defence)/i,
-                        /(\d+)\s*speed/i,
-                        /(\d+)\s*(special|sp\.?\s*att?|sp\.?\s*def)/i,
-                    ];
-
-                    patterns.forEach((pattern, index) => {
-                        const match = cellText.match(pattern);
-                        if (match) {
-                            const value = parseInt(match[1]);
-                            const statNames = ['hp', 'attack', 'defense', 'speed', 'special'];
-                            evData[statNames[index]] = value;
-                        }
-                    });
-
-                    // Also try simple number detection in cells adjacent to stat names
-                    if (/^\d+$/.test(cellText)) {
-                        const num = parseInt(cellText);
-                        const $prevCell = $(cell).prev();
-                        const $nextCell = $(cell).next();
-                        const prevText = $prevCell.text().toLowerCase();
-                        const nextText = $nextCell.text().toLowerCase();
-
-                        if (prevText.includes('hp') || nextText.includes('hp')) {
-                            evData.hp = num;
-                        } else if (prevText.includes('attack') || nextText.includes('attack')) {
-                            evData.attack = num;
-                        } else if (prevText.includes('defense') || nextText.includes('defense')) {
-                            evData.defense = num;
-                        } else if (prevText.includes('speed') || nextText.includes('speed')) {
-                            evData.speed = num;
-                        } else if (prevText.includes('special') || nextText.includes('special')) {
-                            evData.special = num;
-                        }
-                    }
-                });
-
-                // Check if we found any EV data
-                if (Object.values(evData).some(val => val > 0)) {
-                    effortValues = evData;
-                    return false; // break
-                }
-            }
-        });
-
-        return effortValues;
     }
 
     /**
@@ -1085,7 +996,7 @@ class ServerPokemonDataFetcher {
     /**
      * Fetch and validate data for a single Pokemon
      */
-    async fetchAndValidatePokemon(pokemonId, pokemonName) {
+    async fetchAndValidatePokemon(pokemonId, pokemonName, currentPokemonData = null) {
         console.log(`\n=== Fetching data for ${pokemonName} (#${pokemonId}) ===`);
 
         const results = await Promise.allSettled([
@@ -1106,6 +1017,44 @@ class ServerPokemonDataFetcher {
                 };
             }
         });
+
+        // Add detailed logging for specific test Pokemon
+        const testPokemon = ['Voltorb', 'Electrode', 'Exeggcute'];
+        if (testPokemon.includes(pokemonName)) {
+            console.log(
+                `\n🔍 DETAILED DATA COMPARISON FOR ${pokemonName.toUpperCase()} (#${pokemonId}):`
+            );
+            console.log('='.repeat(80));
+
+            // Show our current data first
+            if (currentPokemonData) {
+                console.log(`\n📋 OUR CURRENT DATA:`);
+                console.log('-'.repeat(30));
+                console.log(`✅ Current pokemon-base.json data`);
+                console.log(`📊 Raw data structure:`, JSON.stringify(currentPokemonData, null, 2));
+            } else {
+                console.log(`\n📋 OUR CURRENT DATA:`);
+                console.log('-'.repeat(30));
+                console.log(`⚠️ Current Pokemon data not provided to fetcher`);
+            }
+
+            // Show external source data
+            sourceData.forEach((source, index) => {
+                const sourceName = index === 0 ? 'BULBAPEDIA' : 'SEREBII';
+                console.log(`\n📖 ${sourceName} DATA:`);
+                console.log('-'.repeat(30));
+
+                if (source.error) {
+                    console.log(`❌ Error: ${source.error}`);
+                } else if (source.data) {
+                    console.log(`✅ Successfully fetched data`);
+                    console.log(`📊 Raw data structure:`, JSON.stringify(source.data, null, 2));
+                } else {
+                    console.log(`⚠️ No data returned`);
+                }
+            });
+            console.log('='.repeat(80));
+        }
 
         return {
             pokemon_id: pokemonId,
@@ -1166,7 +1115,7 @@ class ServerPokemonDataFetcher {
      */
     async extractExtendedBulbapediaData($, data) {
         try {
-            // Extract basic data (species, growth rate, base exp, catch rate)
+            // Extract basic data (species, catch rate)
             this.extractBulbapediaBasicExtendedData($, data);
 
             // Extract evolution data
@@ -1174,11 +1123,6 @@ class ServerPokemonDataFetcher {
 
             // Extract learnset and TM data
             await this.extractBulbapediaLearnsetAndTMData($, data);
-
-            // Add notes for unavailable data
-            data.parsing_notes.push(
-                'Effort Values: Not displayed for Gen I/II Pokemon on Bulbapedia'
-            );
         } catch (error) {
             data.parsing_notes.push(`Extended parsing error: ${error.message}`);
         }
@@ -1210,48 +1154,6 @@ class ServerPokemonDataFetcher {
                 if (altSpeciesMatch && !data.data.species) {
                     data.data.species = altSpeciesMatch[1].trim() + ' Pokemon';
                     data.parsing_notes.push(`Species found (alt pattern): ${data.data.species}`);
-                    return false; // break
-                }
-            }
-        });
-
-        // Extract Growth Rate under "Leveling rate" header
-        $('*').each((i, element) => {
-            const $element = $(element);
-            const text = $element.text().trim();
-
-            if (text.includes('Leveling rate')) {
-                // Look for the growth rate in nearby elements
-                let $searchArea = $element.parent();
-                $searchArea.find('*').each((j, subElement) => {
-                    const subText = $(subElement).text().trim();
-                    if (
-                        subText.match(/^(Medium Slow|Medium Fast|Fast|Slow|Erratic|Fluctuating)$/i)
-                    ) {
-                        data.data.growthRate = subText;
-                        data.parsing_notes.push(`Growth rate found: ${subText}`);
-                        return false; // break
-                    }
-                });
-
-                if (data.data.growthRate) return false; // break outer loop
-            }
-        });
-
-        // Extract Base Experience under <b> "Base experience yield"
-        $('b').each((i, boldElement) => {
-            const $bold = $(boldElement);
-            const boldText = $bold.text().trim();
-
-            if (boldText.includes('Base experience yield')) {
-                // Look for number in the same element or next sibling
-                const $parent = $bold.parent();
-                const parentText = $parent.text();
-                const expMatch = parentText.match(/Base experience yield[^\d]*(\d+)/i);
-
-                if (expMatch) {
-                    data.data.baseExp = parseInt(expMatch[1]);
-                    data.parsing_notes.push(`Base experience found: ${data.data.baseExp}`);
                     return false; // break
                 }
             }
@@ -1663,47 +1565,6 @@ class ServerPokemonDataFetcher {
     /**
      * Extract effort values from Bulbapedia
      */
-    extractEffortValues($) {
-        const effortValues = {};
-
-        // Look for effort values in various table formats
-        $('table').each((i, table) => {
-            const $table = $(table);
-            const tableText = $table.text();
-
-            if (tableText.includes('Effort points')) {
-                $table.find('td').each((j, cell) => {
-                    const cellText = $(cell).text().trim();
-
-                    // Match patterns like "1 HP", "2 Attack", etc.
-                    const evMatch = /(\d+)\s+(HP|Attack|Defense|Sp\.\s*Atk|Sp\.\s*Def|Speed)/i.exec(
-                        cellText
-                    );
-                    if (evMatch) {
-                        const value = parseInt(evMatch[1]);
-                        const stat = evMatch[2].toLowerCase().replace(/\s/g, '').replace('.', '');
-
-                        // Normalize stat names
-                        const statMap = {
-                            hp: 'hp',
-                            attack: 'attack',
-                            defense: 'defense',
-                            spatk: 'spAttack',
-                            spdef: 'spDefense',
-                            speed: 'speed',
-                        };
-
-                        if (statMap[stat]) {
-                            effortValues[statMap[stat]] = value;
-                        }
-                    }
-                });
-            }
-        });
-
-        return effortValues;
-    }
-
     /**
      * Extract Pokedex entry from Bulbapedia
      */

@@ -1,6 +1,5 @@
 /* ==========================================================================
-   Pokemon Walkthrough Project - Main CSS Template
-   Learning-focused template with guided implementation sections
+   Pokemon Walkthrough Project - Main CSS
    ========================================================================== */
 
 /* ==========================================================================
@@ -8,44 +7,43 @@
    ========================================================================== */
 
 :root {
-    /* TODO: Add Pokemon-themed color palette for other games as they are implemented */
+    /* Pokemon-themed color palette */
     --pokemon-red: #ff1111;
     --pokemon-blue: #1155ff;
     --pokemon-yellow: #ffde00;
 
-    /* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
-    /* Default theme colors - will be overridden by theme classes */
-    --color-primary: #2563eb; /* Default blue */
-    --color-secondary: #64748b; /* Default gray */
-    --color-accent: var(--pokemon-yellow); /* Always yellow for highlights */
-    --color-background: #ffffff; /* Default white */
-    --color-surface: #f8fafc; /* Light gray for cards/sections */
-    --color-text: #1e293b; /* Dark gray for text */
-    --color-text-secondary: #64748b; /* Lighter gray for secondary text */
-    --color-text-contrast: #000000; /* Black for light backgrounds */
+    /* Core theme colors */
+    --color-primary: #2563eb;
+    --color-secondary: #64748b;
+    --color-accent: var(--pokemon-yellow);
+    --color-background: #ffffff;
+    --color-surface: #f8fafc;
+    --color-text: #1e293b;
+    --color-text-secondary: #64748b;
+    --color-text-contrast: #000000;
 
-    /* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
-    --space-xs: 0.25rem; /* 4px - fine details */
-    --space-sm: 0.5rem; /* 8px - small gaps */
-    --space-md: 1rem; /* 16px - standard spacing */
-    --space-lg: 1.5rem; /* 24px - section spacing */
-    --space-xl: 2.5rem; /* 40px - major sections */
+    /* Spacing system */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
 
-    /* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
-    --font-size-sm: 0.875rem; /* 14px - small text (captions, labels) */
-    --font-size-base: 1rem; /* 16px - body text (paragraphs, normal content) */
-    --font-size-lg: 1.125rem; /* 18px - slightly larger text (subheadings) */
-    --font-size-xl: 1.25rem; /* 20px - medium headings (h3, important text) */
-    --font-size-2xl: 1.5rem; /* 24px - large headings (h2, section titles) */
-    --font-size-3xl: 2rem; /* 32px - main page title */
+    /* Typography scale */
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
 
-    /* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
-    --breakpoint-sm: 576px; /* Mobile Devices */
-    --breakpoint-md: 768px; /* Larger Mobile Devices & Smaller Tablets */
-    --breakpoint-lg: 992px; /* Tablets */
-    --breakpoint-xl: 1200px; /* Small Laptops & Larger Tablets */
+    /* Responsive breakpoints */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
 
-    /* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+    /* UI constants */
     --focus-color: var(--pokemon-yellow);
     --focus-width: 2px;
     --border-radius: 8px;
@@ -56,7 +54,6 @@
    2. RESET & BASE STYLES
    ========================================================================== */
 
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
 *,
 *::before,
 *::after {
@@ -91,7 +88,7 @@ body {
 /* ==========================================================================
    3. ACCESSIBILITY FOUNDATIONS
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 .skip {
     position: absolute;
     top: -1000px;
@@ -136,7 +133,6 @@ body {
    4. TYPOGRAPHY SYSTEM
    ========================================================================== */
 
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
 h1,
 h2,
 h3,
@@ -198,7 +194,7 @@ ol {
 /* ==========================================================================
    5. LAYOUT SYSTEM
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 header {
     display: grid;
     grid-template-rows: auto auto;
@@ -234,9 +230,9 @@ nav a {
 }
 
 /* ==========================================================================
-   6. GAME SELECTION COMPONENT - TODO: Style Pokemon game buttons
+   6. GAME SELECTION COMPONENT
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 .game-selection {
     display: grid;
     grid-template-columns: 1fr;
@@ -317,9 +313,9 @@ nav a {
 }
 
 /* ==========================================================================
-   7. PROGRESS TRACKING COMPONENT - TODO: Style progress indicators
+   7. PROGRESS TRACKING COMPONENT
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 .progress-overview {
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
@@ -391,9 +387,9 @@ nav a {
 }
 
 /* ==========================================================================
-   8. WALKTHROUGH CONTENT COMPONENT - TODO: Style walkthrough sections
+   8. WALKTHROUGH CONTENT COMPONENT
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 .walkthrough-content {
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
@@ -500,9 +496,9 @@ nav a {
 }
 
 /* ==========================================================================
-   9. RESPONSIVE DESIGN - TODO: Implement mobile-first responsive design
+   9. RESPONSIVE DESIGN
    ========================================================================== */
-/* TODO: Revisit when content is implemented to tweak values for accessibility, readability, and design */
+
 @media (min-width: 768px) {
     /* Game Selection - 3 column layout on tablets and up */
     .game-selection {
@@ -523,11 +519,11 @@ nav a {
 }
 
 @media (min-width: 1200px) {
-    /* Future: Additional large screen optimizations */
+    /* Large screen optimizations */
 }
 
 /* ==========================================================================
-   10. UTILITY CLASSES - TODO: Add helpful utility classes
+   10. UTILITY CLASSES
    ========================================================================== */
 
 .sr-only {
@@ -590,10 +586,10 @@ nav a {
 }
 
 /* ==========================================================================
-   11. THEME VARIATIONS - TODO: Implement Pokemon game themes (Future)
+   11. THEME VARIATIONS
    ========================================================================== */
 
-/* TODO: Theme system for different Pokemon games */
+/* Theme system for different Pokemon games */
 /* These classes override the semantic colors defined in :root */
 
 .theme-red {
@@ -622,7 +618,7 @@ nav a {
 }
 
 /* ==========================================================================
-   12. PRINT STYLES - TODO: Optimize for printing (Optional)
+   12. PRINT STYLES
    ========================================================================== */
 
 @media print {
@@ -652,31 +648,5 @@ nav a {
 }
 
 /* ==========================================================================
-   END OF TEMPLATE
-   
-   IMPLEMENTATION GUIDE:
-   1. Start with CSS Custom Properties (section 1) - define your design system
-   2. Implement Reset & Base Styles (section 2) - establish consistent foundation  
-   3. Add Accessibility features (section 3) - ensure inclusive design
-   4. Build Typography System (section 4) - create readable, scalable text
-   5. Create Layout System (section 5) - structure your page layout
-   6. Style Components (sections 6-8) - implement Pokemon-themed components
-   7. Add Responsive Design (section 9) - ensure mobile-first responsiveness
-   8. Include Utilities (section 10) - add helpful utility classes
-   
-   LEARNING OBJECTIVES:
-   - Master CSS custom properties and design systems
-   - Understand mobile-first responsive design principles  
-   - Practice accessibility-focused CSS development
-   - Learn component-based CSS architecture
-   - Implement Pokemon-themed visual design
-   
-   ACCESSIBILITY PRIORITIES:
-   - High contrast focus indicators
-   - Screen reader compatible layouts
-   - Keyboard navigation support
-   - Reduced motion preferences
-   - Semantic color usage (not color-only information)
-   
-   Happy coding! 🎨🎮
+   END OF MAIN CSS
    ========================================================================== */

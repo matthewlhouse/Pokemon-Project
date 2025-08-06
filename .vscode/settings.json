@@ -53,5 +53,9 @@
 
   // JavaScript/ES6 support
   "javascript.preferences.quoteStyle": "single",
-  "typescript.preferences.quoteStyle": "single"
+  "typescript.preferences.quoteStyle": "single",
+
+  // Extension management
+  "extensions.ignoreRecommendations": false,
+  "extensions.autoUpdate": true
 }

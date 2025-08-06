@@ -1,10 +1,7 @@
 # Pokemon Walkthrough Project - .gitignore
 
-# Node modules (if we add build tools later)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Development dependency management handled via VS Code extensions
+# No npm/yarn/node.js build tooling required
 
 # VS Code settings (keep workspace settings, ignore user settings)
 .vscode/
@@ -38,7 +35,7 @@ logs/
 *.cache
 .cache/
 
-# Build outputs (if we add build tools later)
+# Build outputs (VS Code Live Server handles local development)
 dist/
 build/
 .parcel-cache/
@@ -67,17 +64,13 @@ scratch/
 *.backup
 *~
 
-# Coverage reports (if we add testing)
+# Testing handled via VS Code extensions
 coverage/
 *.lcov
-
-# Documentation build (if we add doc generation)
-docs/build/
-
-# Lock files (until we decide on package manager)
-package-lock.json
-yarn.lock
-
-# Test artifacts
 test-results/
 test-reports/
+
+# Validation system (development tool - separate from main project)
+validation/node_modules/
+validation/package-lock.json
+validation/reports/*.html

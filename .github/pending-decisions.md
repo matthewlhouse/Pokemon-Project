@@ -131,6 +131,38 @@ core/gen1/pokemon/
 4. Conduct A/B testing if performance data suggests benefits
 5. Make informed decision based on real-world evidence
 
+### Future Multi-Generation Considerations
+
+**Potential Architecture Evolution**: As additional generations are added, we may need to create shared core files above the generation-specific structure to avoid data duplication.
+
+**Current Structure**:
+
+```text
+data/core/gen1/pokemon.json
+data/core/gen2/pokemon.json  # When added
+data/core/gen3/pokemon.json  # When added
+```
+
+**Future Potential Structure**:
+
+```text
+data/core/shared/
+├── pokemon-universal.json   # Pokemon that exist across generations
+├── moves-universal.json     # Moves shared across generations
+└── types-universal.json     # Type system (mostly consistent)
+data/core/gen1/
+├── pokemon-exclusive.json   # Gen 1 specific Pokemon data
+└── overrides.json          # Gen 1 specific variations
+```
+
+**Decision Trigger**: When data duplication across generations becomes significant enough to impact:
+
+- File size and loading performance
+- Data consistency maintenance
+- Update workflow efficiency
+
+**Evaluation Timeline**: Assess after Gen II implementation to determine actual duplication patterns and maintenance overhead.
+
 ---
 
 ## Framework Migration Decision

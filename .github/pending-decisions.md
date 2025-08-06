@@ -165,6 +165,43 @@ data/core/gen1/
 
 ---
 
+## Validation Tool Architecture
+
+**Status**: 🟡 **Deferred Until Gen II Development**
+
+**Decision Required**: Refactor validation report tooling for maintainability and multi-generation support
+
+**Context**:
+
+- Current `js/validation-report.js` is a large monolithic file (~2000+ lines)
+- File contains multiple distinct functional areas that could be modularized
+- However, validation tooling is development infrastructure, not user-facing walkthrough code
+- Tool will likely need significant changes for each generation anyway
+
+**Current Approach**:
+
+- Accept large monolithic structure for Gen I development phase
+- Focus modular architecture efforts on walkthrough application code
+- Validation report treated as separate development tool with different architecture standards
+
+**Future Considerations**:
+
+- **Modularization**: Break validation report into focused modules (filtering, charts, quick-fix, virtual scrolling, etc.)
+- **Generation Abstraction**: Create generation-agnostic validation framework
+- **Tool Chain Integration**: Better integration with development workflow
+- **Performance Optimization**: Virtual scrolling and memory management improvements
+
+**Decision Trigger**: Beginning of Gen II development when validation tool modifications become necessary
+
+**Rationale**:
+
+- Validation tool architecture doesn't impact user experience
+- Development effort better spent on walkthrough application architecture
+- Tool will require substantial changes for Gen II regardless of current structure
+- Premature optimization of development tooling vs. user-facing code
+
+---
+
 ## Framework Migration Decision
 
 **Status**: 🟡 **Pending Phase 1 Results**

@@ -85,3 +85,18 @@
 .pkmyellow-walkthrough[aria-pressed='true'] {
     background-color: var(--color-secondary);
 }
+
+.section-summary {
+    background: var(--bg-tertiary);
+    padding: 15px 20px;
+    border-radius: 7px 7px 0 0;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 2px solid var(--border-secondary);
+    transition: all 0.3s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

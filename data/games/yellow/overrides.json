@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "game": "Pokemon Yellow",
+    "version": "1.0.0", 
+    "description": "Game-specific data overrides for Pokemon Yellow - anime-inspired changes",
+    "lastUpdated": "TBD"
+  },
+  "starter_override": {
+    "pokemon": "025",
+    "name": "Pikachu", 
+    "special_mechanics": ["follows_player", "happiness_system", "refuses_evolution_stone"]
+  },
+  "unique_features": [
+    {
+      "feature": "team_rocket_battles",
+      "description": "Jessie and James appear as recurring battles"
+    },
+    {
+      "feature": "gym_leader_changes", 
+      "description": "Some gym leaders have different Pokemon (e.g., Brock has Graveler)"
+    }
+  ],
+  "version_differences": [
+    {
+      "pokemon": "025",
+      "name": "Pikachu",
+      "availability": "starter_only",
+      "notes": "Cannot catch wild Pikachu, must be starter"
+    }
+  ]
+}

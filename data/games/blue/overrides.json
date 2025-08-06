@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "game": "Pokemon Blue",
+    "version": "1.0.0",
+    "description": "Game-specific data overrides for Pokemon Blue - differences from base data", 
+    "lastUpdated": "TBD"
+  },
+  "version_exclusives": [
+    {
+      "pokemon": "027",
+      "name": "Sandshrew",
+      "exclusive_to": "blue"
+    },
+    {
+      "pokemon": "028",
+      "name": "Sandslash", 
+      "exclusive_to": "blue"
+    },
+    {
+      "pokemon": "058",
+      "name": "Growlithe",
+      "exclusive_to": "blue"
+    },
+    {
+      "pokemon": "059", 
+      "name": "Arcanine",
+      "exclusive_to": "blue"
+    }
+  ]
+}

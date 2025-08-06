@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "game": "Pokemon Red",
+    "version": "1.0.0",
+    "description": "Pokemon Red item locations and availability",
+    "lastUpdated": "TBD"
+  },
+  "items": {
+    "route_1": {
+      "visible": [
+        {
+          "item": "potion",
+          "quantity": 1,
+          "location": "North of Pallet Town",
+          "description": "On the ground near the tall grass"
+        }
+      ],
+      "hidden": []
+    },
+    "pallet_town": {
+      "visible": [],
+      "hidden": [],
+      "shops": [],
+      "gifts": [
+        {
+          "item": "pokedex", 
+          "giver": "Professor Oak",
+          "requirements": ["Choose starter Pokemon", "Talk to Oak"]
+        }
+      ]
+    }
+  }
+}

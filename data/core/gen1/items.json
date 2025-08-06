@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generation": 1,
+    "total_items": 84,
+    "last_updated": "2025-08-05",
+    "description": "Generation I item database - all items available in Red/Blue/Yellow"
+  },
+  "items": {
+    "pokeballs": {
+      "poke_ball": {
+        "name": "Poke Ball",
+        "category": "pokeball",
+        "buy_price": 200,
+        "sell_price": 100,
+        "description": "A device for catching wild Pokemon. It is thrown like a ball at the target.",
+        "catch_rate_modifier": 1.0,
+        "pocket": "items"
+      },
+      "great_ball": {
+        "name": "Great Ball", 
+        "category": "pokeball",
+        "buy_price": 600,
+        "sell_price": 300,
+        "description": "A good, high-performance Ball that provides a higher catch rate than a standard Poke Ball.",
+        "catch_rate_modifier": 1.5,
+        "pocket": "items"
+      },
+      "ultra_ball": {
+        "name": "Ultra Ball",
+        "category": "pokeball", 
+        "buy_price": 1200,
+        "sell_price": 600,
+        "description": "An ultra-performance Ball that provides a higher catch rate than a Great Ball.",
+        "catch_rate_modifier": 2.0,
+        "pocket": "items"
+      },
+      "master_ball": {
+        "name": "Master Ball",
+        "category": "pokeball",
+        "buy_price": null,
+        "sell_price": null,
+        "description": "The best Ball with the ultimate level of performance. It will catch any wild Pokemon without fail.",
+        "catch_rate_modifier": "guaranteed",
+        "pocket": "items",
+        "unique": true
+      }
+    },
+    "medicine": {
+      "potion": {
+        "name": "Potion",
+        "category": "medicine",
+        "buy_price": 300,
+        "sell_price": 150,
+        "description": "A spray-type medicine for wounds. It restores the HP of one Pokemon by 20 points.",
+        "effect": "heal_hp",
+        "heal_amount": 20,
+        "pocket": "items"
+      },
+      "super_potion": {
+        "name": "Super Potion",
+        "category": "medicine", 
+        "buy_price": 700,
+        "sell_price": 350,
+        "description": "A spray-type medicine for wounds. It restores the HP of one Pokemon by 50 points.",
+        "effect": "heal_hp",
+        "heal_amount": 50,
+        "pocket": "items"
+      }
+    }
+  }
+}

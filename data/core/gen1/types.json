@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generation": 1,
+    "total_types": 15,
+    "last_updated": "2025-08-05", 
+    "description": "Generation I type effectiveness chart and type data"
+  },
+  "types": {
+    "normal": {
+      "name": "Normal",
+      "color": "#A8A878",
+      "weaknesses": ["Fighting"],
+      "resistances": [],
+      "immunities": ["Ghost"],
+      "strong_against": [],
+      "weak_against": ["Rock", "Steel"]
+    },
+    "fire": {
+      "name": "Fire", 
+      "color": "#F08030",
+      "weaknesses": ["Ground", "Rock", "Water"],
+      "resistances": ["Bug", "Steel", "Fire", "Grass", "Ice"],
+      "immunities": [],
+      "strong_against": ["Bug", "Steel", "Grass", "Ice"],
+      "weak_against": ["Rock", "Fire", "Water", "Dragon"]
+    },
+    "water": {
+      "name": "Water",
+      "color": "#6890F0", 
+      "weaknesses": ["Grass", "Electric"],
+      "resistances": ["Steel", "Fire", "Water", "Ice"],
+      "immunities": [],
+      "strong_against": ["Ground", "Rock", "Fire"],
+      "weak_against": ["Water", "Grass", "Dragon"]
+    },
+    "electric": {
+      "name": "Electric",
+      "color": "#F8D030",
+      "weaknesses": ["Ground"],
+      "resistances": ["Flying", "Steel", "Electric"],
+      "immunities": [],
+      "strong_against": ["Flying", "Water"],
+      "weak_against": ["Ground", "Grass", "Electric", "Dragon"]
+    },
+    "grass": {
+      "name": "Grass",
+      "color": "#78C850",
+      "weaknesses": ["Flying", "Poison", "Bug", "Fire", "Ice"],
+      "resistances": ["Ground", "Water", "Grass", "Electric"],
+      "immunities": [],
+      "strong_against": ["Ground", "Rock", "Water"],
+      "weak_against": ["Flying", "Poison", "Bug", "Steel", "Fire", "Grass", "Dragon"]
+    }
+  },
+  "effectiveness": {
+    "normal": {
+      "super_effective": [],
+      "not_very_effective": ["Rock", "Steel"],
+      "no_effect": ["Ghost"]
+    },
+    "fire": {
+      "super_effective": ["Bug", "Steel", "Grass", "Ice"],
+      "not_very_effective": ["Rock", "Fire", "Water", "Dragon"],
+      "no_effect": []
+    },
+    "water": {
+      "super_effective": ["Ground", "Rock", "Fire"],
+      "not_very_effective": ["Water", "Grass", "Dragon"],
+      "no_effect": []
+    },
+    "electric": {
+      "super_effective": ["Flying", "Water"],
+      "not_very_effective": ["Ground", "Grass", "Electric", "Dragon"],
+      "no_effect": ["Ground"]
+    },
+    "grass": {
+      "super_effective": ["Ground", "Rock", "Water"],
+      "not_very_effective": ["Flying", "Poison", "Bug", "Steel", "Fire", "Grass", "Dragon"],
+      "no_effect": []
+    }
+  }
+}

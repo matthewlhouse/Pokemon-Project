@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "game": "Pokemon Red",
+    "version": "1.0.0",
+    "description": "Game-specific data overrides for Pokemon Red - differences from base data",
+    "lastUpdated": "TBD"
+  },
+  "pokemon_overrides": {
+    "025": {
+      "notes": "Pikachu not available in Red (Yellow exclusive)",
+      "availability": "trade_only"
+    }
+  },
+  "version_exclusives": [
+    {
+      "pokemon": "023",
+      "name": "Ekans",
+      "exclusive_to": "red"
+    },
+    {
+      "pokemon": "024", 
+      "name": "Arbok",
+      "exclusive_to": "red"
+    },
+    {
+      "pokemon": "037",
+      "name": "Vulpix", 
+      "exclusive_to": "red"
+    },
+    {
+      "pokemon": "038",
+      "name": "Ninetales",
+      "exclusive_to": "red" 
+    }
+  ]
+}

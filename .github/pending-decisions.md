@@ -46,7 +46,94 @@ This document tracks features and design decisions that require further testing,
 
 ---
 
-## Framework Migration Trigger
+## Data Architecture Optimization
+
+**Status**: 🟡 **Pending Gen I Performance Data**
+
+**Decision Required**: Choose optimal data loading strategy for Pokemon data
+
+**Current Implementation**: Generation-based architecture with single files per data type
+
+- `core/gen1/pokemon.json` (8,121 lines) - Complete Pokemon database
+- `core/gen1/moves.json` - Move database
+- `core/gen1/items.json` - Item database  
+- `core/gen1/types.json` - Type effectiveness data
+
+**Testing Needed**:
+
+- [ ] Measure actual loading times for `pokemon.json` (8,121 lines) on target devices
+- [ ] Test network performance: 4G LTE, WiFi, slow connections
+- [ ] Memory usage analysis during walkthrough sessions
+- [ ] Browser parsing performance for large JSON files
+- [ ] Cache effectiveness and invalidation strategies
+- [ ] User experience impact: loading delays vs. responsiveness
+
+### Option A: Keep Current Structure (Recommended for Gen I)
+
+Single file per data type approach
+
+- **Pros**: Simple loading, single source of truth, atomic updates, fewer HTTP requests
+- **Cons**: Larger initial downloads, potential edit conflicts, loading time for large files
+- **Best for**: Small teams, MVP development, data consistency
+
+### Option B: Modular Data by Category
+
+Split Pokemon data into focused files
+
+```text
+core/gen1/pokemon/
+├── basic-info.json      # Names, species, types, stats
+├── evolution.json       # Evolution chains  
+├── learnsets.json       # Move learning data
+├── tm-compatibility.json # TM/HM compatibility
+└── pokedex-entries.json # Pokedex descriptions
+```
+
+- **Pros**: Granular loading, smaller file sizes, team collaboration, targeted updates
+- **Cons**: Multiple HTTP requests, coordination overhead, referential integrity challenges
+- **Best for**: Large teams, performance optimization, granular updates
+
+### Key Performance Questions to Answer
+
+1. **Loading Overhead vs Loading Time Trade-off**
+   - Is 1 large request better than 5 smaller requests?
+   - How much does HTTP request overhead impact total load time?
+   - What's the network performance impact on different connection types?
+
+2. **User Experience Impact**
+   - Do users notice the difference in loading patterns?
+   - How does perceived performance compare to actual performance?
+   - What's the impact on walkthrough flow and usability?
+
+3. **Development Workflow**
+   - How often do we edit different parts of Pokemon data?
+   - What's the impact on merge conflicts and collaboration?
+   - How does data validation complexity change?
+
+**Evaluation Timeline**:
+
+- **Phase 1**: Complete Gen I with current structure
+- **Phase 2**: Collect real performance data from Gen I implementation
+- **Phase 3**: Make data-driven decision based on evidence, not speculation
+
+**Success Metrics**:
+
+- **Core Web Vitals**: First Contentful Paint, Largest Contentful Paint
+- **User Experience**: Time to interactive walkthrough content
+- **Development Velocity**: Time to implement new features and content
+- **Data Accuracy**: Error rates and validation effectiveness
+
+**Next Steps**:
+
+1. Complete Gen I implementation with current architecture
+2. Implement performance monitoring and data collection
+3. Gather user feedback on loading experience
+4. Conduct A/B testing if performance data suggests benefits
+5. Make informed decision based on real-world evidence
+
+---
+
+## Framework Migration Decision
 
 **Status**: 🟡 **Pending Phase 1 Results**
 

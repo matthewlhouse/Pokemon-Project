@@ -3,34 +3,22 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <!-- TODO: Update description when more games are covered -->
         <meta
             name="description"
-            content="Interactive, accessible Pokemon walkthroughs for Red, Blue & Yellow with progress tracking and comprehensive guides"
+            content="Interactive, accessible Pokemon walkthroughs with progress tracking and comprehensive guides"
         />
         <title>The Pokemon Walkthrough Project</title>
-        <!-- TODO: Pick an icon to represent the project -->
-        <link rel="icon" href="favicon.ico" />
-        <meta name="theme-color" content="#FFDE00" />
-        <!-- TODO: Consider preload hints for performance (optional for now) -->
+        <!-- TODO: Implement Favicon Switching with JS -->
+        <link rel="icon" href="assets/favicons/default.ico" id="favicon"/>
 
+        <meta name="theme-color" content="#FFDE00" />
         <link rel="stylesheet" href="css/main.css" />
     </head>
     <body>
         <header>
             <a href="#main-content" class="skip">Skip to Main Content</a>
-
             <h1>The Pokemon Walkthrough Project</h1>
-            <!-- TODO: Update navigation when content is finalized -->
-            <nav>
-                <ul>
-                    <li><a href="#walkthrough">Walkthrough</a></li>
-                    <li><a href="#database">Database</a></li>
-                    <li><a href="#settings">Settings</a></li>
-                </ul>
-            </nav>
         </header>
-
         <main id="main-content">
             <section class="game-selection">
                 <button
@@ -38,7 +26,6 @@
                     name="Pokemon Red"
                     type="button"
                     aria-pressed="false"
-                    aria-describedby="game-description"
                 >
                     Pokemon Red
                 </button>
@@ -47,7 +34,6 @@
                     name="Pokemon Blue"
                     type="button"
                     aria-pressed="false"
-                    aria-describedby="game-description"
                 >
                     Pokemon Blue
                 </button>
@@ -56,12 +42,10 @@
                     name="Pokemon Yellow"
                     type="button"
                     aria-pressed="false"
-                    aria-describedby="game-description"
                 >
                     Pokemon Yellow
                 </button>
             </section>
-            <!-- TODO: Placeholder data, update when number of steps is known -->
             <section class="progress-overview">
                 <article class="overall-progress-tracker">
                     <div class="progress-steps">
@@ -94,15 +78,10 @@
                     </div>
                 </article>
             </section>
-            <!-- TODO: Will remain empty as content will be loaded dynamically based on game selection -->
             <section class="walkthrough-content">
                 <h2>Walkthrough</h2>
             </section>
         </main>
-        <!-- TODO: Create settings panel (initially hidden) -->
-
-        <!-- TODO: Add loading indicator for future use -->
-
-        <!-- TODO: Link to JavaScript file when ready to add interactivity -->
+        <script src="js/app.js"></script>
     </body>
 </html>

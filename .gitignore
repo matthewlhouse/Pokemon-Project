@@ -71,6 +71,4 @@ test-results/
 test-reports/
 
 # Validation system (development tool - separate from main project)
-validation/node_modules/
-validation/package-lock.json
 validation/reports/*.html

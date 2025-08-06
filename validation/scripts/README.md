@@ -20,14 +20,20 @@ This is part of the `/validation` system - see [`../README.md`](../README.md) fo
 
 ## Dependencies
 
-These validation scripts require Node.js and the following packages:
+These validation scripts require Node.js and external packages for web scraping:
 
-```bash
-# Required for data fetching from external sources
-npm install cheerio axios
-```
+**Manual Setup Required:**
 
-**Note:** The main Pokemon Walkthrough Project does NOT use npm or Node.js dependencies. These scripts are separate development tools for data validation only.
+- `cheerio` - HTML parsing for web scraping
+- `axios` - HTTP client for web requests
+
+**Setup Options:**
+
+1. **Local Installation**: `npm install cheerio axios` (creates local node_modules)
+2. **Global Installation**: `npm install -g cheerio axios` (system-wide)
+3. **Alternative**: Use different HTTP/HTML parsing libraries as needed
+
+**Note:** The main Pokemon Walkthrough Project uses NO external dependencies. This validation system is a separate development tool only.
 
 ## Usage
 

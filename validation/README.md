@@ -26,8 +26,8 @@ validation/
 
 **This validation system is intentionally separate from the main project:**
 
-- **Main Project**: VS Code extension-only approach, no npm dependencies
-- **Validation System**: Node.js development tool with external dependencies
+- **Main Project**: VS Code extension-only approach, no external dependencies
+- **Validation System**: Node.js development tool (requires manual dependency setup)
 
 ## Quick Start
 
@@ -39,8 +39,8 @@ See [`scripts/README.md`](scripts/README.md) for detailed usage instructions.
 # Navigate to the validation directory
 cd validation
 
-# Install dependencies (one-time setup)
-npm install cheerio axios
+# Note: External dependencies required for data fetching
+# See scripts/README.md for dependency setup instructions
 
 # Run validation
 node scripts/validation-cli.js

@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Theme System - Modular Theme Architecture
+   Individual theme imports for scalable theme management
+   ========================================================================== */
+
+/* Import individual theme stylesheets */
+@import url('themes/pokemon-games.css');  /* Pokemon Red/Blue/Yellow game themes */
+
+/* Future theme imports will be added here as the project expands:
+ * @import url('themes/dark-mode.css');        // Dark mode theme
+ * @import url('themes/high-contrast.css');    // Accessibility high contrast
+ * @import url('themes/pokemon-gen2.css');     // Gold/Silver/Crystal themes  
+ * @import url('themes/pokemon-gen3.css');     // Ruby/Sapphire/Emerald themes
+ * @import url('themes/seasonal.css');         // Holiday and seasonal themes
+ * @import url('themes/user-preferences.css'); // Font size, compact mode, etc.
+ */

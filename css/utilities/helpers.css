@@ -52,14 +52,3 @@
 .invisible {
     visibility: hidden;
 }
-
-/* Pokemon-specific background utilities */
-.pokemon-red-bg {
-    background-color: var(--pokemon-red);
-}
-.pokemon-blue-bg {
-    background-color: var(--pokemon-blue);
-}
-.pokemon-yellow-bg {
-    background-color: var(--pokemon-yellow);
-}

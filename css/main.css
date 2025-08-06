@@ -6,5 +6,6 @@
 /* Import modular stylesheets */
 @import url('base.css');        /* Reset, typography, accessibility */
 @import url('components.css');  /* Game selection, progress, walkthrough */
-@import url('layout.css');      /* Grid systems, page structure */
-@import url('utilities.css');   /* Helper classes, themes, print styles */
+@import url('layout.css');      /* Grid systems, page structure, responsive */
+@import url('themes.css');      /* Pokemon themes, dark mode, user preferences */
+@import url('utilities.css');   /* Helper classes, print styles */

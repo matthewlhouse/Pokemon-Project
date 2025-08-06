@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Utility Styles - Helper Classes, Themes, and Print Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.mb-sm {
+    margin-bottom: var(--space-sm);
+}
+.mb-md {
+    margin-bottom: var(--space-md);
+}
+.mb-lg {
+    margin-bottom: var(--space-lg);
+}
+
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+/* Focus utilities */
+.focus-visible-only:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Display utilities */
+.hidden {
+    display: none;
+}
+.visible {
+    visibility: visible;
+}
+.invisible {
+    visibility: hidden;
+}
+
+/* Pokemon-specific utilities */
+.pokemon-red-bg {
+    background-color: var(--pokemon-red);
+}
+.pokemon-blue-bg {
+    background-color: var(--pokemon-blue);
+}
+.pokemon-yellow-bg {
+    background-color: var(--pokemon-yellow);
+}
+
+/* ==========================================================================
+   THEME VARIATIONS
+   ========================================================================== */
+
+/* Theme system for different Pokemon games */
+/* These classes override the semantic colors defined in :root */
+
+.theme-red {
+    /* Pokemon Red theme overrides */
+    --color-primary: var(--pokemon-red);
+    --color-secondary: #cc0000;
+    --color-surface: #fff5f5;
+    --color-background: #ffffff;
+}
+
+.theme-blue {
+    /* Pokemon Blue theme overrides */
+    --color-primary: var(--pokemon-blue);
+    --color-secondary: #0d47a1;
+    --color-surface: #f0f4ff;
+    --color-background: #ffffff;
+}
+
+.theme-yellow {
+    /* Pokemon Yellow theme overrides */
+    --color-primary: var(--pokemon-yellow);
+    --color-secondary: #f57c00;
+    --color-surface: #fffbf0;
+    --color-background: #ffffff;
+    --color-text: #1a1a1a;
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+    /* Hide interactive elements */
+    nav,
+    .game-selection,
+    button {
+        display: none;
+    }
+
+    /* Optimize for print */
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    .walkthrough-content {
+        background: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* Ensure readable colors */
+    * {
+        background: white !important;
+        color: black !important;
+    }
+}

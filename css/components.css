@@ -1,0 +1,9 @@
+/* ==========================================================================
+   Component Styles - Modular Component Architecture
+   Individual component imports for maintainable CSS organization
+   ========================================================================== */
+
+/* Import individual component stylesheets */
+@import url('components/game-selection.css');      /* Pokemon game selection buttons */
+@import url('components/progress-tracking.css');   /* Progress overview and cards */
+@import url('components/walkthrough-content.css'); /* Main walkthrough content and inline elements */

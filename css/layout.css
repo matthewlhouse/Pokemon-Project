@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Layout Styles - Grid Systems and Page Structure
+   ========================================================================== */
+
+/* ==========================================================================
+   MAIN LAYOUT STRUCTURE
+   ========================================================================== */
+
+header {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-primary);
+}
+
+main {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-md);
+}
+
+nav {
+    display: grid;
+    justify-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--space-md);
+}
+
+nav a {
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ========================================================================== */
+
+@media (min-width: 768px) {
+    /* Game Selection - 3 column layout on tablets and up */
+    .game-selection {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Progress Tracker - 2 column layout on tablets */
+    .overall-progress-tracker {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    /* Progress Tracker - 4 column layout on desktop */
+    .overall-progress-tracker {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Large screen optimizations */
+}

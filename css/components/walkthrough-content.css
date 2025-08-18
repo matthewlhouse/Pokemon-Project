@@ -60,6 +60,13 @@
     color: var(--color-primary);
 }
 
+.walkthrough-content h4 {
+    text-align: left;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+}
+
 .walkthrough-step {
     padding: var(--space-sm);
     margin-bottom: var(--space-sm);

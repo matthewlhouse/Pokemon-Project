@@ -10,6 +10,9 @@
 }
 
 .walkthrough-content summary {
+    display: flex;
+    align-items: center;
+    align-items: baseline;
     list-style: none;
     cursor: pointer;
     -webkit-user-select: none;
@@ -28,12 +31,6 @@
 /* Optional: Add hover effect to indicate clickability */
 .walkthrough-content summary:hover h3{
     color: var(--pokemon-red);
-}
-
-/* Optional: Add focus styles for accessibility */
-.walkthrough-content summary:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
 }
 
 .walkthrough-content {
@@ -62,23 +59,53 @@
 
 .walkthrough-content h4 {
     text-align: left;
-    margin-top: var(--space-lg);
+    margin-top: var(--space-xs);
     margin-bottom: var(--space-sm);
     color: var(--color-primary);
+}
+
+.walkthrough-content h5 {
+    text-align: left;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+}
+
+.walkthrough-content span {
+    margin-left: var(--space-sm);
+    font-weight: bold;
+}
+
+.item-box {
+    border: 2px double var(--color-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.note-box {
+    background: var(--color-background);
+    border: 2px solid var(--color-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
 }
 
 .walkthrough-step {
     padding: var(--space-sm);
     margin-bottom: var(--space-sm);
-    border-left: 3px solid var(--color-secondary);
+    border-left: 3px solid var(--pokemon-red);
     background-color: var(--color-background);
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-radius: var(--border-radius);
     transition: all var(--transition-speed) ease;
 }
 
 .walkthrough-step:hover {
-    border-left-color: var(--color-primary);
     transform: translateX(2px);
+}
+
+.step-title {
+    font-weight: bold;
 }
 
 .step-completed {
@@ -123,31 +150,75 @@
    ========================================================================== */
 
 .pokemon-encounter {
-    display: inline-block;
-    background-color: var(--pokemon-red);
-    color: white;
-    padding: var(--space-xs) var(--space-sm);
+    display: block;
+    border: 2px double var(--color-secondary);
     border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.pokemon-encounter td label {
+    display: block;
+}
+
+.pokemon-encounter table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-width: 2px;
+}
+
+.pokemon-encounter th{
+    border-color: black;
+    border-style: solid;
+    font-weight: bold;
+    padding: var(--space-xs);
+}
+
+.pokemon-encounter td{
+    border-color: black;
+    border-style: solid;
+    overflow: hidden;
+    padding: var(--space-xs);
+    word-break: normal;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .item-found {
+    border-left: 3px solid var(--pokemon-yellow);
     display: inline-block;
-    background-color: var(--pokemon-yellow);
     color: var(--color-text-contrast);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
 }
 
 .trainer-battle {
+    border-left: 3px solid var(--pokemon-blue);
     display: inline-block;
-    background-color: var(--pokemon-blue);
-    color: white;
+    color: var(--color-text-contrast);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
+}
+
+.trainer-battle table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-width: 2px;
+}
+
+.trainer-battle th{
+    border-color: black;
+    border-style: solid;
+    font-weight: bold;
+    padding: var(--space-xs);
+}
+
+.trainer-battle td{
+    border-color: black;
+    border-style: solid;
+    overflow: hidden;
+    padding: var(--space-xs);
+    word-break: normal;
+    text-align: center;
+    vertical-align: middle;
 }

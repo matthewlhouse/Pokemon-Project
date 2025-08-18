@@ -7,3 +7,4 @@
 @import url('components/game-selection.css');      /* Pokemon game selection buttons */
 @import url('components/progress-tracking.css');   /* Progress overview and cards */
 @import url('components/walkthrough-content.css'); /* Main walkthrough content and inline elements */
+@import url('components/tooltips.css');            /* Tooltips for items */

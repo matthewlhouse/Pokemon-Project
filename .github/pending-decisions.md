@@ -46,6 +46,71 @@ This document tracks features and design decisions that require further testing,
 
 ---
 
+## Real-Time Game Mechanics Integration
+
+**Status**: 🟡 **Pending Gen II Development Planning**
+
+**Decision Required**: Implement HTML `<time datetime>` elements for real-time game features
+
+**Context**:
+
+Games like Pokemon Gold/Silver/Crystal introduce real-time mechanics:
+
+- Day/night cycles affecting Pokemon encounters and evolutions
+- Time-based events and NPCs
+- Weekly events (Bug Catching Contest, etc.)
+- Berry growth timers (later generations)
+
+**Technical Implementation**:
+
+- [ ] Use HTML `<time datetime>` element for semantic time representation
+- [ ] Display current real-world time mapped to in-game time
+- [ ] Show countdown to next time transition (day→night, night→day)
+- [ ] Accessibility: Screen reader friendly time announcements
+- [ ] Timezone handling for global users
+
+**Features to Consider**:
+
+- [ ] **Current Game Time Display**: "It's currently 2:30 PM (Day time) in Johto"
+- [ ] **Transition Countdown**: "Night begins in 3 hours 45 minutes"
+- [ ] **Event Scheduling**: "Bug Catching Contest starts in 2 days"
+- [ ] **Encounter Timing**: "Hoothoot appears during night hours (6 PM - 6 AM)"
+- [ ] **Evolution Reminders**: "Eevee can evolve into Espeon during day hours"
+
+**Implementation Questions**:
+
+- [ ] Real-time sync vs. simulated game time?
+- [ ] How to handle users in different timezones?
+- [ ] Should users be able to adjust their "game clock"?
+- [ ] Integration with walkthrough step timing and recommendations?
+- [ ] Offline functionality when system clock changes?
+
+**Accessibility Considerations**:
+
+- [ ] ARIA live regions for time updates
+- [ ] Reduced motion preferences for countdown animations
+- [ ] High contrast time display options
+- [ ] Screen reader friendly time format announcements
+
+**Testing Requirements**:
+
+- [ ] Cross-timezone user experience testing
+- [ ] Battery impact of real-time updates
+- [ ] Performance impact of frequent DOM updates
+- [ ] Accuracy of countdown timers over extended sessions
+
+**Decision Timeline**: Evaluate during Gen II development planning phase
+
+**Next Steps**:
+
+1. Research Gen II time-based mechanics and requirements
+2. Prototype HTML `<time datetime>` implementation
+3. Test timezone handling and user experience
+4. Integration planning with walkthrough content
+5. Accessibility testing with screen readers
+
+---
+
 ## Data Architecture Optimization
 
 **Status**: 🟡 **Pending Gen I Performance Data**
@@ -56,7 +121,7 @@ This document tracks features and design decisions that require further testing,
 
 - `core/gen1/pokemon.json` (8,121 lines) - Complete Pokemon database
 - `core/gen1/moves.json` - Move database
-- `core/gen1/items.json` - Item database  
+- `core/gen1/items.json` - Item database
 - `core/gen1/types.json` - Type effectiveness data
 
 **Testing Needed**:
@@ -83,7 +148,7 @@ Split Pokemon data into focused files
 ```text
 core/gen1/pokemon/
 ├── basic-info.json      # Names, species, types, stats
-├── evolution.json       # Evolution chains  
+├── evolution.json       # Evolution chains
 ├── learnsets.json       # Move learning data
 ├── tm-compatibility.json # TM/HM compatibility
 └── pokedex-entries.json # Pokedex descriptions
@@ -96,19 +161,21 @@ core/gen1/pokemon/
 ### Key Performance Questions to Answer
 
 1. **Loading Overhead vs Loading Time Trade-off**
-   - Is 1 large request better than 5 smaller requests?
-   - How much does HTTP request overhead impact total load time?
-   - What's the network performance impact on different connection types?
+
+    - Is 1 large request better than 5 smaller requests?
+    - How much does HTTP request overhead impact total load time?
+    - What's the network performance impact on different connection types?
 
 2. **User Experience Impact**
-   - Do users notice the difference in loading patterns?
-   - How does perceived performance compare to actual performance?
-   - What's the impact on walkthrough flow and usability?
+
+    - Do users notice the difference in loading patterns?
+    - How does perceived performance compare to actual performance?
+    - What's the impact on walkthrough flow and usability?
 
 3. **Development Workflow**
-   - How often do we edit different parts of Pokemon data?
-   - What's the impact on merge conflicts and collaboration?
-   - How does data validation complexity change?
+    - How often do we edit different parts of Pokemon data?
+    - What's the impact on merge conflicts and collaboration?
+    - How does data validation complexity change?
 
 **Evaluation Timeline**:
 

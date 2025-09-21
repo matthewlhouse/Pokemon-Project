@@ -14,7 +14,6 @@
 
     // Accessibility and validation
     "deque-systems.vscode-axe-linter", // axe Accessibility Linter
-    "webhint.vscode-webhint", // webhint - Web best practices
 
     // Markdown and documentation
     "davidanson.vscode-markdownlint", // Markdown linting

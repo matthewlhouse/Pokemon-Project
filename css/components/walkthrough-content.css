@@ -29,7 +29,7 @@
 }
 
 /* Optional: Add hover effect to indicate clickability */
-.walkthrough-content summary:hover h3{
+.walkthrough-content summary:hover h3 {
     color: var(--pokemon-red);
 }
 
@@ -145,6 +145,10 @@
     padding: var(--space-xl);
 }
 
+.step-content {
+    display: grid;
+}
+
 /* ==========================================================================
    Inline Element Components for Walkthrough Content
    ========================================================================== */
@@ -161,20 +165,20 @@
     display: block;
 }
 
-.pokemon-encounter table{
+.pokemon-encounter table {
     border-collapse: collapse;
     border-spacing: 0;
     border-width: 2px;
 }
 
-.pokemon-encounter th{
+.pokemon-encounter th {
     border-color: black;
     border-style: solid;
     font-weight: bold;
     padding: var(--space-xs);
 }
 
-.pokemon-encounter td{
+.pokemon-encounter td {
     border-color: black;
     border-style: solid;
     overflow: hidden;
@@ -200,20 +204,20 @@
     border-radius: var(--border-radius);
 }
 
-.trainer-battle table{
+.trainer-battle table {
     border-collapse: collapse;
     border-spacing: 0;
     border-width: 2px;
 }
 
-.trainer-battle th{
+.trainer-battle th {
     border-color: black;
     border-style: solid;
     font-weight: bold;
     padding: var(--space-xs);
 }
 
-.trainer-battle td{
+.trainer-battle td {
     border-color: black;
     border-style: solid;
     overflow: hidden;
